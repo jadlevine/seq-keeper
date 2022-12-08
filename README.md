@@ -16,11 +16,34 @@
 
 ### **_Description_**
 
-A PERN stack application for researching, curating, and visualizing DNA sequences and evolutionary relationships.
+A PERN stack application for researching and curating DNA sequences and their evolutionary relationships.
+
+---
+
+### **_Planning_**
+
+You can see the planning of this project on Trello, [here](https://trello.com/b/BPpOhQ9x/seq-keeper)
+
+An Entity Relationship Diagram (ERD) of the data models can be found [here](https://drive.google.com/file/d/1pu_gBItMIm7eFgA6dT51EIxQ-Jg-Sp0f/view?usp=sharing)
+
+A Component Hierarchy Diagram showing the structure of the React app can be found [here](https://drive.google.com/file/d/1hBGsjTrU7Cw9RS-O6ioQqnudeqJ0uNjK/view?usp=sharing)
 
 ---
 
 ### **_Technologies Used_**
+
+PERN Stack
+
+- Postgres
+- Express
+- React
+- Node
+
+BioTech Stack
+
+- BLAST (Nucleotide search)
+- MUSCLE (Multiple Sequence Alignment)
+- phylotree.js (tree visualization)
 
 <!-- ![Tech Used](./images/tech_banner_FSK.png) -->
 
@@ -28,9 +51,7 @@ A PERN stack application for researching, curating, and visualizing DNA sequence
 
 ### **_Getting Started_**
 
-<!-- To use this application, use the deployed version on Heroku, [here](https://full-stack-kingdom-jal.herokuapp.com/) -->
-
-You can see the planning of this project on Trello, [here](https://trello.com/b/BPpOhQ9x/seq-keeper)
+<!-- To use this application, use the deployed version on Heroku, [here](heroku link) -->
 
 Using the application
 
@@ -58,5 +79,10 @@ Using the application
 ---
 
 ### **_Credits_**
+
+BLAST
+MUSCLE
+phyhlotree.js
+validator
 
 <!-- Font: [Bangers](https://fonts.google.com/specimen/Bangers) -->
