@@ -11,16 +11,39 @@ const UserHome = () => {
 
   const getSearchResults = async () => {
     let db = 'Gene'
-    // let query = 'brca1'
     let searchResponse = await ESearch(db, searchQuery)
-    const keys = Object.keys(searchResponse)
-    //filter out the last line (uid)
-    keys
-    // then map the filtered keys and build the search results array
-    // then set search results to
-    keys.map((key) => {})
-    console.log(typeof searchResponse)
-    console.log(searchResponse[207])
+
+    // might make sense just to filter out the last result and set the entire DocSum object (convert to array?) to searchResults... then parse out the details later?
+    let parsedResultsArr = []
+    for (const key in searchResponse) {
+      // if (Object.hasOwnProperty.call(object, key)) {
+      //   const element = object[key];
+      // }
+      if (key !== 'uids') {
+        const resultObj = {
+          uid: searchResponse[key].uid,
+          name: searchResponse[key].name,
+          description: searchResponse[key].description,
+          chromosome: searchResponse[key].chromosome,
+          maplocation: searchResponse[key].maplocation,
+          organism: {
+            scientificname: searchResponse[key].organism.scientificname,
+            commonname: searchResponse[key].organism.commonname,
+            taxid: searchResponse[key].organism.taxid
+          },
+          summary: searchResponse[key].summary
+        }
+        parsedResultsArr.push(resultObj)
+      }
+    }
+    // console.log(parsedResultsArr)
+    // console.log(searchResponse)
+
+    // then set search results to parsed results
+    setSearchResults(parsedResultsArr)
+    // and update state
+    setSearched(true)
+    setSearchQuery('')
   }
 
   const handleChange = (e) => {
