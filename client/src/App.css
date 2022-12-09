@@ -7,3 +7,19 @@ body {
 -webkit-font-smoothing: antialiased;
 -moz-osx-font-smoothing: grayscale;
 }
+
+.nav-bar{
+  display: flex;
+  justify-content: space-between;
+  background-color: rgb(188, 179, 179);
+  align-items: center;
+  font-size: 20px;
+  padding: 1em;
+  min-height: 2em;
+}
+
+.nav-options{
+  display: flex;
+  justify-content: space-evenly;
+  width: 550px;
+}
