@@ -1,8 +1,16 @@
-import React from 'react'
+const GeneSearch = (props) => {
 
-const GeneSearch = () => {
   return (
-    <div>GeneSearch</div>
+    <form onSubmit={props.onSubmit}>
+      <input
+        type="text"
+        name="genesearch"
+        value={props.searchQuery}
+        placeholder="Search Genes"
+        onChange={props.handleChange}
+      />
+      <button type="submit">Submit</button>
+    </form>
   )
 }
 
