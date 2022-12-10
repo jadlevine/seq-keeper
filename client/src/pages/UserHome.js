@@ -2,6 +2,13 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { ESearch } from '../services/Entrez'
 import GeneSearch from '../components/GeneSearch'
+import GeneListItem from '../components/GeneListItem'
+
+/** notes
+ *
+ * db lists: https://www.ncbi.nlm.nih.gov/guide/all/
+ *
+ * */
 
 const UserHome = () => {
   const [genes, setGenes] = useState([])
@@ -13,6 +20,7 @@ const UserHome = () => {
     let db = 'Gene'
     let searchResponse = await ESearch(db, searchQuery)
 
+    console.log(searchResponse)
     // might make sense just to filter out the last result and set the entire DocSum object (convert to array?) to searchResults... then parse out the details later?
     let parsedResultsArr = []
     for (const key in searchResponse) {
@@ -55,9 +63,12 @@ const UserHome = () => {
     getSearchResults()
   }
 
-  // db lists: https://www.ncbi.nlm.nih.gov/guide/all/
-  // YEEEESSSSSS////
-  // docSums.data.result = {key:value,...} where key is uid(plus one key at the end that is uids: [array of uids]), value is object containing summary data, including(amongst others): chromosome, description, maplocation, name, nomenclaturestatus, organism: {scientificname: 'value', commonname: 'value', tacid: 'value'}, summary, uid
+  useEffect(() => {
+    // on page load?
+    // getGenes()
+    // getGeneCollections()
+    // set state for those things
+  }, [])
 
   // NEXT STEPS
   // // render the data from docsums above, each with button to go to gene details page
@@ -72,6 +83,28 @@ const UserHome = () => {
         onSubmit={onSubmit}
         searchQuery={searchQuery}
       />
+      {searched ? (
+        <div className="search-results">
+          <h2>Search Results</h2>
+          <div className="search-table-header-row">
+            <div className="table-header">Gene Name</div>
+            <div className="table-header">Description</div>
+            <div className="table-header">Species</div>
+            <div className="table-header">Chromosome</div>
+            <div className="table-header">Map Location</div>
+          </div>
+          <div className="search-results-list">
+            {searchResults.map((gene) => (
+              <GeneListItem key={gene.uid} gene={gene} />
+            ))}
+          </div>
+        </div>
+      ) : (
+        <div className="genelist">
+          <h2>Gene List</h2>
+          {/* map gene list here */}
+        </div>
+      )}
     </div>
   )
 }

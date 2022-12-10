@@ -1,5 +1,7 @@
 import axios from 'axios'
-
+// import { xmlToJson } from '../services/XmlToJson'
+// import { xml2Json } from 'xml2js'
+var XMLParser = require('react-xml-parser')
 // Entrez Utilities
 // https://www.ncbi.nlm.nih.gov/books/NBK25499/#_chapter4
 // ESearch - Provides a list of UIDs matching a text query
@@ -13,6 +15,12 @@ import axios from 'axios'
 // ESpell - Provides spelling suggestions for terms within a single text query in a given database.
 // ECitMatch - Retrieves PubMed IDs (PMIDs) that correspond to a set of input citation strings.
 // others have to do with using Entrez History Server (which I think can be used as a storage for search stuff... essentially, what I'm trying to do)
+
+/**
+ * wait, why? Maybe ok for now, since we're only using gene db
+ * Special note for sequence databases.
+ * NCBI is no longer assigning GI numbers to a growing number of new sequence records. As such, these records are not indexed in Entrez, and so cannot be retrieved using ESearch or ESummary, and have no Entrez links accessible by ELink. EFetch can retrieve these records by including their accession.version identifier in the id parameter.
+ */
 
 const entrezBaseUrl = 'https://eutils.ncbi.nlm.nih.gov/entrez/eutils/'
 
@@ -38,6 +46,49 @@ export const ESearch = async (db, query) => {
 
     // return DocSums
     return docSums.data.result
+  } catch (error) {
+    console.log(`error ${error}`)
+  }
+}
+
+export const EFetch = async (db, uid) => {
+  try {
+    let eFetchUrl = ''
+    if (db === 'nuccore') {
+      // eFetchUrl = `${entrezBaseUrl}efetch.fcgi?db=${db}&id=${uid}&rettype=fasta&retmode=text`
+      // uid = 1677538580
+      console.log(`db: ${db}`)
+      eFetchUrl = `${entrezBaseUrl}efetch.fcgi?db=nucleotide&id=1677538580&rettype=fasta`
+      // https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nucleotide&id=5&rettype=fasta
+
+      // console.log(eFetchUrl)
+    } else {
+      // const eFetchUrl = `${entrezBaseUrl}efetch.fcgi?db=${db}&id=${uid}` // => returns asn.1
+      // eFetchUrl = `${entrezBaseUrl}efetch.fcgi?db=${db}&id=${uid}&rettype=gene_table&retmode=text` // => returns gene table
+      console.log(`db: ${db}`)
+      eFetchUrl = `${entrezBaseUrl}efetch.fcgi?db=${db}&id=${uid}&retmode=xml` // => returns xml
+      const response = await axios.get(eFetchUrl)
+      // var xmlDOM = new DOMParser().parseFromString(response, 'text/xml') // did not work :(
+      // let jsonRes = xmlToJson(response)
+      // const str = toString(response)
+      var jsonRes = new XMLParser().parseFromString(response.data) // Assume xmlText contains the example XML
+      // console.log(xml)
+      // console.log(xml.getElementsByTagName('Name'))
+
+      // let jsonRes = xml2Json(response)
+
+      // console.log(jsonRes)
+      // // const idList = response.data.esearchresult.idlist
+
+      return jsonRes
+      // return response.data
+    }
+    console.log(eFetchUrl)
+    const response = await axios.get(eFetchUrl)
+    console.log(response)
+    // const idList = response.data.esearchresult.idlist
+
+    return response
   } catch (error) {
     console.log(`error ${error}`)
   }

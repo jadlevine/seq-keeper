@@ -4,7 +4,7 @@ import Login from './pages/Login'
 import Register from './pages/Register'
 import AccountDetails from './pages/AccountDetails'
 import UserHome from './pages/UserHome'
-import GenePage from './pages/GenePage'
+import GeneDetails from './pages/GeneDetails'
 import Nav from './components/Nav'
 
 function App() {
@@ -17,9 +17,9 @@ function App() {
         <Route path="/" element={<Login />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/account-details" element={<AccountDetails />} />
+        <Route path="/account_details" element={<AccountDetails />} />
         <Route path="/user-home" element={<UserHome />} />
-        <Route path="/gene/:gene_id" element={<GenePage />} />
+        <Route path="/gene/:gene_uid" element={<GeneDetails />} />
       </Routes>
     </div>
   )

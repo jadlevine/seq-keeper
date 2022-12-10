@@ -23,3 +23,30 @@ body {
   justify-content: space-evenly;
   width: 550px;
 }
+
+.gene-list-item{
+  display: flex;
+  justify-content: flex-start;
+  align-content: center;
+}
+/* .gene-data{
+  padding: 2em;
+} */
+
+.search-table-header-row,.search-table-item-row{
+  display: grid;
+  margin: 2em;
+  grid-template-columns: repeat(5, 1fr);
+  background-color: aquamarine;
+  border: 1pt solid black;
+  width: auto;
+}
+
+.link {
+  color: blue;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.link:visited {
+  color: purple;
+}
