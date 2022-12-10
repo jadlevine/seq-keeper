@@ -1,7 +1,6 @@
 import { useParams } from 'react-router-dom'
 import { useState, useEffect } from 'react'
-import { EFetch } from '../services/Entrez'
-import { xmlToJson } from '../services/XmlToJson'
+import { ESearch, EFetch } from '../services/Entrez'
 
 const GeneDetails = () => {
   let { gene_uid } = useParams()
@@ -23,7 +22,7 @@ const GeneDetails = () => {
   // for now, just gonna put it on a button to control it
 
   const getGeneDets = async () => {
-    let db = 'Gene'
+    let db = 'gene'
     let fetchResponse = await EFetch(db, gene_uid)
     console.log(fetchResponse)
     // let jsonRes = xmlToJson(fetchResponse)
@@ -32,6 +31,31 @@ const GeneDetails = () => {
   }
   const getGeneSeq = async () => {
     let db = 'nuccore'
+    let nucUid = 1676319757
+    let fetchResponse = await EFetch(db, nucUid)
+    // let fetchResponse = await EFetch(db, gene_uid)
+    console.log(fetchResponse)
+  }
+
+  const nucleotideSearch = async () => {
+    let db = 'nuccore'
+    let searchQuery = 'RAD51+human'
+    let searchResponse = await ESearch(db, searchQuery)
+    // let fetchResponse = await EFetch(db, gene_uid)
+    console.log(searchResponse)
+  }
+
+  const homologeneSearch = async () => {
+    let db = 'homologene'
+    let searchQuery = 'RAD51[gene+name]+human[orgn]'
+    // tpo[gene name] AND human[orgn]
+    let searchResponse = await ESearch(db, searchQuery)
+    // let fetchResponse = await EFetch(db, gene_uid)
+    console.log(searchResponse)
+  }
+
+  const getHomologeneDetails = async () => {
+    let db = 'homologene'
     let fetchResponse = await EFetch(db, gene_uid)
     console.log(fetchResponse)
   }
@@ -42,6 +66,9 @@ const GeneDetails = () => {
       <h3> uid: {gene_uid}</h3>
       <button onClick={getGeneDets}>Get Gene Details</button>
       <button onClick={getGeneSeq}>Get Gene Seq</button>
+      <button onClick={nucleotideSearch}>Nucleotide Search</button>
+      <button onClick={homologeneSearch}>Search Homologs</button>
+      <button onClick={getHomologeneDetails}>getHomologeneDetails</button>
     </div>
   )
 }

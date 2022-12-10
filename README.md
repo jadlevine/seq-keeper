@@ -80,9 +80,11 @@ Using the application
 
 ### **_Credits_**
 
+Entez
 BLAST
 MUSCLE
 phyhlotree.js
 validator
+[react-xml-parser](https://www.npmjs.com/package/react-xml-parser)
 
 <!-- Font: [Bangers](https://fonts.google.com/specimen/Bangers) -->

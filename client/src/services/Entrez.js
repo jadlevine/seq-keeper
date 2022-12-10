@@ -1,6 +1,5 @@
 import axios from 'axios'
-// import { xmlToJson } from '../services/XmlToJson'
-// import { xml2Json } from 'xml2js'
+
 var XMLParser = require('react-xml-parser')
 // Entrez Utilities
 // https://www.ncbi.nlm.nih.gov/books/NBK25499/#_chapter4
@@ -40,6 +39,7 @@ export const ESearch = async (db, query) => {
         uidStr += uid
       }
     })
+
     // make esummary request
     const eSummUrl = `${entrezBaseUrl}esummary.fcgi?db=${db}&id=${uidStr}&retmode=json`
     const docSums = await axios.get(eSummUrl)
@@ -55,40 +55,30 @@ export const EFetch = async (db, uid) => {
   try {
     let eFetchUrl = ''
     if (db === 'nuccore') {
-      // eFetchUrl = `${entrezBaseUrl}efetch.fcgi?db=${db}&id=${uid}&rettype=fasta&retmode=text`
-      // uid = 1677538580
       console.log(`db: ${db}`)
-      eFetchUrl = `${entrezBaseUrl}efetch.fcgi?db=nucleotide&id=1677538580&rettype=fasta`
-      // https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nucleotide&id=5&rettype=fasta
-
-      // console.log(eFetchUrl)
-    } else {
-      // const eFetchUrl = `${entrezBaseUrl}efetch.fcgi?db=${db}&id=${uid}` // => returns asn.1
-      // eFetchUrl = `${entrezBaseUrl}efetch.fcgi?db=${db}&id=${uid}&rettype=gene_table&retmode=text` // => returns gene table
+      eFetchUrl = `${entrezBaseUrl}efetch.fcgi?db=nucleotide&id=${uid}&rettype=fasta`
+      const fasta = await axios.get(eFetchUrl)
+      return fasta.data
+    } else if (db === 'gene') {
       console.log(`db: ${db}`)
       eFetchUrl = `${entrezBaseUrl}efetch.fcgi?db=${db}&id=${uid}&retmode=xml` // => returns xml
       const response = await axios.get(eFetchUrl)
-      // var xmlDOM = new DOMParser().parseFromString(response, 'text/xml') // did not work :(
-      // let jsonRes = xmlToJson(response)
-      // const str = toString(response)
-      var jsonRes = new XMLParser().parseFromString(response.data) // Assume xmlText contains the example XML
-      // console.log(xml)
-      // console.log(xml.getElementsByTagName('Name'))
-
-      // let jsonRes = xml2Json(response)
-
-      // console.log(jsonRes)
-      // // const idList = response.data.esearchresult.idlist
-
+      let jsonRes = new XMLParser().parseFromString(response.data) // response.data MUST be XML
+      // above line takes a while with big XML files... try to get back smaller XML
       return jsonRes
-      // return response.data
+    } else if (db === 'homologene') {
+      console.log(`db: ${db}`)
+      eFetchUrl = `${entrezBaseUrl}efetch.fcgi?db=${db}&id=${uid}&retmode=xml` // => returns xml
+      const response = await axios.get(eFetchUrl)
+      let jsonRes = new XMLParser().parseFromString(response.data) // response.data MUST be XML
+      return jsonRes
     }
-    console.log(eFetchUrl)
-    const response = await axios.get(eFetchUrl)
-    console.log(response)
-    // const idList = response.data.esearchresult.idlist
+    // console.log(eFetchUrl)
+    // const response = await axios.get(eFetchUrl)
+    // console.log(response)
+    // // const idList = response.data.esearchresult.idlist
 
-    return response
+    // return response
   } catch (error) {
     console.log(`error ${error}`)
   }
