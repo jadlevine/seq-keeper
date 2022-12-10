@@ -18,37 +18,38 @@ const UserHome = () => {
 
   const getSearchResults = async () => {
     let db = 'Gene'
-    let searchResponse = await ESearch(db, searchQuery)
+    let formattedQuery = searchQuery.replace(' ', '+')
+    let searchResponse = await ESearch(db, formattedQuery)
 
     console.log(searchResponse)
     // might make sense just to filter out the last result and set the entire DocSum object (convert to array?) to searchResults... then parse out the details later?
-    let parsedResultsArr = []
-    for (const key in searchResponse) {
-      // if (Object.hasOwnProperty.call(object, key)) {
-      //   const element = object[key];
-      // }
-      if (key !== 'uids') {
-        const resultObj = {
-          uid: searchResponse[key].uid,
-          name: searchResponse[key].name,
-          description: searchResponse[key].description,
-          chromosome: searchResponse[key].chromosome,
-          maplocation: searchResponse[key].maplocation,
-          organism: {
-            scientificname: searchResponse[key].organism.scientificname,
-            commonname: searchResponse[key].organism.commonname,
-            taxid: searchResponse[key].organism.taxid
-          },
-          summary: searchResponse[key].summary
-        }
-        parsedResultsArr.push(resultObj)
-      }
-    }
+    // let parsedResultsArr = []
+    // for (const key in searchResponse) {
+    //   // if (Object.hasOwnProperty.call(object, key)) {
+    //   //   const element = object[key];
+    //   // }
+    //   if (key !== 'uids') {
+    //     const resultObj = {
+    //       uid: searchResponse[key].uid,
+    //       name: searchResponse[key].name,
+    //       description: searchResponse[key].description,
+    //       chromosome: searchResponse[key].chromosome,
+    //       maplocation: searchResponse[key].maplocation,
+    //       organism: {
+    //         scientificname: searchResponse[key].organism.scientificname,
+    //         commonname: searchResponse[key].organism.commonname,
+    //         taxid: searchResponse[key].organism.taxid
+    //       },
+    //       summary: searchResponse[key].summary
+    //     }
+    //     parsedResultsArr.push(resultObj)
+    //   }
+    // }
     // console.log(parsedResultsArr)
     // console.log(searchResponse)
 
     // then set search results to parsed results
-    setSearchResults(parsedResultsArr)
+    setSearchResults(searchResponse)
     // and update state
     setSearched(true)
     setSearchQuery('')
@@ -85,7 +86,7 @@ const UserHome = () => {
       />
       {searched ? (
         <div className="search-results">
-          <h2>Search Results</h2>
+          <h2>Search Results ({searchResults.length})</h2>
           <div className="search-table-header-row">
             <div className="table-header">Gene Name</div>
             <div className="table-header">Description</div>
@@ -94,8 +95,8 @@ const UserHome = () => {
             <div className="table-header">Map Location</div>
           </div>
           <div className="search-results-list">
-            {searchResults.map((gene) => (
-              <GeneListItem key={gene.uid} gene={gene} />
+            {searchResults.map((geneSumm) => (
+              <GeneListItem key={geneSumm.uid} geneSumm={geneSumm} />
             ))}
           </div>
         </div>

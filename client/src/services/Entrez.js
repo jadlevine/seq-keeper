@@ -41,11 +41,27 @@ export const ESearch = async (db, query) => {
     })
 
     // make esummary request
-    const eSummUrl = `${entrezBaseUrl}esummary.fcgi?db=${db}&id=${uidStr}&retmode=json`
-    const docSums = await axios.get(eSummUrl)
+    const eSumms = ESummary(db, uidStr)
+    return eSumms
+  } catch (error) {
+    console.log(`error ${error}`)
+  }
+}
 
-    // return DocSums
-    return docSums.data.result
+export const ESummary = async (db, uid) => {
+  try {
+    // make esummary request
+    const eSummUrl = `${entrezBaseUrl}esummary.fcgi?db=${db}&id=${uid}&retmode=json`
+    const res = await axios.get(eSummUrl)
+    // clean up response to be an array of docSum objects
+    let docSumsArr = []
+    for (const key in res.data.result) {
+      if (key !== 'uids') {
+        docSumsArr.push(res.data.result[key])
+      }
+    }
+    // return DocSumsArr
+    return docSumsArr
   } catch (error) {
     console.log(`error ${error}`)
   }

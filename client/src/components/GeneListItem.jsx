@@ -13,22 +13,22 @@ import { Link } from 'react-router-dom'
 // },
 // summary: searchResponse[key].summary
 
-const GeneListItem = ({ gene }) => {
+const GeneListItem = ({ geneSumm }) => {
   let navigate = useNavigate()
 
   const showGene = () => {
-    navigate(`/gene/${gene.uid}`)
+    navigate(`/gene/${geneSumm.uid}`)
   }
 
   return (
     <div className="search-table-item-row">
       <div className="gene-data link" onClick={showGene}>
-        {gene.name}
+        {geneSumm.name}
       </div>
-      <div className="gene-data">{gene.description}</div>
-      <div className="gene-data">{gene.organism.scientificname}</div>
-      <div className="gene-data">{gene.chromosome}</div>
-      <div className="gene-data">{gene.maplocation}</div>
+      <div className="gene-data">{geneSumm.description}</div>
+      <div className="gene-data">{geneSumm.organism.scientificname}</div>
+      <div className="gene-data">{geneSumm.chromosome}</div>
+      <div className="gene-data">{geneSumm.maplocation}</div>
     </div>
   )
 }
