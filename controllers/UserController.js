@@ -2,8 +2,6 @@ const { User } = require('../models')
 const middleware = require('../middleware')
 const validator = require('validator')
 
-//validator may be an issue, this version is as is from foliage friends (where email-validator only was installed)
-
 const GetAllUsers = async (req, res) => {
   try {
     const users = await User.findAll()
@@ -20,15 +18,16 @@ const RegisterUser = async (req, res) => {
     if (userExists) {
       return res.send(`That Email Already Exists`)
     } else {
-      // let validEmail = validator.validate(email)
-      // if (!validEmail) {
-      //   return res.send(`Invalid Email Format`)
-      // } else {
-      // let passwordDigest = await middleware.hashPassword(password)
-      let passwordDigest = password
-      const user = await User.create({ email, passwordDigest, name })
-      res.send(user)
-      // }
+      let validEmail = validator.isEmail(email)
+      if (!validEmail) {
+        return res.send(`Invalid Email Format`)
+      } else {
+        let passwordDigest = await middleware.hashPassword(password)
+        // let passwordDigest = password
+        const user = await User.create({ email, passwordDigest, name })
+        // should password digest be sent back here? maybe not, seems unsecure?
+        res.send(user)
+      }
     }
   } catch (error) {
     throw error
@@ -97,13 +96,13 @@ const UpdateUser = async (req, res) => {
         where: { id: userId },
         returning: true
       })
-      console.log(updateConfirm)
+      // console.log(updateConfirm)
       return res.send(updateConfirm)
     }
-    console.log('C')
+    // console.log('C')
     res
       .status(401)
-      .send({ status: 'Error', msg: 'password does not stored password' })
+      .send({ status: 'Error', msg: 'password does not match stored password' })
   } catch (error) {
     // console.log('D')
     throw error
@@ -111,12 +110,14 @@ const UpdateUser = async (req, res) => {
 }
 
 const DeleteUser = async (req, res) => {
+  // change this to accept req.body? Orrrr... delete requests aren't allowed to have bodies, right?
+
   try {
     let userId = parseInt(req.params.user_id)
     // await User.destroy({ where: { id: userId } })
     let user = await User.findOne({ where: { id: userId } })
     await user.destroy()
-    //this should cascade to all the users plants and rooms, but it didn't.... hmm... could add another couple lines of code here to clean up the plants and rooms.
+    //this should cascade to all the users genes, seqs, and homologpairs... it might not?
     res.send({
       message: `Deletion Confirmed: User: ${userId}`
     })
@@ -127,9 +128,9 @@ const DeleteUser = async (req, res) => {
 
 module.exports = {
   GetAllUsers,
-  // Login,
+  Login,
   RegisterUser,
-  // CheckSession,
-  // UpdateUser,
+  CheckSession,
+  UpdateUser,
   DeleteUser
 }
