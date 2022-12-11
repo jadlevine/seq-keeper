@@ -20,14 +20,15 @@ const RegisterUser = async (req, res) => {
     if (userExists) {
       return res.send(`That Email Already Exists`)
     } else {
-      let validEmail = validator.validate(email)
-      if (!validEmail) {
-        return res.send(`Invalid Email Format`)
-      } else {
-        let passwordDigest = await middleware.hashPassword(password)
-        const user = await User.create({ email, passwordDigest, name })
-        res.send(user)
-      }
+      // let validEmail = validator.validate(email)
+      // if (!validEmail) {
+      //   return res.send(`Invalid Email Format`)
+      // } else {
+      // let passwordDigest = await middleware.hashPassword(password)
+      let passwordDigest = password
+      const user = await User.create({ email, passwordDigest, name })
+      res.send(user)
+      // }
     }
   } catch (error) {
     throw error
@@ -126,9 +127,9 @@ const DeleteUser = async (req, res) => {
 
 module.exports = {
   GetAllUsers,
-  Login,
+  // Login,
   RegisterUser,
-  CheckSession,
-  UpdateUser,
+  // CheckSession,
+  // UpdateUser,
   DeleteUser
 }
