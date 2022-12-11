@@ -9,13 +9,13 @@ INITIAL MODELS TO GENERATE
   sequelize model:generate --name User --attributes name:string,email:string,passwordDigest:string
 
   Gene Model
-  sequelize model:generate --name Gene --attributes name:string,uid:integer,nomeclaturename:string,nomenclaturestatus:string,description:string,chromosome:string,maplocation:string,summary:string,organismScientificName:string,organismCommonName:string,organismTaxId:integer,ncbiLink:string,homologList:array,userId:integer
+  sequelize model:generate --name Gene --attributes name:string,uid:integer,nomeclaturename:string,nomenclaturestatus:string,description:string,chromosome:string,maplocation:string,summary:text,organismScientificName:string,organismCommonName:string,organismTaxId:integer,ncbiLink:string,homologList:array,userId:integer
 
   Sequence Model
-  sequelize model:generate --name Sequence --attributes fullDefinitionLine:string,seqId:string,organismScientificName:string,seqTitle:string,molType:string,sequence:string,geneUid:integer,userId:integer,geneId:integer
+  sequelize model:generate --name Sequence --attributes fullDefinitionLine:text,seqId:string,organismScientificName:string,seqTitle:string,molType:string,sequence:text,geneUid:integer,userId:integer,geneId:integer
 
-  HomologousPairs Model
-  sequelize model:generate --name HomologousPairs --attributes userId:integer,geneId:integer,homologId:integer,orthoPara:string
+  HomologousPair Model
+  sequelize model:generate --name HomologousPair --attributes userId:integer,geneId:integer,homologId:integer,orthoPara:string
 
 
 IN PSQL

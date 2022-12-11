@@ -9,19 +9,47 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Sequence.belongsTo(models.User, {
+        foreignKey: 'userId'
+      })
+      Sequence.belongsTo(models.Gene, {
+        foreignKey: 'geneId'
+      })
     }
   }
   Sequence.init(
     {
-      fullDefinitionLine: DataTypes.STRING,
+      fullDefinitionLine: {
+        type: DataTypes.TEXT,
+        allowNull: false
+      },
       seqId: DataTypes.STRING,
       organismScientificName: DataTypes.STRING,
       seqTitle: DataTypes.STRING,
       molType: DataTypes.STRING,
-      sequence: DataTypes.STRING,
-      geneUid: DataTypes.INTEGER,
-      userId: DataTypes.INTEGER,
-      geneId: DataTypes.INTEGER
+      sequence: DataTypes.TEXT,
+      geneUid: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+      },
+      userId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        onDelete: 'CASCADE',
+        references: {
+          model: 'users',
+          key: 'id'
+        }
+      },
+      geneId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        onDelete: 'CASCADE',
+        references: {
+          model: 'genes',
+          key: 'id'
+        }
+      }
     },
     {
       sequelize,

@@ -10,7 +10,8 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       fullDefinitionLine: {
-        type: Sequelize.STRING
+        type: Sequelize.TEXT,
+        allowNull: false
       },
       seqId: {
         type: Sequelize.STRING
@@ -25,16 +26,29 @@ module.exports = {
         type: Sequelize.STRING
       },
       sequence: {
-        type: Sequelize.STRING
+        type: Sequelize.TEXT
       },
       geneUid: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull: false
       },
       userId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        onDelete: 'CASCADE',
+        references: {
+          model: 'users',
+          key: 'id'
+        }
       },
       geneId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        onDelete: 'CASCADE',
+        references: {
+          model: 'genes',
+          key: 'id'
+        }
       },
       createdAt: {
         allowNull: false,
