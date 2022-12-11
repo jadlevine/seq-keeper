@@ -31,6 +31,11 @@
 //   }
 // }
 
+// this doesn't bleong here, once logged in, all requests should go through client, and, there should ideally be a separate service for each model?
+
+//so really, the 3 functions above should be in services/Account (User)
+// then there should also be services/gene, /sequence, /homologouspair?
+
 // export const GetRooms = async (req) => {
 //   try {
 //     const res = await Client.get(`/rooms/user/${req.id}`)
