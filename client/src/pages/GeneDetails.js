@@ -114,9 +114,11 @@ const GeneDetails = () => {
             <GeneSummary geneSumm={geneSumm} />
             <div className="gene-data-finder-container container">
               <div className="seq-find container">
-                <button onClick={getNtSearch}>Search for Nucleotides</button>
                 {ntSearchResults ? (
                   <div className="search-results">
+                    <button onClick={() => setNtSearchResults(null)}>
+                      Hide Nucleotide Search Results
+                    </button>
                     <h2>Search Results ({ntSearchResults.length})</h2>
                     <div className="nt-search-table-header-row">
                       <div className="table-header">uid</div>
@@ -134,9 +136,7 @@ const GeneDetails = () => {
                     </div>
                   </div>
                 ) : (
-                  <div>
-                    click above to search for nucleotide sequences for this gene
-                  </div>
+                  <button onClick={getNtSearch}>Search for Nucleotides</button>
                 )}
               </div>
               <HomologFinder />

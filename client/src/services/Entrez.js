@@ -72,7 +72,8 @@ export const EFetch = async (db, uid) => {
     let eFetchUrl = ''
     if (db === 'nuccore') {
       console.log(`db: ${db}`)
-      eFetchUrl = `${entrezBaseUrl}efetch.fcgi?db=nucleotide&id=${uid}&rettype=fasta`
+      // eFetchUrl = `${entrezBaseUrl}efetch.fcgi?db=nucleotide&id=${uid}&rettype=fasta`
+      eFetchUrl = `${entrezBaseUrl}efetch.fcgi?db=${db}&id=${uid}&rettype=fasta`
       const fasta = await axios.get(eFetchUrl)
       return fasta.data
     } else if (db === 'gene') {
