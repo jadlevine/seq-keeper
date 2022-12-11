@@ -73,10 +73,14 @@ body {
   display: flex;
   justify-content: space-around;
 }
+.gene-summ-container{
+  width: 40vw;
+}
 
 .gene-data-finder-container{
   display: flex;
   flex-direction: column;
+  width: 50vw;
 }
 
 .gene-summ-line, .species-summ-line{

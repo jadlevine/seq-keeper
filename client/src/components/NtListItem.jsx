@@ -23,7 +23,7 @@ const NtListItem = ( { ntSumm } ) => {
       <div className="nt-data">{ntSumm.uid}</div>
       <div className="nt-data">{ntSumm.caption}</div>
       <div className="nt-data">{ntSumm.moltype}</div>
-      <div className="nt-data">{ntSumm.slen}</div>
+      <div className="nt-data bold larger">{ntSumm.slen}</div>
       <div className="nt-data">{ntSumm.organism}</div>
       <div className="nt-data">{ntSumm.updatedate}</div>
       <div className="nt-data">{ntSumm.title}</div>

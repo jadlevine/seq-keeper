@@ -22,6 +22,10 @@ const GeneSummary = ({geneSumm}) => {
         <div className="gene-summ-data">{geneSumm.nomenclaturestatus}</div>
       </div>
       <div className="gene-summ-line">
+        <div className="gene-summ-title bold">Description</div>
+        <div className="gene-summ-data">{geneSumm.description}</div>
+      </div>
+      <div className="gene-summ-line">
         <div className="gene-summ-title bold">Chomosome</div>
         <div className="gene-summ-data">{geneSumm.chromosome}</div>
       </div>

@@ -38,12 +38,15 @@ import GeneSummary from '../components/GeneSummary'
 import NtListItem from '../components/NtListItem'
 import HomologFinder from '../components/HomologFinder'
 import Species from '../components/Species'
+import GeneListItem from '../components/GeneListItem'
+import HomologListItem from '../components/HomologListItem'
 
 const GeneDetails = () => {
   let { gene_uid } = useParams()
 
   const [geneSumm, setGeneSumm] = useState(null)
   const [ntSearchResults, setNtSearchResults] = useState(null)
+  const [homologSearchResults, setHomologSearchResults] = useState(null)
 
   const inSeqKeeper = false
 
@@ -61,6 +64,28 @@ const GeneDetails = () => {
     console.log(response)
   }
 
+  const getHomologSearch = async () => {
+    let db = 'homologene'
+    let searchQuery = `${
+      geneSumm.name
+    }[gene+name]+${geneSumm.organism.scientificname.replaceAll(' ', '+')}[orgn]`
+
+    /**
+     * PROB need to strip numbers off end (strain id?)...
+     * Pyricularia oryzae 70-15
+     * BREAKS this function
+     * */
+
+    // let searchQuery = `${geneSumm.name}[gene+name]+${geneSumm.organism.taxid}[txid]`
+    console.log(searchQuery)
+    // tpo[gene name] AND human[orgn]
+    let response = await ESearch(db, searchQuery)
+
+    setHomologSearchResults(response[0].homologenedatalist)
+    // delete this when done!
+    console.log(response)
+    console.log(response[0].homologenedatalist)
+  }
   // on page load
   useEffect(() => {
     if (inSeqKeeper) {
@@ -85,15 +110,6 @@ const GeneDetails = () => {
     let fetchResponse = await EFetch(db, nucUid)
     // let fetchResponse = await EFetch(db, gene_uid)
     console.log(fetchResponse)
-  }
-
-  const homologeneSearch = async () => {
-    let db = 'homologene'
-    let searchQuery = 'RAD51[gene+name]+human[orgn]'
-    // tpo[gene name] AND human[orgn]
-    let searchResponse = await ESearch(db, searchQuery)
-    // let fetchResponse = await EFetch(db, gene_uid)
-    console.log(searchResponse)
   }
 
   const getHomologeneDetails = async () => {
@@ -136,10 +152,44 @@ const GeneDetails = () => {
                     </div>
                   </div>
                 ) : (
-                  <button onClick={getNtSearch}>Search for Nucleotides</button>
+                  <button onClick={getNtSearch}>
+                    Search for {geneSumm.name} Nucleotide sequences
+                  </button>
                 )}
               </div>
-              <HomologFinder />
+              {/* <HomologFinder /> */}
+              <div className="homolog-find container">
+                {homologSearchResults ? (
+                  <div className="search-results">
+                    <button onClick={() => setHomologSearchResults(null)}>
+                      Hide Homolog Search Results
+                    </button>
+                    <h2>Search Results ({homologSearchResults.length})</h2>
+                    <div className="homolog-search-table-header-row">
+                      <div className="table-header">uid</div>
+                      <div className="table-header">caption</div>
+                      <div className="table-header">moltype</div>
+                      <div className="table-header">slen</div>
+                      <div className="table-header">organism</div>
+                      <div className="table-header">updatedate</div>
+                      <div className="table-header">title</div>
+                    </div>
+                    <div className="search-results-list">
+                      {homologSearchResults.map((homologSumm) => (
+                        <HomologListItem
+                          key={homologSumm.geneid}
+                          homologSumm={homologSumm}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                ) : (
+                  <button onClick={getHomologSearch}>
+                    Search for Homologs of {geneSumm.organism.commonname}{' '}
+                    {geneSumm.name}
+                  </button>
+                )}
+              </div>
             </div>
           </div>
         </div>
