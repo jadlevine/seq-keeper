@@ -19,12 +19,12 @@ module.exports = (sequelize, DataTypes) => {
       })
       Gene.belongsToMany(models.Gene, {
         as: 'focalGene',
-        through: models.homologousPairs,
+        through: models.HomologousPair,
         foreignKey: 'geneId'
       })
       Gene.belongsToMany(models.Gene, {
         as: 'homolog',
-        through: models.homologousPairs,
+        through: models.HomologousPair,
         foreignKey: 'homologId'
       })
     }
@@ -49,7 +49,7 @@ module.exports = (sequelize, DataTypes) => {
       organismCommonName: DataTypes.STRING,
       organismTaxId: DataTypes.INTEGER,
       ncbiLink: DataTypes.STRING,
-      homologList: DataTypes.ARRAY(DataTypes.String),
+      homologList: DataTypes.ARRAY(DataTypes.STRING),
       userId: {
         type: DataTypes.INTEGER,
         allowNull: false,

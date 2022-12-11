@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
         onDelete: 'CASCADE',
         hooks: true
       })
-      User.hasMany(models.HomologousPairs, {
+      User.hasMany(models.HomologousPair, {
         foreignKey: 'userId',
         onDelete: 'CASCADE',
         hooks: true
