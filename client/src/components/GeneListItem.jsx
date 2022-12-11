@@ -1,6 +1,9 @@
 import { useNavigate } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 
+// come back and update the useNavigate below (to get to GeneDetails) with link or a-tag, whichever works best
+
+
 // uid: searchResponse[key].uid,
 // name: searchResponse[key].name,
 // description: searchResponse[key].description,

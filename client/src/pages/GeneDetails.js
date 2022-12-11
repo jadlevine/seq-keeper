@@ -35,7 +35,7 @@ import { useParams } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { ESearch, ESummary, EFetch } from '../services/Entrez'
 import GeneSummary from '../components/GeneSummary'
-import SeqFinder from '../components/SeqFinder'
+import NtListItem from '../components/NtListItem'
 import HomologFinder from '../components/HomologFinder'
 import Species from '../components/Species'
 
@@ -113,7 +113,32 @@ const GeneDetails = () => {
           <div className="gene-page-body">
             <GeneSummary geneSumm={geneSumm} />
             <div className="gene-data-finder-container container">
-              <SeqFinder />
+              <div className="seq-find container">
+                <button onClick={getNtSearch}>Search for Nucleotides</button>
+                {ntSearchResults ? (
+                  <div className="search-results">
+                    <h2>Search Results ({ntSearchResults.length})</h2>
+                    <div className="nt-search-table-header-row">
+                      <div className="table-header">uid</div>
+                      <div className="table-header">caption</div>
+                      <div className="table-header">moltype</div>
+                      <div className="table-header">slen</div>
+                      <div className="table-header">organism</div>
+                      <div className="table-header">updatedate</div>
+                      <div className="table-header">title</div>
+                    </div>
+                    <div className="search-results-list">
+                      {ntSearchResults.map((ntSumm) => (
+                        <NtListItem key={ntSumm.uid} ntSumm={ntSumm} />
+                      ))}
+                    </div>
+                  </div>
+                ) : (
+                  <div>
+                    click above to search for nucleotide sequences for this gene
+                  </div>
+                )}
+              </div>
               <HomologFinder />
             </div>
           </div>
@@ -123,7 +148,7 @@ const GeneDetails = () => {
           <h1>Getting Gene Summary</h1>
         </div>
       )}
-      <button onClick={getNtSearch}>Nucleotide Search</button>
+
       {/* <button onClick={getGeneDets}>Get Gene Details</button>
       <button onClick={getGeneSeq}>Get Gene Seq</button>
       <button onClick={homologeneSearch}>Search Homologs</button>
