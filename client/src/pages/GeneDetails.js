@@ -9,7 +9,6 @@ import HomologFinder from '../components/HomologFinder'
 import Species from '../components/Species'
 import GeneListItem from '../components/GeneListItem'
 import HomologListItem from '../components/HomologListItem'
-import e from 'cors'
 
 const GeneDetails = ({ user }) => {
   let { gene_uid } = useParams()
