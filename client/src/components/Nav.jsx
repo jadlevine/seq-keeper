@@ -13,6 +13,7 @@ const Nav = ({ user, handleSignout }) => {
     <div className="nav-options">
       <div>Signed in as: {user?.email}</div>
       <Link to="/userhome">User Home</Link>
+      <Link to="/searchncbi">NCBI Search</Link>
       <Link to="/accountdetails">Account Details</Link>
       <Link onClick={handleSignout} to="/signin">Sign Out</Link>
     </div>

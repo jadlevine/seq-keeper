@@ -29,7 +29,8 @@ const GeneListItem = ({ geneSumm }) => {
         {geneSumm.name}
       </div>
       <div className="gene-data">{geneSumm.description}</div>
-      <div className="gene-data">{geneSumm.organism.scientificname}</div>
+      {geneSumm.organismscientificname? <div className="gene-data">{geneSumm.organismscientificname}</div> : <div className="gene-data">{geneSumm.organism.scientificname}</div>}
+      {/* <div className="gene-data">{geneSumm.organism.scientificname}</div> */}
       <div className="gene-data">{geneSumm.chromosome}</div>
       <div className="gene-data">{geneSumm.maplocation}</div>
     </div>

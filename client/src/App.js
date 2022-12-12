@@ -9,6 +9,7 @@ import UserHome from './pages/UserHome'
 import GeneDetails from './pages/GeneDetails'
 import Nav from './components/Nav'
 import NoPage from './components/NoPage'
+import SearchNcbi from './pages/SearchNcbi'
 
 const App = () => {
   const [user, setUser] = useState(null)
@@ -41,8 +42,9 @@ const App = () => {
   )
   const authRoutes = (
     <Route path="/">
-      <Route index element={<UserHome />} />
-      <Route path="/userhome" element={<UserHome />} />
+      <Route index element={<UserHome user={user} />} />
+      <Route path="/userhome" element={<UserHome user={user} />} />
+      <Route path="/searchncbi" element={<SearchNcbi />} />
       <Route
         path="/accountdetails"
         element={<AccountDetails user={user} handleSignout={handleSignout} />}

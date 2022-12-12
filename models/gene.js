@@ -39,21 +39,15 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false
       },
-      // new migration for updates?
       nomenclaturename: DataTypes.STRING,
-      // nomenclaturename: DataTypes.STRING,
       nomenclaturestatus: DataTypes.STRING,
       description: DataTypes.STRING,
       chromosome: DataTypes.STRING,
       maplocation: DataTypes.STRING,
       summary: DataTypes.TEXT,
       organismscientificname: DataTypes.STRING,
-      // organismscientificname: DataTypes.STRING,
       organismcommonname: DataTypes.STRING,
-      // organismcommonname: DataTypes.STRING,
       organismtaxid: DataTypes.INTEGER,
-      // organismtaxid: DataTypes.INTEGER,
-      // organismtaxid: DataTypes.STRING, (this being a string would make life EASIER!!)
       ncbiLink: DataTypes.STRING,
       homologList: DataTypes.ARRAY(DataTypes.STRING),
       userId: {

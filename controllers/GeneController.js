@@ -5,9 +5,7 @@ const GetAllGenesByUser = async (req, res) => {
     const genes = await Gene.findAll({
       where: { userId: req.body.userId }
     })
-
     res.send(genes)
-    // res.send('hello')
   } catch (error) {
     throw error
   }

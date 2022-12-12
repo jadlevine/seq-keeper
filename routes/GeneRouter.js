@@ -2,7 +2,7 @@ const Router = require('express').Router()
 const controller = require('../controllers/GeneController.js')
 const middleware = require('../middleware')
 
-Router.get(
+Router.post(
   '/all',
   middleware.stripToken,
   middleware.verifyToken,
