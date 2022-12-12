@@ -11,11 +11,38 @@ const GetAllGenesByUser = async (req, res) => {
   }
 }
 
+const GetGeneById = async (req, res) => {
+  try {
+    let geneId = parseInt(req.params.gene_id)
+    // const gene = await Gene.findByPk(geneId)
+    let gene = await Gene.findOne({ where: { id: geneId } })
+    // if (gene === null) {
+    //   res.send({ msg: 'Error, gene not found' })
+    // } else {
+    //   res.send(gene)
+    // }
+    res.send(gene)
+  } catch (error) {
+    throw error
+  }
+}
+
 const AddGene = async (req, res) => {
   try {
     const newGene = await Gene.create(req.body)
     // console.log(typeof req.body.organism.taxid)
     res.send(newGene)
+  } catch (error) {
+    throw error
+  }
+}
+
+const DeleteGene = async (req, res) => {
+  try {
+    let geneId = parseInt(req.params.gene_id)
+    let gene = await Gene.findOne({ where: { id: geneId } })
+    await gene.destroy()
+    res.send({ message: `Deleted room with an id of ${geneId}` })
   } catch (error) {
     throw error
   }
@@ -71,20 +98,11 @@ const AddGene = async (req, res) => {
 //   }
 // }
 
-// const DeleteRoom = async (req, res) => {
-//   try {
-//     let roomId = parseInt(req.params.room_id)
-//     let room = await Room.findOne({ where: { id: roomId } })
-//     await room.destroy()
-//     res.send({ message: `Deleted room with an id of ${roomId}` })
-//   } catch (error) {
-//     throw error
-//   }
-// }
-
 module.exports = {
   GetAllGenesByUser,
-  AddGene
+  GetGeneById,
+  AddGene,
+  DeleteGene
   // GetAllRooms,
   // GetRoomById,
   // CreateRoom,

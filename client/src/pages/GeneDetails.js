@@ -1,7 +1,12 @@
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { ESearch, ESummary, EFetch } from '../services/Entrez'
-import { AddGeneToUser } from '../services/GeneServices'
+import {
+  AddGeneToUser,
+  DeleteGene,
+  GetAllGenesByUser,
+  GetGeneById
+} from '../services/GeneServices'
 
 import GeneSummary from '../components/GeneSummary'
 import NtListItem from '../components/NtListItem'
@@ -12,15 +17,16 @@ import HomologListItem from '../components/HomologListItem'
 
 const GeneDetails = ({ user }) => {
   let { gene_uid } = useParams()
+  let navigate = useNavigate()
 
   const [geneSumm, setGeneSumm] = useState(null)
   const [ntSearchResults, setNtSearchResults] = useState(null)
   const [homologSearchResults, setHomologSearchResults] = useState(null)
-  const [userHasGene, setUserHasGene] = useState(false)
+  const [skGeneId, setSKGeneId] = useState(false)
 
   const inSeqKeeper = false
 
-  const getGeneSumm = async () => {
+  const getGeneFromNCBI = async () => {
     const db = 'gene'
     const response = await ESummary(db, gene_uid)
     let skGeneSumm = {
@@ -33,6 +39,29 @@ const GeneDetails = ({ user }) => {
     }
     setGeneSumm(skGeneSumm)
   }
+
+  ////////////////////////////
+  ////   YOU ARE HERE ////////
+  ////////////////////////////
+  // THIS IS UNNECESSARY ... just setGeneSumm from getGeneData IF a match is found!!!
+  // still, this function will probably be userful elsewhere!!
+  const getGeneFromSK = async (geneId) => {
+    const gene = await GetGeneById(geneId)
+    setGeneSumm(gene)
+  }
+
+  const getGeneData = async () => {
+    let userSKGenes = await GetAllGenesByUser(user.id)
+    for (const gene in userSKGenes) {
+      if (userSKGenes[gene].uid === parseInt(gene_uid)) {
+        setSKGeneId(userSKGenes[gene].id)
+        getGeneFromSK(userSKGenes[gene].id)
+        return
+      }
+    }
+    getGeneFromNCBI()
+  }
+
   const getNtSearch = async () => {
     const db = 'nuccore'
     let searchQuery = `${geneSumm.name}+${geneSumm.organism.scientificname}`
@@ -68,17 +97,23 @@ const GeneDetails = ({ user }) => {
   const addThisGene = async (e) => {
     e.preventDefault()
     const added = await AddGeneToUser(user.id, geneSumm)
-    setUserHasGene(true)
-    console.log(added)
+    setSKGeneId(added.id) // check this line
+    // setUserHasGene(true)
+    // console.log(added)
   }
+
+  const deleteThisGene = async (e) => {
+    e.preventDefault()
+    console.log(geneSumm.id)
+    // const deleted = await DeleteGene(geneSumm.id)
+    // setSKGeneId(false)
+    // navigate(`/userhome`)
+  }
+
   // on page load
   useEffect(() => {
-    if (inSeqKeeper) {
-      console.log('Gene in Seq Keeper')
-    } else {
-      // get geneDocSum
-      getGeneSumm()
-    }
+    // useEffect here to check if user has gene, and then get geneSumm from proper location (SK or NCBI)... set skGeneId to id/null, which will trigger conditional rendering of all sorts of stuff (add or delete this gene button, etc...)
+    getGeneData()
   }, [])
 
   const getGeneDets = async () => {
@@ -110,6 +145,7 @@ const GeneDetails = ({ user }) => {
           <div className="gene-page-header">
             <h1>{geneSumm.name}</h1>
             <button onClick={addThisGene}>Add this Gene</button>
+            <button onClick={deleteThisGene}>Delete this Gene</button>
             <Species geneSumm={geneSumm} />
           </div>
           <div className="gene-page-body">
@@ -170,9 +206,10 @@ const GeneDetails = ({ user }) => {
                     </div>
                   </div>
                 ) : (
-                  <button onClick={getHomologSearch}>
-                    Search for Homologs of {geneSumm.organism.commonname}{' '}
-                    {geneSumm.name}
+                  <button className="red" onClick={getHomologSearch}>
+                    this homolog button is broken right now
+                    {/* Search for Homologs of {geneSumm.organism.commonname}{' '}
+                    {geneSumm.name} */}
                   </button>
                 )}
               </div>

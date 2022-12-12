@@ -15,6 +15,21 @@ Router.post(
   middleware.verifyToken,
   controller.AddGene
 )
+
+Router.delete(
+  '/:gene_id',
+  middleware.stripToken,
+  middleware.verifyToken,
+  controller.DeleteGene
+)
+
+Router.get(
+  '/:gene_id',
+  middleware.stripToken,
+  middleware.verifyToken,
+  controller.GetGeneById
+)
+
 // Router.post(
 //   '/create',
 //   middleware.stripToken,
@@ -48,13 +63,6 @@ Router.post(
 //   middleware.stripToken,
 //   middleware.verifyToken,
 //   controller.UpdatePlant
-// )
-
-// Router.delete(
-//   '/plant/:plant_id',
-//   middleware.stripToken,
-//   middleware.verifyToken,
-//   controller.DeletePlant
 // )
 
 module.exports = Router
