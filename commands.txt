@@ -17,6 +17,10 @@ INITIAL MODELS TO GENERATE
   HomologousPair Model
   sequelize model:generate --name HomologousPair --attributes userId:integer,geneId:integer,homologId:integer,orthoPara:string
 
+MIGRATION COMMANDS
+sequelize migration:generate --name gene-model-spellcheck-and-cas
+ing-to-reflect-ncbi-data
+
 
 IN PSQL
   \c foliage_friend_development;

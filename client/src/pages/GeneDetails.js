@@ -60,7 +60,10 @@ const GeneDetails = ({ user }) => {
     let skGeneSumm = {
       ...response[0],
       ncbiLink: `https://www.ncbi.nlm.nih.gov/gene/${response[0].uid}`,
-      homologList: []
+      homologList: [],
+      organismscientificname: response[0].organism.scientificname,
+      organismcommonname: response[0].organism.commonname,
+      organismtaxid: response[0].organism.taxid
     }
     // setGeneSumm(response[0])
     setGeneSumm(skGeneSumm)

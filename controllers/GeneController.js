@@ -16,7 +16,7 @@ const GetAllGenesByUser = async (req, res) => {
 const AddGene = async (req, res) => {
   try {
     const newGene = await Gene.create(req.body)
-    console.log(req.body)
+    console.log(typeof req.body.organism.taxid)
     res.send(newGene)
   } catch (error) {
     throw error
