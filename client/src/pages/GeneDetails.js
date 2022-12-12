@@ -1,36 +1,3 @@
-// this page is tricky because:
-// //it could be accessed from search results (probably not added yet, but could be already?) AND from gene list (already saved)
-// //if already added, data comes from backend
-// // // else - data comes from several places
-//VIP      // docsum - new api call OR, ideally, passed from SearchResults/GeneList item
-//VIP      // sequence - DNA/(RNA?) - API call to nucleotide db (using uid?)
-//Low      //          - protein - API calls to protein seq db + maybe structure db?
-//Medium   // Homolog list - API call to homologene
-
-/**  Pseudocode (new entry)
- * On page load
- * --> get gene docsum, set state
- * --> render docsum data
- 
-* --> button to find sequences
- * --> CLICK --> search nuccore by gene name and species (docsums?)
- *           --> set state (seqSearchResults, setSeqSearchResults) = useState(null) render results (some details to help user pick which to investigate)
- *           -->  each result clickable
- *            --> if clicked, fetch fasta
- *            --> set state (currentSeq) render fasta (conditionally, with button to go back to seqResults view
- 
- * --> button to find homologs
- * --> CLICK --> search homologene (docsums are fine here, I think)
- *            --> set state (homologs - array of objects?), render results
- *            --> bonus, checkboxes to add to homolog list
- *      KEY POINT HERE --> homologs should be clickable, and send user to a page for that gene.
- *        back buttons will be important to allow user to back track and not loose search results, etc...
- * 
- * AND OF COURSE, we need some CRUD buttons (add this gene/seq/homolog list to seqKeeper)
- *        (update/delete buttons once it is in the database)
- * 
- * **/
-
 import { useParams } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { ESearch, ESummary, EFetch } from '../services/Entrez'
@@ -65,7 +32,6 @@ const GeneDetails = ({ user }) => {
       organismcommonname: response[0].organism.commonname,
       organismtaxid: response[0].organism.taxid
     }
-    // setGeneSumm(response[0])
     setGeneSumm(skGeneSumm)
   }
   const getNtSearch = async () => {
