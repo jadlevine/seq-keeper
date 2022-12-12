@@ -18,6 +18,7 @@ export const AddGeneToUser = async (userid, geneSumm) => {
     const res = await Client.post('/user/genes/add', { ...geneSumm, userId })
     console.log(res)
     console.log(res.data)
+    return res.data
   } catch (error) {
     throw error
   }

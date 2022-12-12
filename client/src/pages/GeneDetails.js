@@ -57,7 +57,13 @@ const GeneDetails = ({ user }) => {
   const getGeneSumm = async () => {
     const db = 'gene'
     const response = await ESummary(db, gene_uid)
-    setGeneSumm(response[0])
+    let skGeneSumm = {
+      ...response[0],
+      ncbiLink: `https://www.ncbi.nlm.nih.gov/gene/${response[0].uid}`,
+      homologList: []
+    }
+    // setGeneSumm(response[0])
+    setGeneSumm(skGeneSumm)
   }
   const getNtSearch = async () => {
     const db = 'nuccore'
