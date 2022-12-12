@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { UpdateAccount } from '../services/UserServices'
 import DeleteAccount from '../components/DeleteAccount'
 
-const AccountDetails = ({ user, handleLogOut }) => {
+const AccountDetails = ({ user, handleSignout }) => {
   let navigate = useNavigate()
 
   const inititialRenderedForm = {
@@ -58,8 +58,8 @@ const AccountDetails = ({ user, handleLogOut }) => {
       //alert user that update was successful
       window.alert('SUCCESS! Account details updated. Please sign in again')
       // logout and navigate back to sign in
-      handleLogOut()
-      navigate('/login')
+      handleSignout()
+      navigate('/signin')
     } catch (error) {
       // let title = document.getElementsByClassName('update-title')[0].innerHTML
       // title.innerHTML =
@@ -95,7 +95,7 @@ const AccountDetails = ({ user, handleLogOut }) => {
             onClose={() => setShowDelete(false)}
             user={user}
             show={showDelete}
-            handleLogOut={handleLogOut}
+            handleSignout={handleSignout}
           />
         </div>
       </div>

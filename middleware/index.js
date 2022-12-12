@@ -13,7 +13,7 @@ const hashPassword = async (password) => {
 }
 
 const comparePassword = async (storedPassword, password) => {
-  // Accepts the password provided in the login request and the currently stored password
+  // Accepts the password provided in the signin request and the currently stored password
   // Compares the two passwords for a match
   let passwordMatch = await bcrypt.compare(password, storedPassword)
   //   returns true if the passwords match

@@ -41,7 +41,7 @@ const Register = () => {
       } else {
         alert('Registration Success\nPlease sign in!')
         setFormValues(initialState)
-        navigate('/login')
+        navigate('/signin')
       }
     }
   }
@@ -64,11 +64,11 @@ const Register = () => {
     return (
       <div className="signUp-container">
         <div className="button-form-container">
-          <button onClick={() => navigate('/login')} className="signup-btn">
+          <button onClick={() => navigate('/signin')} className="signup-btn">
             Sign In
           </button>
           <form className="signup-container" onSubmit={handleSubmit}>
-            <h3 className="signin-text">Sign Up</h3>
+            <h3 className="signin-text">Register For A Seq Keeper Account</h3>
             <input
               onChange={handleChange}
               type="text"

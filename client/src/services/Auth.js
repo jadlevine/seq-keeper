@@ -2,11 +2,11 @@
 
 // export const SignInUser = async (data) => {
 //   try {
-//     const res = await Client.post('/users/login', data)
+//     const res = await Client.post('/users/signin', data)
 //     localStorage.setItem('token', res.data.token)
 //     return res.data.user
 //   } catch (error) {
-//     return 'Login Error'
+//     return 'Signin Error'
 //     throw error
 //   }
 // }

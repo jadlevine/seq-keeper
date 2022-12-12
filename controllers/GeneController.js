@@ -1,8 +1,32 @@
 const { User, Gene, HomologousPair, Sequence } = require('../models')
 
-// const GetAllRooms = async (req, res) => {
+const GetAllGenesByUser = async (req, res) => {
+  try {
+    const genes = await Gene.findAll({
+      where: { userId: req.body.userId }
+    })
+
+    res.send(genes)
+    // res.send('hello')
+  } catch (error) {
+    throw error
+  }
+}
+
+const AddGene = async (req, res) => {
+  try {
+    const newGene = await Gene.create(req.body)
+    res.send(newGene)
+  } catch (error) {
+    throw error
+  }
+}
+
+// const CreateRoom = async (req, res) => {
 //   try {
-//     const room = await Room.findAll()
+//     const { name, userId } = req.body.formValues
+//     // console.log(req.body)
+//     let room = await Room.create({ name, userId })
 //     res.send(room)
 //   } catch (error) {
 //     throw error
@@ -35,17 +59,6 @@ const { User, Gene, HomologousPair, Sequence } = require('../models')
 //   }
 // }
 
-// const CreateRoom = async (req, res) => {
-//   try {
-//     const { name, userId } = req.body.formValues
-//     // console.log(req.body)
-//     let room = await Room.create({ name, userId })
-//     res.send(room)
-//   } catch (error) {
-//     throw error
-//   }
-// }
-
 // const UpdateRoom = async (req, res) => {
 //   try {
 //     let roomId = parseInt(req.body.roomForm.roomId)
@@ -71,8 +84,9 @@ const { User, Gene, HomologousPair, Sequence } = require('../models')
 // }
 
 module.exports = {
+  GetAllGenesByUser,
+  AddGene
   // GetAllRooms,
-  // GetRoomsByUser,
   // GetRoomById,
   // CreateRoom,
   // UpdateRoom,

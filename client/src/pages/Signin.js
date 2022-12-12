@@ -1,8 +1,8 @@
 import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
-import { LoginUser } from '../services/UserServices'
+import { SigninUser } from '../services/UserServices'
 
-const LogIn = ({ setUser }) => {
+const Signin = ({ setUser }) => {
   const navigate = useNavigate()
 
   const initialState = { email: '', password: '' }
@@ -15,20 +15,20 @@ const LogIn = ({ setUser }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    const payload = await LoginUser(formValues)
-    if (payload === 'Login Error') {
+    const payload = await SigninUser(formValues)
+    if (payload === 'Signin Error') {
       alert(
         `${payload}\nMake sure your email and password are the same ones you used to register`
       )
     } else {
       setUser(payload)
       setFormValues(initialState)
-      navigate('/user-home')
+      navigate('/userhome')
     }
   }
 
   return (
-    <div className="login-container">
+    <div className="signin-container">
       <div className="button-form-container">
         <button onClick={() => navigate('/register')} className="signup-btn">
           Register
@@ -63,4 +63,4 @@ const LogIn = ({ setUser }) => {
   )
 }
 
-export default LogIn
+export default Signin

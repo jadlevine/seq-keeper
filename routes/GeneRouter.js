@@ -2,7 +2,25 @@ const Router = require('express').Router()
 const controller = require('../controllers/GeneController.js')
 const middleware = require('../middleware')
 
-// Router.get('/all', controller.GetAllPlants) // testing route
+Router.get(
+  '/all',
+  middleware.stripToken,
+  middleware.verifyToken,
+  controller.GetAllGenesByUser
+)
+
+Router.post(
+  '/add',
+  middleware.stripToken,
+  middleware.verifyToken,
+  controller.AddGene
+)
+// Router.post(
+//   '/create',
+//   middleware.stripToken,
+//   middleware.verifyToken,
+//   controller.CreatePlant
+// )
 
 // Router.get(
 //   '/user/:user_id/',
@@ -23,13 +41,6 @@ const middleware = require('../middleware')
 //   middleware.stripToken,
 //   middleware.verifyToken,
 //   controller.GetPlantById
-// )
-
-// Router.post(
-//   '/create',
-//   middleware.stripToken,
-//   middleware.verifyToken,
-//   controller.CreatePlant
 // )
 
 // Router.put(

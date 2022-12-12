@@ -14,7 +14,7 @@ const DeleteAccount = (props) => {
     try {
       await Client.delete(`/users/user/${req}`)
       console.log(`User removed with id of ${req}`)
-      props.handleLogOut()
+      props.handleSignout()
       navigate('/register')
     } catch (err) {
       throw err

@@ -10,9 +10,9 @@ export const RegisterUser = async (data) => {
   }
 }
 
-export const LoginUser = async (data) => {
+export const SigninUser = async (data) => {
   try {
-    const res = await Client.post('/users/login', data)
+    const res = await Client.post('/users/signin', data)
     localStorage.setItem('token', res.data.token)
     return res.data.user
   } catch (error) {

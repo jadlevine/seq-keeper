@@ -6,7 +6,7 @@ Router.get('/all', controller.GetAllUsers) // testing route
 
 Router.post('/register', controller.RegisterUser)
 
-Router.post('/login', controller.Login)
+Router.post('/signin', controller.Signin)
 
 Router.get(
   '/session',

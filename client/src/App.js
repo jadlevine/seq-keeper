@@ -2,15 +2,15 @@ import './App.css'
 import { Routes, Route } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { CheckSession } from './services/UserServices'
-
-import Login from './pages/Login'
+import Signin from './pages/Signin'
 import Register from './pages/Register'
 import AccountDetails from './pages/AccountDetails'
 import UserHome from './pages/UserHome'
 import GeneDetails from './pages/GeneDetails'
 import Nav from './components/Nav'
+import NoPage from './components/NoPage'
 
-function App() {
+const App = () => {
   const [user, setUser] = useState(null)
 
   const checkToken = async () => {
@@ -18,7 +18,7 @@ function App() {
     setUser(user)
   }
 
-  const handleLogOut = () => {
+  const handleSignout = () => {
     //Reset all auth related state and clear localStorage
     setUser(null)
     localStorage.clear()
@@ -31,22 +31,33 @@ function App() {
     }
   }, [])
 
+  const publicRoutes = (
+    <Route path="/">
+      <Route index element={<Signin setUser={setUser} />} />
+      <Route path="/signin" element={<Signin setUser={setUser} />} />
+      <Route path="/register" element={<Register />} />
+      <Route path="*" element={<NoPage />} />
+    </Route>
+  )
+  const authRoutes = (
+    <Route path="/">
+      <Route index element={<UserHome />} />
+      <Route path="/userhome" element={<UserHome />} />
+      <Route
+        path="/accountdetails"
+        element={<AccountDetails user={user} handleSignout={handleSignout} />}
+      />
+      <Route path="/gene/:gene_uid" element={<GeneDetails user={user} />} />
+      <Route path="*" element={<NoPage />} />
+    </Route>
+  )
+
   return (
     <div>
       <div className="header-container">
-        <Nav />
+        <Nav user={user} handleSignout={handleSignout} />
       </div>
-      <Routes>
-        {/* <Route path="/" element={<Login setUser={setUser}/>} /> */}
-        <Route path="/login" element={<Login setUser={setUser} />} />
-        <Route path="/register" element={<Register />} />
-        <Route
-          path="/account-details"
-          element={<AccountDetails user={user} handleLogOut={handleLogOut} />}
-        />
-        <Route path="/user-home" element={<UserHome />} />
-        <Route path="/gene/:gene_uid" element={<GeneDetails />} />
-      </Routes>
+      <Routes>{user ? authRoutes : publicRoutes}</Routes>
     </div>
   )
 }

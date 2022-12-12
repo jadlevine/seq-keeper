@@ -34,19 +34,23 @@
 import { useParams } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { ESearch, ESummary, EFetch } from '../services/Entrez'
+import { AddGeneToUser } from '../services/GeneServices'
+
 import GeneSummary from '../components/GeneSummary'
 import NtListItem from '../components/NtListItem'
 import HomologFinder from '../components/HomologFinder'
 import Species from '../components/Species'
 import GeneListItem from '../components/GeneListItem'
 import HomologListItem from '../components/HomologListItem'
+import e from 'cors'
 
-const GeneDetails = () => {
+const GeneDetails = ({ user }) => {
   let { gene_uid } = useParams()
 
   const [geneSumm, setGeneSumm] = useState(null)
   const [ntSearchResults, setNtSearchResults] = useState(null)
   const [homologSearchResults, setHomologSearchResults] = useState(null)
+  const [userHasGene, setUserHasGene] = useState(false)
 
   const inSeqKeeper = false
 
@@ -86,6 +90,13 @@ const GeneDetails = () => {
     console.log(response)
     console.log(response[0].homologenedatalist)
   }
+
+  const addThisGene = async (e) => {
+    e.preventDefault()
+    const added = await AddGeneToUser(user.id, geneSumm)
+    setUserHasGene(true)
+    console.log(added)
+  }
   // on page load
   useEffect(() => {
     if (inSeqKeeper) {
@@ -124,6 +135,7 @@ const GeneDetails = () => {
         <div>
           <div className="gene-page-header">
             <h1>{geneSumm.name}</h1>
+            <button onClick={addThisGene}>Add this Gene</button>
             <Species geneSumm={geneSumm} />
           </div>
           <div className="gene-page-body">

@@ -34,7 +34,7 @@ const RegisterUser = async (req, res) => {
   }
 }
 
-const Login = async (req, res) => {
+const Signin = async (req, res) => {
   try {
     const user = await User.findOne({
       where: { email: req.body.email },
@@ -53,7 +53,7 @@ const Login = async (req, res) => {
       return res.send({ user: payload, token })
     }
     // return res.send(`Error Logging In`)
-    res.status(401).send({ status: 'Error', msg: 'Login Error' })
+    res.status(401).send({ status: 'Error', msg: 'Signin Error' })
   } catch (error) {
     throw error
   }
@@ -128,7 +128,7 @@ const DeleteUser = async (req, res) => {
 
 module.exports = {
   GetAllUsers,
-  Login,
+  Signin,
   RegisterUser,
   CheckSession,
   UpdateUser,
