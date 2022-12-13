@@ -10,6 +10,20 @@ const AddSequence = async (req, res) => {
   }
 }
 
+const CheckForSequence = async (req, res) => {
+  try {
+    const seq = await Sequence.findOne({
+      where: {
+        userId: req.body.userId,
+        uid: req.body.seqUid
+      }
+    })
+    res.send(seq)
+  } catch (error) {
+    throw error
+  }
+}
+
 // const GetAllRooms = async (req, res) => {
 //   try {
 //     const room = await Room.findAll()
@@ -82,7 +96,8 @@ const AddSequence = async (req, res) => {
 
 module.exports = {
   // GetAllRooms,
-  AddSequence
+  AddSequence,
+  CheckForSequence
   // GetRoomsByUser,
   // GetRoomById,
   // CreateRoom,

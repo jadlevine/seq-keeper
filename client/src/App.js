@@ -14,6 +14,7 @@ import SearchNCBI from './pages/SearchNCBI'
 
 const App = () => {
   const [user, setUser] = useState(null)
+  const [geneSumm, setGeneSumm] = useState(null)
 
   const checkToken = async () => {
     const user = await CheckSession()
@@ -50,10 +51,25 @@ const App = () => {
         path="/accountdetails"
         element={<AccountDetails user={user} handleSignout={handleSignout} />}
       />
-      <Route path="/gene/:gene_uid" element={<GeneDetails user={user} />} />
       <Route
-        path="/sequence/:seq_uid"
-        element={<SequenceDetails user={user} />}
+        path="/gene/:gene_uid"
+        element={
+          <GeneDetails
+            user={user}
+            geneSumm={geneSumm}
+            setGeneSumm={setGeneSumm}
+          />
+        }
+      />
+      <Route
+        path="/gene/:gene_uid/sequence/:seq_uid"
+        element={
+          <SequenceDetails
+            user={user}
+            geneSumm={geneSumm}
+            setGeneSumm={setGeneSumm}
+          />
+        }
       />
       <Route path="*" element={<NoPage />} />
     </Route>

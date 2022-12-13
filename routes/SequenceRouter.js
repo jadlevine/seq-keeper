@@ -11,6 +11,13 @@ Router.post(
   controller.AddSequence
 )
 
+Router.post(
+  '/check',
+  middleware.stripToken,
+  middleware.verifyToken,
+  controller.CheckForSequence
+)
+
 // Router.get(
 //   '/user/:user_id/',
 //   middleware.stripToken,

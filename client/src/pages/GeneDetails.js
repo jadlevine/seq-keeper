@@ -5,7 +5,8 @@ import {
   AddGeneToUser,
   DeleteGene,
   GetAllGenesByUser,
-  GetGeneById
+  GetGeneById,
+  CheckSKGeneStatus
 } from '../services/GeneServices'
 
 import GeneSummary from '../components/GeneSummary'
@@ -15,16 +16,16 @@ import OrganismSummary from '../components/OrganismSummary'
 import GeneListItem from '../components/GeneListItem'
 import HomologListItem from '../components/HomologListItem'
 
-const GeneDetails = ({ user }) => {
+const GeneDetails = ({ user, geneSumm, setGeneSumm }) => {
   let { gene_uid } = useParams()
   let navigate = useNavigate()
 
-  const [geneSumm, setGeneSumm] = useState(null)
-  const [ntSearchResults, setNtSearchResults] = useState(null)
+  // const [geneSumm, setGeneSumm] = useState(null)
+  const [seqSearchResults, setSeqSearchResults] = useState(null)
   const [homologSearchResults, setHomologSearchResults] = useState(null)
-  const [skGeneId, setSKGeneId] = useState(false)
+  const [skGeneId, setSKGeneId] = useState(false) // need this b/c geneSumm could have just been created from NCBI data!!
 
-  const inSeqKeeper = false
+  // const inSeqKeeper = false
 
   const getGeneFromNCBI = async () => {
     const db = 'gene'
@@ -40,27 +41,38 @@ const GeneDetails = ({ user }) => {
     setGeneSumm(skGeneSumm)
   }
 
-  ////////////////////////////
-  ////   YOU ARE HERE ////////
-  ////////////////////////////
-  // THIS IS UNNECESSARY ... just setGeneSumm from getGeneData IF a match is found!!!
-  // still, this function will probably be userful elsewhere!!
+  const getSKGeneSumm = async () => {
+    let skGeneSumm = null
+    console.log(`user.id: ${user.id}. Type: ${typeof user.id}`)
+    console.log(`gene_uid: ${gene_uid}. Type: ${typeof gene_uid}`)
+    skGeneSumm = await CheckSKGeneStatus(user.id, gene_uid)
+    console.log(`GENE: skGeneSumm response from backend: ${skGeneSumm}`)
+    console.log(skGeneSumm)
+    if (skGeneSumm) {
+      setGeneSumm(skGeneSumm)
+      setSKGeneId(skGeneSumm.id)
+      return
+    }
+    getGeneFromNCBI()
+  }
+
+  // useful?
   const getGeneFromSK = async (geneId) => {
     const gene = await GetGeneById(geneId)
     setGeneSumm(gene)
   }
 
-  const getGeneData = async () => {
-    let userSKGenes = await GetAllGenesByUser(user.id)
-    for (const gene in userSKGenes) {
-      if (userSKGenes[gene].uid === parseInt(gene_uid)) {
-        setSKGeneId(userSKGenes[gene].id)
-        getGeneFromSK(userSKGenes[gene].id)
-        return
-      }
-    }
-    getGeneFromNCBI()
-  }
+  // const getGeneData = async () => {
+  //   let userSKGenes = await GetAllGenesByUser(user.id)
+  //   for (const gene in userSKGenes) {
+  //     if (userSKGenes[gene].uid === parseInt(gene_uid)) {
+  //       setSKGeneId(userSKGenes[gene].id)
+  //       getGeneFromSK(userSKGenes[gene].id)
+  //       return
+  //     }
+  //   }
+  //   getGeneFromNCBI()
+  // }
 
   const nucleotideSearch = async () => {
     const db = 'nuccore'
@@ -73,7 +85,7 @@ const GeneDetails = ({ user }) => {
     let searchQuery = `${geneSumm.name}+${organism}`
     console.log(searchQuery)
     let response = await ESearch(db, searchQuery)
-    setNtSearchResults(response)
+    setSeqSearchResults(response)
     // delete this when done!
     console.log(response)
   }
@@ -120,7 +132,8 @@ const GeneDetails = ({ user }) => {
   // on page load
   useEffect(() => {
     // useEffect here to check if user has gene, and then get geneSumm from proper location (SK or NCBI)... set skGeneId to id/null, which will trigger conditional rendering of all sorts of stuff (add or delete this gene button, etc...)
-    getGeneData()
+    getSKGeneSumm()
+    // getGeneData()
   }, [])
 
   // might not use these functions
@@ -170,12 +183,12 @@ const GeneDetails = ({ user }) => {
             <GeneSummary geneSumm={geneSumm} />
             <div className="gene-data-finder-container container">
               <div className="seq-find container">
-                {ntSearchResults ? (
+                {seqSearchResults ? (
                   <div className="search-results">
-                    <button onClick={() => setNtSearchResults(null)}>
-                      Hide Nucleotide Search Results
+                    <button onClick={() => setSeqSearchResults(null)}>
+                      Hide Sequence Search Results
                     </button>
-                    <h2>Search Results ({ntSearchResults.length})</h2>
+                    <h2>Search Results ({seqSearchResults.length})</h2>
                     {/* <div className="seq-table-header-row">
                       <div className="table-header">Accession</div>
                       <div className="table-header">Molecule</div>
@@ -184,8 +197,8 @@ const GeneDetails = ({ user }) => {
                       <div className="table-header">Update Date</div>
                     </div> */}
                     <div className="search-results-list">
-                      {ntSearchResults.map((ntSumm) => (
-                        <SequenceListItem key={ntSumm.uid} ntSumm={ntSumm} />
+                      {seqSearchResults.map((seqSumm) => (
+                        <SequenceListItem key={seqSumm.uid} seqSumm={seqSumm} />
                       ))}
                     </div>
                   </div>

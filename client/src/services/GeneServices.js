@@ -10,6 +10,15 @@ export const GetAllGenesByUser = async (userId) => {
   }
 }
 
+export const CheckSKGeneStatus = async (userId, geneUid) => {
+  try {
+    const res = await Client.post('/user/genes/check', { userId, geneUid })
+    return res.data
+  } catch (error) {
+    throw error
+  }
+}
+
 export const GetGeneById = async (geneId) => {
   try {
     const res = await Client.get(`/user/genes/${geneId}`)

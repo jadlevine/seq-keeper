@@ -37,6 +37,20 @@ const AddGene = async (req, res) => {
   }
 }
 
+const CheckForGene = async (req, res) => {
+  try {
+    const gene = await Gene.findOne({
+      where: {
+        userId: req.body.userId,
+        uid: req.body.geneUid
+      }
+    })
+    res.send(gene)
+  } catch (error) {
+    throw error
+  }
+}
+
 const DeleteGene = async (req, res) => {
   try {
     let geneId = parseInt(req.params.gene_id)
@@ -102,6 +116,7 @@ module.exports = {
   GetAllGenesByUser,
   GetGeneById,
   AddGene,
+  CheckForGene,
   DeleteGene
   // GetAllRooms,
   // GetRoomById,

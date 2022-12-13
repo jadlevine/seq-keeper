@@ -8,6 +8,7 @@ const GeneSearchBar = (props) => {
         value={props.searchQuery}
         placeholder="Search Genes"
         onChange={props.handleChange}
+        required
       />
       <button type="submit">Submit</button>
     </form>

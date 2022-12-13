@@ -16,6 +16,13 @@ Router.post(
   controller.AddGene
 )
 
+Router.post(
+  '/check',
+  middleware.stripToken,
+  middleware.verifyToken,
+  controller.CheckForGene
+)
+
 Router.delete(
   '/:gene_id',
   middleware.stripToken,
