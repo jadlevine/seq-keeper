@@ -22,16 +22,21 @@ const SequenceDetails = ({ user, geneSumm }) => {
   let { gene_uid, seq_uid } = useParams()
   let navigate = useNavigate()
 
-  // const [geneSumm, setGeneSumm] = useState(null) // SHOULD be from SK only
+  // const [geneSumm, setGeneSumm] = useState(null) // SHOULD be from SK only - this lives up in App.js now (THANK YOU AARON SANCHEZ!!!)
   const [seqSumm, setSeqSumm] = useState(null) // could be from ncbi or sk
   const [skSeqId, setSKSeqId] = useState(false) // says if seq is in db, and so seqSumm above came from db
   const [fasta, setFasta] = useState(null)
 
-  const getSeq = async (e) => {
+  const viewFasta = async (e) => {
     e.preventDefault()
-    // let fastaResponse = await EFetch('nuccore', ntSumm.gi)
-    // // console.log(fastaResponse)
-    // setFasta(fastaResponse)
+    if (skSeqId) {
+      setFasta(seqSumm.fasta)
+    } else {
+      let fastaResponse = await EFetch('nuccore', seqSumm.gi)
+      // console.log(fastaResponse)
+      setFasta(fastaResponse)
+      setSeqSumm({ ...seqSumm, fasta: fastaResponse })
+    }
   }
 
   const addThisSequence = async (e) => {
@@ -188,7 +193,7 @@ const SequenceDetails = ({ user, geneSumm }) => {
                   <div className="text-block fasta">{fasta}</div>
                 </div>
               ) : (
-                <button onClick={getSeq}>View FASTA Sequence</button>
+                <button onClick={viewFasta}>View FASTA Sequence</button>
               )}
             </div>
           </div>

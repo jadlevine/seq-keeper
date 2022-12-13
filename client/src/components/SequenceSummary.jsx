@@ -2,7 +2,9 @@ import React from 'react'
 
 const SequenceSummary = () => {
   return (
-    <div>SequenceSummary</div>
+    <div>
+      <h2 className="red container">SequenceSummary.jsx</h2>
+    </div>
   )
 }
 
