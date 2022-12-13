@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { ESearch, ESummary, EFetch } from '../services/Entrez'
 
-const SeqListItem = ( { ntSumm } ) => {
+const SequenceListItem = ( { ntSumm } ) => {
 
   const [fasta, setFasta] = useState(null)
 
@@ -107,4 +107,4 @@ const SeqListItem = ( { ntSumm } ) => {
   )
 }
 
-export default SeqListItem
+export default SequenceListItem

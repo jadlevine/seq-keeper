@@ -1,10 +1,10 @@
-const GeneSearch = (props) => {
+const GeneSearchBar = (props) => {
 
   return (
     <form onSubmit={props.onSubmit}>
       <input
         type="text"
-        name="genesearch"
+        name="genesearchbar"
         value={props.searchQuery}
         placeholder="Search Genes"
         onChange={props.handleChange}
@@ -14,4 +14,4 @@ const GeneSearch = (props) => {
   )
 }
 
-export default GeneSearch
+export default GeneSearchBar

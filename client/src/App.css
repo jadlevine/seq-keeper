@@ -95,16 +95,16 @@ body {
   width: 50vw;
 }
 
-.gene-summ-line, .species-summ-line{
+.gene-summ-line, .organism-summ-line{
   display: grid;
   grid-template-columns: repeat(2,1fr);
   justify-content: center;
 }
-.gene-summ-title, .species-summ-title{
+.gene-summ-title, .organism-summ-title{
 justify-self: end;
 margin: 0 1em;
 }
-.gene-summ-data, .species-summ-data{
+.gene-summ-data, .organism-summ-data{
   justify-self: start;
   margin: 0 1em 0 0;
 }

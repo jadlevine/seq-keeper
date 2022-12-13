@@ -13,7 +13,7 @@
  * --> render docsum data
  
 * --> button to find sequences
- * --> CLICK --> search nuccore by gene name and species (docsums?)
+ * --> CLICK --> search nuccore by gene name and organism(scientific name?) (docsums?)
  *           --> set state (seqSearchResults, setSeqSearchResults) = useState(null) render results (some details to help user pick which to investigate)
  *           -->  each result clickable
  *            --> if clicked, fetch fasta

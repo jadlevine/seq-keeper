@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react'
 import { ESearch } from '../services/Entrez'
-import GeneSearch from '../components/GeneSearch'
+import GeneSearchBar from '../components/GeneSearchBar'
 import GeneListItem from '../components/GeneListItem'
 
-const SearchNcbi = () => {
+const SearchNCBI = () => {
   const [searchQuery, setSearchQuery] = useState('')
   const [searched, setSearched] = useState(false)
   const [searchResults, setSearchResults] = useState([])
@@ -35,7 +35,7 @@ const SearchNcbi = () => {
   return (
     <div>
       <h1>NCBI Search</h1>
-      <GeneSearch
+      <GeneSearchBar
         handleChange={handleChange}
         onSubmit={onSubmit}
         searchQuery={searchQuery}
@@ -46,7 +46,7 @@ const SearchNcbi = () => {
           <div className="search-table-header-row">
             <div className="table-header">Gene Name</div>
             <div className="table-header">Description</div>
-            <div className="table-header">Species</div>
+            <div className="table-header">Organism</div>
             <div className="table-header">Chromosome</div>
             <div className="table-header">Map Location</div>
           </div>
@@ -68,4 +68,4 @@ const SearchNcbi = () => {
   )
 }
 
-export default SearchNcbi
+export default SearchNCBI

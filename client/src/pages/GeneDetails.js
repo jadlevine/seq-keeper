@@ -9,9 +9,9 @@ import {
 } from '../services/GeneServices'
 
 import GeneSummary from '../components/GeneSummary'
-import SeqListItem from '../components/SeqListItem'
-import HomologFinder from '../components/HomologFinder'
-import Species from '../components/Species'
+import SequenceListItem from '../components/SequenceListItem'
+import HomologFinder from '../components/HomologSearch.jsx'
+import OrganismSummary from '../components/OrganismSummary'
 import GeneListItem from '../components/GeneListItem'
 import HomologListItem from '../components/HomologListItem'
 
@@ -164,7 +164,7 @@ const GeneDetails = ({ user }) => {
                 </div>
               )}
             </div>
-            <Species geneSumm={geneSumm} />
+            <OrganismSummary geneSumm={geneSumm} />
           </div>
           <div className="gene-page-body">
             <GeneSummary geneSumm={geneSumm} />
@@ -185,7 +185,7 @@ const GeneDetails = ({ user }) => {
                     </div> */}
                     <div className="search-results-list">
                       {ntSearchResults.map((ntSumm) => (
-                        <SeqListItem key={ntSumm.uid} ntSumm={ntSumm} />
+                        <SequenceListItem key={ntSumm.uid} ntSumm={ntSumm} />
                       ))}
                     </div>
                   </div>

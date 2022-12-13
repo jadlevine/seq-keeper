@@ -37,7 +37,7 @@ const UserHome = ({ user }) => {
             <div className="search-table-header-row">
               <div className="table-header">Gene Name</div>
               <div className="table-header">Description</div>
-              <div className="table-header">Species</div>
+              <div className="table-header">Organism</div>
               <div className="table-header">Chromosome</div>
               <div className="table-header">Map Location</div>
             </div>
