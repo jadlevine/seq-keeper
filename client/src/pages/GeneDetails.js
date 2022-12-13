@@ -9,7 +9,7 @@ import {
 } from '../services/GeneServices'
 
 import GeneSummary from '../components/GeneSummary'
-import NtListItem from '../components/NtListItem'
+import SeqListItem from '../components/SeqListItem'
 import HomologFinder from '../components/HomologFinder'
 import Species from '../components/Species'
 import GeneListItem from '../components/GeneListItem'
@@ -62,9 +62,16 @@ const GeneDetails = ({ user }) => {
     getGeneFromNCBI()
   }
 
-  const getNtSearch = async () => {
+  const nucleotideSearch = async () => {
     const db = 'nuccore'
-    let searchQuery = `${geneSumm.name}+${geneSumm.organism.scientificname}`
+    let organism
+    if (skGeneId) {
+      organism = geneSumm.organismscientificname
+    } else {
+      organism = geneSumm.organism.scientificname
+    }
+    let searchQuery = `${geneSumm.name}+${organism}`
+    console.log(searchQuery)
     let response = await ESearch(db, searchQuery)
     setNtSearchResults(response)
     // delete this when done!
@@ -116,6 +123,7 @@ const GeneDetails = ({ user }) => {
     getGeneData()
   }, [])
 
+  // might not use these functions
   const getGeneDets = async () => {
     let db = 'gene'
     let fetchResponse = await EFetch(db, gene_uid)
@@ -131,7 +139,6 @@ const GeneDetails = ({ user }) => {
     // let fetchResponse = await EFetch(db, gene_uid)
     console.log(fetchResponse)
   }
-
   const getHomologeneDetails = async () => {
     let db = 'homologene'
     let fetchResponse = await EFetch(db, gene_uid)
@@ -144,8 +151,19 @@ const GeneDetails = ({ user }) => {
         <div>
           <div className="gene-page-header">
             <h1>{geneSumm.name}</h1>
-            <button onClick={addThisGene}>Add this Gene</button>
-            <button onClick={deleteThisGene}>Delete this Gene</button>
+            <div className="geneSKStatus container">
+              {skGeneId ? (
+                <div>
+                  <h4>Seq Keeper Gene ID: {skGeneId}</h4>
+                  <button onClick={deleteThisGene}>Delete</button>
+                </div>
+              ) : (
+                <div>
+                  <h4>This gene is not yet associated with your account</h4>
+                  <button onClick={addThisGene}>Add this Gene</button>
+                </div>
+              )}
+            </div>
             <Species geneSumm={geneSumm} />
           </div>
           <div className="gene-page-body">
@@ -158,23 +176,21 @@ const GeneDetails = ({ user }) => {
                       Hide Nucleotide Search Results
                     </button>
                     <h2>Search Results ({ntSearchResults.length})</h2>
-                    <div className="nt-search-table-header-row">
-                      <div className="table-header">uid</div>
-                      <div className="table-header">caption</div>
-                      <div className="table-header">moltype</div>
-                      <div className="table-header">slen</div>
-                      <div className="table-header">organism</div>
-                      <div className="table-header">updatedate</div>
-                      <div className="table-header">title</div>
-                    </div>
+                    {/* <div className="seq-table-header-row">
+                      <div className="table-header">Accession</div>
+                      <div className="table-header">Molecule</div>
+                      <div className="table-header">Sequence Length</div>
+                      <div className="table-header">Organism</div>
+                      <div className="table-header">Update Date</div>
+                    </div> */}
                     <div className="search-results-list">
                       {ntSearchResults.map((ntSumm) => (
-                        <NtListItem key={ntSumm.uid} ntSumm={ntSumm} />
+                        <SeqListItem key={ntSumm.uid} ntSumm={ntSumm} />
                       ))}
                     </div>
                   </div>
                 ) : (
-                  <button onClick={getNtSearch}>
+                  <button onClick={nucleotideSearch}>
                     Search for {geneSumm.name} Nucleotide sequences
                   </button>
                 )}

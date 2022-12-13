@@ -1,5 +1,15 @@
 const { User, Gene, HomologousPair, Sequence } = require('../models')
 
+const AddSequence = async (req, res) => {
+  try {
+    const newSeq = await Sequence.create(req.body)
+    // console.log(typeof req.body.organism.taxid)
+    res.send(newSeq)
+  } catch (error) {
+    throw error
+  }
+}
+
 // const GetAllRooms = async (req, res) => {
 //   try {
 //     const room = await Room.findAll()
@@ -72,6 +82,7 @@ const { User, Gene, HomologousPair, Sequence } = require('../models')
 
 module.exports = {
   // GetAllRooms,
+  AddSequence
   // GetRoomsByUser,
   // GetRoomById,
   // CreateRoom,

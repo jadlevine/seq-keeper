@@ -4,6 +4,13 @@ const middleware = require('../middleware')
 
 // Router.get('/all', controller.GetAllPlants) // testing route
 
+Router.post(
+  '/add',
+  middleware.stripToken,
+  middleware.verifyToken,
+  controller.AddSequence
+)
+
 // Router.get(
 //   '/user/:user_id/',
 //   middleware.stripToken,

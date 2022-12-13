@@ -10,8 +10,7 @@ const SearchNcbi = () => {
 
   const getSearchResults = async () => {
     let db = 'Gene'
-    let formattedQuery = searchQuery.replace(' ', '+')
-    let searchResponse = await ESearch(db, formattedQuery)
+    let searchResponse = await ESearch(db, searchQuery)
 
     // then set search results to parsed results
     setSearchResults(searchResponse)

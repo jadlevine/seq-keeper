@@ -21,6 +21,14 @@ MIGRATION COMMANDS
 sequelize migration:generate --name gene-model-spellcheck-and-cas
 ing-to-reflect-ncbi-data
 
+sequelize migration:generate --name HomologousPair-changeColumn-userId--allowNull-false-geneId--allowNull-false-homologId--allowNull-false
+
+sequelize migration:generate --name Gene-addColumn-notes-changeColumn-description-text
+
+sequelize migration:generate --name Sequence-overhaul
+
+
+
 
 IN PSQL
   \c foliage_friend_development;

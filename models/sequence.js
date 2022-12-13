@@ -19,19 +19,22 @@ module.exports = (sequelize, DataTypes) => {
   }
   Sequence.init(
     {
-      fullDefinitionLine: {
-        type: DataTypes.TEXT,
+      uid: {
+        type: DataTypes.STRING,
         allowNull: false
       },
-      seqId: DataTypes.STRING,
-      organismScientificName: DataTypes.STRING,
-      seqTitle: DataTypes.STRING,
-      molType: DataTypes.STRING,
-      sequence: DataTypes.TEXT,
-      geneUid: {
-        type: DataTypes.INTEGER,
-        allowNull: false
-      },
+      title: DataTypes.STRING,
+      accessionversion: DataTypes.STRING,
+      biomol: DataTypes.STRING,
+      slen: DataTypes.INTEGER,
+      updatedate: DataTypes.INTEGER,
+      organism: DataTypes.STRING,
+      strain: DataTypes.STRING,
+      taxid: DataTypes.STRING,
+      subtype: DataTypes.STRING,
+      subname: DataTypes.STRING,
+      fasta: DataTypes.TEXT,
+      notes: DataTypes.TEXT,
       userId: {
         type: DataTypes.INTEGER,
         allowNull: false,

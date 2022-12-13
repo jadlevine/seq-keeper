@@ -41,7 +41,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       nomenclaturename: DataTypes.STRING,
       nomenclaturestatus: DataTypes.STRING,
-      description: DataTypes.STRING,
+      description: DataTypes.TEXT,
       chromosome: DataTypes.STRING,
       maplocation: DataTypes.STRING,
       summary: DataTypes.TEXT,
@@ -50,6 +50,7 @@ module.exports = (sequelize, DataTypes) => {
       organismtaxid: DataTypes.INTEGER,
       ncbiLink: DataTypes.STRING,
       homologList: DataTypes.ARRAY(DataTypes.STRING),
+      notes: DataTypes.TEXT,
       userId: {
         type: DataTypes.INTEGER,
         allowNull: false,
