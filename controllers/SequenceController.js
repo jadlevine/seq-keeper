@@ -24,6 +24,23 @@ const CheckForSequence = async (req, res) => {
   }
 }
 
+const DeleteSeqFromUser = async (req, res) => {
+  try {
+    let userId = parseInt(req.params.user_id)
+    let seqId = parseInt(req.params.seq_id)
+    let seq = await Sequence.findOne({
+      where: {
+        id: seqId,
+        userId
+      }
+    })
+    await seq.destroy()
+    res.send({ message: `Deleted sequence with an id of ${seqId}` })
+  } catch (error) {
+    throw error
+  }
+}
+
 // const GetAllRooms = async (req, res) => {
 //   try {
 //     const room = await Room.findAll()
@@ -97,7 +114,8 @@ const CheckForSequence = async (req, res) => {
 module.exports = {
   // GetAllRooms,
   AddSequence,
-  CheckForSequence
+  CheckForSequence,
+  DeleteSeqFromUser
   // GetRoomsByUser,
   // GetRoomById,
   // CreateRoom,

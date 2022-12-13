@@ -19,3 +19,13 @@ export const AddSeqToUser = async (seqSumm) => {
     throw error
   }
 }
+
+export const DeleteSeqFromUser = async (userId, seqId) => {
+  try {
+    const res = await Client.delete(`/user/sequences/${userId}/${seqId}`) // this is messy, but a trial... if it works, change to (`/user//${userId}/sequence/${seqId}`), and change all routes to user/${userId}, where appropriate
+    return res.data
+  } catch (error) {
+    // console.log(error)
+    throw error
+  }
+}

@@ -57,7 +57,7 @@ const DeleteGene = async (req, res) => {
     let geneId = parseInt(req.params.gene_id)
     let gene = await Gene.findOne({ where: { id: geneId } })
     await gene.destroy()
-    res.send({ message: `Deleted room with an id of ${geneId}` })
+    res.send({ message: `Deleted gene with an id of ${geneId}` })
   } catch (error) {
     throw error
   }

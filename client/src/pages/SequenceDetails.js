@@ -8,7 +8,11 @@ import {
   // GetGeneById,
   CheckSKGeneStatus
 } from '../services/GeneServices'
-import { CheckSKSeqStatus, AddSeqToUser } from '../services/SequenceServices'
+import {
+  CheckSKSeqStatus,
+  AddSeqToUser,
+  DeleteSeqFromUser
+} from '../services/SequenceServices'
 // import functions from sequenceservices here
 
 import OrganismSummary from '../components/OrganismSummary'
@@ -44,6 +48,7 @@ const SequenceDetails = ({ user, geneSumm }) => {
     e.preventDefault()
     // not including user.id in line below, because it's already been wrapped up into the seqSumm object/state
     const added = await AddSeqToUser(seqSumm)
+    setSeqSumm(added)
     setSKSeqId(added.id)
     // YOU ARE HERE!!!
 
@@ -68,9 +73,13 @@ const SequenceDetails = ({ user, geneSumm }) => {
   const deleteThisSequence = async (e) => {
     e.preventDefault()
     // console.log(geneSumm.id)
-    // const deleted = await DeleteGene(geneSumm.id)
-    // setSKGeneId(false)
-    // navigate(`/userhome`)
+    console.log(user.id)
+    console.log(seqSumm.id)
+    const deleted = await DeleteSeqFromUser(user.id, seqSumm.id)
+    setSKSeqId(false)
+    setFasta(null)
+    setSeqSumm(null)
+    navigate(-1)
   }
 
   const getSeqFromNCBI = async () => {
@@ -173,7 +182,9 @@ const SequenceDetails = ({ user, geneSumm }) => {
               {skSeqId ? (
                 <div>
                   <h4>Seq Keeper Seq ID: {skSeqId}</h4>
-                  <button onClick={deleteThisSequence}>Delete</button>
+                  <button onClick={deleteThisSequence}>
+                    Delete from account
+                  </button>
                 </div>
               ) : (
                 <div>

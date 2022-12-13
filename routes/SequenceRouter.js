@@ -18,6 +18,13 @@ Router.post(
   controller.CheckForSequence
 )
 
+Router.delete(
+  '/:user_id/:seq_id',
+  middleware.stripToken,
+  middleware.verifyToken,
+  controller.DeleteSeqFromUser
+)
+
 // Router.get(
 //   '/user/:user_id/',
 //   middleware.stripToken,
