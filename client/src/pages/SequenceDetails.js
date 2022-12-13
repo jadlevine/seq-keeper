@@ -8,7 +8,7 @@ import {
   // GetGeneById,
   CheckSKGeneStatus
 } from '../services/GeneServices'
-import { CheckSKSeqStatus } from '../services/SequenceServices'
+import { CheckSKSeqStatus, AddSeqToUser } from '../services/SequenceServices'
 // import functions from sequenceservices here
 
 import OrganismSummary from '../components/OrganismSummary'
@@ -32,7 +32,8 @@ const SequenceDetails = ({ user, geneSumm }) => {
     if (skSeqId) {
       setFasta(seqSumm.fasta)
     } else {
-      let fastaResponse = await EFetch('nuccore', seqSumm.gi)
+      let fastaResponse = await EFetch('nuccore', seqSumm.uid)
+      // console.log(typeof fastaResponse)
       // console.log(fastaResponse)
       setFasta(fastaResponse)
       setSeqSumm({ ...seqSumm, fasta: fastaResponse })
@@ -41,6 +42,10 @@ const SequenceDetails = ({ user, geneSumm }) => {
 
   const addThisSequence = async (e) => {
     e.preventDefault()
+    // not including user.id in line below, because it's already been wrapped up into the seqSumm object/state
+    const added = await AddSeqToUser(seqSumm)
+    setSKSeqId(added.id)
+    // YOU ARE HERE!!!
 
     // eventually, render this component(page?) like the geneDetails page... with conditional rendering depending on if the seq is in SeqKeeper yet
 
@@ -49,6 +54,7 @@ const SequenceDetails = ({ user, geneSumm }) => {
     // setSKSeqId(added.id)
 
     console.log('you got it, dude!')
+    console.log(added)
   }
 
   // const addThisGene = async (e) => {
@@ -68,10 +74,10 @@ const SequenceDetails = ({ user, geneSumm }) => {
   }
 
   const getSeqFromNCBI = async () => {
-    console.log(geneSumm)
+    // console.log(geneSumm)
     const db = 'nuccore'
     const response = await ESummary(db, seq_uid)
-    console.log(response)
+    // console.log(response)
     let skSeqSumm = {
       ...response[0],
       ncbiLink: `https://www.ncbi.nlm.nih.gov/nuccore/${response[0].uid}`,
@@ -105,7 +111,7 @@ const SequenceDetails = ({ user, geneSumm }) => {
   const getSeqSumm = async () => {
     //check if skSeqId exists (controlls conditional rendering of lots on this page)
     const skSeqSumm = await CheckSKSeqStatus(user.id, seq_uid)
-    console.log(`SEQUENCE: skSeqSumm response from backend: ${skSeqSumm}`)
+    // console.log(`SEQUENCE: skSeqSumm response from backend: ${skSeqSumm}`)
     if (skSeqSumm) {
       setSeqSumm(skSeqSumm)
       setSKSeqId(skSeqSumm.id)

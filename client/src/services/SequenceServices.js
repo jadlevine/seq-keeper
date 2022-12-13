@@ -9,12 +9,13 @@ export const CheckSKSeqStatus = async (userId, seqUid) => {
   }
 }
 
-// export const AddGeneToUser = async (userid, geneSumm) => {
-//   try {
-//     let userId = parseInt(userid)
-//     const res = await Client.post('/user/genes/add', { ...geneSumm, userId })
-//     return res.data
-//   } catch (error) {
-//     throw error
-//   }
-// }
+export const AddSeqToUser = async (seqSumm) => {
+  try {
+    // let userId = parseInt(userid)
+    // const res = await Client.post('/user/sequences/add', { ...geneSumm, userId })
+    const res = await Client.post('/user/sequences/add', seqSumm)
+    return res.data
+  } catch (error) {
+    throw error
+  }
+}

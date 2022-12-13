@@ -29,6 +29,7 @@ const GetGeneById = async (req, res) => {
 
 const AddGene = async (req, res) => {
   try {
+    // don't need anything special here (i.e., addGeneToUser, b/c gene already has user id... that stuff will come during get requests!!)
     const newGene = await Gene.create(req.body)
     // console.log(typeof req.body.organism.taxid)
     res.send(newGene)
