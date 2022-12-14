@@ -2,13 +2,20 @@ import { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { ESearch, ESummary, EFetch } from '../services/Entrez'
 
-const SequenceListItem = ( { seqSumm } ) => {
+const SequenceListItem = ( props ) => {
+  let { seqSumm,
+    userId,
+    geneId,
+    setCurrentSeqSumm,
+    setNeedSeqSumm
+  } = props
   let { gene_uid } = useParams()
   let navigate = useNavigate()
 
 
   const viewThisSequence = async (e) => {
       e.preventDefault()
+      setCurrentSeqSumm(seqSumm)
       navigate(`/gene/${gene_uid}/sequence/${seqSumm.uid}`)
 
     //navigate to sequence details (which will need geneid/geneSumm? and user info?)
@@ -18,7 +25,6 @@ const SequenceListItem = ( { seqSumm } ) => {
 
   return (
     <div className="seq-list-item container">
-      {/* <div className="nt-search-table-item-row"> */}
       <div className="text-block">
         <div className="nt-data">{seqSumm.title}</div>
         

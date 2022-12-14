@@ -1,38 +1,33 @@
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 
-const HomologListItem = ({homologSumm}) => {
+const HomologListItem = ({homologSumm, setCurrentGeneSumm, setNeedGeneSumm, currentGeneSummUid}) => {
   
   let navigate = useNavigate()
   
-  const showGene = () => {
+  const showGene = async () => {
+    await setNeedGeneSumm(true)
+    await setCurrentGeneSumm(null)
     navigate(`/gene/${homologSumm.geneid}`)
   }
 
-
-  return (
-    <div className="nt-search-table-item-row">
-      {/* <div className="gene-data link" onClick={showGene}>
-        {geneSumm.name}
-      </div> */}
-      <div className="nt-data">{homologSumm.geneid}</div>
-      <div className="nt-data">{homologSumm.symbol}</div>
-      <div className="nt-data">{homologSumm.title}</div>
-      <div className="nt-data">{homologSumm.taxname}</div>
-      <div className="nt-data">{homologSumm.taxid}</div>
-      
-      <a href={`/gene/${homologSumm.geneid}`} target="_blank">Seq Keeper Link</a>
-      <a href={`https://www.ncbi.nlm.nih.gov/nuccore/${homologSumm.geneid}`} target="_blank">NCBI Link</a>
-      
-      {/* {fasta?(
-        <div className="fasta">
-          <button onClick={()=>setFasta(null)}>Hide Sequence</button>
-          <div>{fasta}</div>
+  if(homologSumm.geneid === currentGeneSummUid){
+    return
+  } else {
+    return (
+      <div className="homolog-list-item container">
+        <div className="gene-data">
+          <h4>Gene Name</h4>
+          {/* <Link to={`/gene/${homologSumm.geneid}`}>{homologSumm.symbol}</Link> */}
+          <div className="gene-data link" onClick={showGene}>{homologSumm.symbol}</div>
         </div>
-      ):(
-        <button onClick={getSeq}>Get this sequence</button>
-      )} */}
-    </div>
-  )
+        <div className="gene-data">
+          <h4>Organism</h4>
+          <div className="gene-data">{homologSumm.taxname}</div>
+        </div>
+      </div>
+    )
+  }
+
 }
 
 export default HomologListItem

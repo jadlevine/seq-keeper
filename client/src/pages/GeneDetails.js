@@ -16,9 +16,20 @@ import OrganismSummary from '../components/OrganismSummary'
 import GeneListItem from '../components/GeneListItem'
 import HomologListItem from '../components/HomologListItem'
 
-const GeneDetails = ({ user, geneSumm, setGeneSumm }) => {
+const GeneDetails = (props) => {
+  let {
+    user,
+    currentGeneSumm,
+    setCurrentGeneSumm,
+    setNeedGeneSumm,
+    needGeneSumm,
+    setCurrentSeqSumm,
+    setNeedSeqSumm
+  } = props
   let { gene_uid } = useParams()
   let navigate = useNavigate()
+
+  // //
 
   // const [geneSumm, setGeneSumm] = useState(null)
   const [seqSearchResults, setSeqSearchResults] = useState(null)
@@ -38,18 +49,19 @@ const GeneDetails = ({ user, geneSumm, setGeneSumm }) => {
       organismcommonname: response[0].organism.commonname,
       organismtaxid: response[0].organism.taxid
     }
-    setGeneSumm(skGeneSumm)
+    console.log('fetching and converting to SK format')
+    setCurrentGeneSumm(skGeneSumm)
   }
 
   const getSKGeneSumm = async () => {
     let skGeneSumm = null
-    console.log(`user.id: ${user.id}. Type: ${typeof user.id}`)
-    console.log(`gene_uid: ${gene_uid}. Type: ${typeof gene_uid}`)
+    // console.log(`user.id: ${user.id}. Type: ${typeof user.id}`)
+    // console.log(`gene_uid: ${gene_uid}. Type: ${typeof gene_uid}`)
     skGeneSumm = await CheckSKGeneStatus(user.id, gene_uid)
-    console.log(`GENE: skGeneSumm response from backend: ${skGeneSumm}`)
+    // console.log(`GENE: skGeneSumm response from backend: ${skGeneSumm}`)
     console.log(skGeneSumm)
     if (skGeneSumm) {
-      setGeneSumm(skGeneSumm)
+      setCurrentGeneSumm(skGeneSumm)
       setSKGeneId(skGeneSumm.id)
       return
     }
@@ -59,7 +71,36 @@ const GeneDetails = ({ user, geneSumm, setGeneSumm }) => {
   // useful?
   const getGeneFromSK = async (geneId) => {
     const gene = await GetGeneById(geneId)
-    setGeneSumm(gene)
+    setCurrentGeneSumm(gene)
+  }
+
+  const NCBISequenceSearch = async () => {
+    const db = 'nuccore'
+    let organism = currentGeneSumm.organismscientificname
+    let organismFormatted = organism.replaceAll(' ', '%20')
+    let gene = currentGeneSumm.name
+    let geneFormatted = gene.replaceAll(' ', '%20')
+    let searchQuery = `(${organismFormatted}%5BOrganism%5D)%20AND%20${geneFormatted}%5BGene%20Name%5D`
+
+    /**
+     * EXAMPLE
+     * (human%5BOrganism%5D)%20AND%20rad51%5BGene%20Name%5D
+     * (human[Organism]) AND rad51[Gene Name]
+     *
+     * (bos taurus[Organism]) AND bdnf[Gene Name]
+     * (bos%20taurus%5BOrganism%5D)%20AND%20bdnf%5BGene%20Name%5D
+     
+    * q = `(${organismFormatted}%5BOrganism%5D)%20AND%20${geneFormatted}%5BGene%20Name%5D`
+     */
+    // EXAMPLE:
+
+    // let searchQuery = `bos%20taurus%5BOrganism%5D)%20AND%20bdnf%5BGene%20Name%5D`
+
+    console.log(searchQuery)
+    let response = await ESearch(db, searchQuery)
+    setSeqSearchResults(response)
+    // delete this when done!
+    console.log(response)
   }
 
   // const getGeneData = async () => {
@@ -74,27 +115,12 @@ const GeneDetails = ({ user, geneSumm, setGeneSumm }) => {
   //   getGeneFromNCBI()
   // }
 
-  const nucleotideSearch = async () => {
-    const db = 'nuccore'
-    let organism
-    if (skGeneId) {
-      organism = geneSumm.organismscientificname
-    } else {
-      organism = geneSumm.organism.scientificname
-    }
-    let searchQuery = `${geneSumm.name}+${organism}`
-    console.log(searchQuery)
-    let response = await ESearch(db, searchQuery)
-    setSeqSearchResults(response)
-    // delete this when done!
-    console.log(response)
-  }
-
   const getHomologSearch = async () => {
     let db = 'homologene'
-    let searchQuery = `${
-      geneSumm.name
-    }[gene+name]+${geneSumm.organism.scientificname.replaceAll(' ', '+')}[orgn]`
+    let geneName = currentGeneSumm.name
+    let sciNameArr = currentGeneSumm.organismscientificname.split(' ')
+    let organism = `${sciNameArr[0]}+${sciNameArr[1]}`
+    let searchQuery = `${geneName}[gene+name]+${organism}[orgn]`
 
     /**
      * PROB need to strip numbers off end (strain id?)...
@@ -106,16 +132,20 @@ const GeneDetails = ({ user, geneSumm, setGeneSumm }) => {
     console.log(searchQuery)
     // tpo[gene name] AND human[orgn]
     let response = await ESearch(db, searchQuery)
-
-    setHomologSearchResults(response[0].homologenedatalist)
+    if (response[0]) {
+      setHomologSearchResults(response[0].homologenedatalist)
+    } else {
+      setHomologSearchResults('nonefound')
+    }
     // delete this when done!
-    console.log(response)
-    console.log(response[0].homologenedatalist)
+    // console.log(response)
+    // console.log(response[0].homologenedatalist)
   }
 
   const addThisGene = async (e) => {
     e.preventDefault()
-    const added = await AddGeneToUser(user.id, geneSumm)
+    const added = await AddGeneToUser(user.id, currentGeneSumm)
+    setCurrentGeneSumm(added)
     setSKGeneId(added.id) // check this line
     // setUserHasGene(true)
     // console.log(added)
@@ -123,8 +153,9 @@ const GeneDetails = ({ user, geneSumm, setGeneSumm }) => {
 
   const deleteThisGene = async (e) => {
     e.preventDefault()
-    console.log(geneSumm.id)
-    // const deleted = await DeleteGene(geneSumm.id)
+    const deleted = await DeleteGene(currentGeneSumm.id)
+    setCurrentGeneSumm(null)
+    setNeedGeneSumm(true)
     // setSKGeneId(false)
     // navigate(`/userhome`)
   }
@@ -132,9 +163,18 @@ const GeneDetails = ({ user, geneSumm, setGeneSumm }) => {
   // on page load
   useEffect(() => {
     // useEffect here to check if user has gene, and then get geneSumm from proper location (SK or NCBI)... set skGeneId to id/null, which will trigger conditional rendering of all sorts of stuff (add or delete this gene button, etc...)
-    getSKGeneSumm()
+    if (needGeneSumm) {
+      setSKGeneId(false)
+      getSKGeneSumm()
+      setNeedGeneSumm(false)
+      setSeqSearchResults(null)
+      setHomologSearchResults(null)
+    }
+    // if gene is in seq keeper, get associated sequences
+
     // getGeneData()
-  }, [])
+    // }, [])
+  }, [currentGeneSumm])
 
   // might not use these functions
   const getGeneDets = async () => {
@@ -160,10 +200,10 @@ const GeneDetails = ({ user, geneSumm, setGeneSumm }) => {
 
   return (
     <div>
-      {geneSumm ? (
+      {currentGeneSumm ? (
         <div>
           <div className="gene-page-header">
-            <h1>{geneSumm.name}</h1>
+            <h1>{currentGeneSumm.name}</h1>
             <div className="geneSKStatus container">
               {skGeneId ? (
                 <div>
@@ -172,76 +212,86 @@ const GeneDetails = ({ user, geneSumm, setGeneSumm }) => {
                 </div>
               ) : (
                 <div>
-                  <h4>This gene is not yet associated with your account</h4>
+                  <h4>This gene is not associated with your account</h4>
                   <button onClick={addThisGene}>Add this Gene</button>
+                  <button className="red">
+                    Add it as a homolog of...? this does nothing right now
+                  </button>
                 </div>
               )}
             </div>
-            <OrganismSummary geneSumm={geneSumm} />
+            <OrganismSummary currentGeneSumm={currentGeneSumm} />
           </div>
           <div className="gene-page-body">
-            <GeneSummary geneSumm={geneSumm} />
+            <GeneSummary currentGeneSumm={currentGeneSumm} />
             <div className="gene-data-finder-container container">
-              <div className="seq-find container">
-                {seqSearchResults ? (
-                  <div className="search-results">
-                    <button onClick={() => setSeqSearchResults(null)}>
-                      Hide Sequence Search Results
-                    </button>
-                    <h2>Search Results ({seqSearchResults.length})</h2>
-                    {/* <div className="seq-table-header-row">
-                      <div className="table-header">Accession</div>
-                      <div className="table-header">Molecule</div>
-                      <div className="table-header">Sequence Length</div>
-                      <div className="table-header">Organism</div>
-                      <div className="table-header">Update Date</div>
-                    </div> */}
-                    <div className="search-results-list">
-                      {seqSearchResults.map((seqSumm) => (
-                        <SequenceListItem key={seqSumm.uid} seqSumm={seqSumm} />
-                      ))}
-                    </div>
+              {skGeneId ? (
+                <div>
+                  <div className="seq-find container">
+                    {seqSearchResults ? (
+                      <div className="search-results">
+                        <button onClick={() => setSeqSearchResults(null)}>
+                          Hide Sequence Search Results
+                        </button>
+                        <h2>Search Results ({seqSearchResults.length})</h2>
+                        <div className="search-results-list">
+                          {seqSearchResults.map((seqSumm) => (
+                            <SequenceListItem
+                              key={seqSumm.uid}
+                              seqSumm={seqSumm}
+                              userId={user.id}
+                              geneId={skGeneId}
+                              setNeedSeqSumm={setNeedSeqSumm}
+                              setCurrentSeqSumm={setCurrentSeqSumm}
+                            />
+                          ))}
+                        </div>
+                      </div>
+                    ) : (
+                      <button onClick={NCBISequenceSearch}>
+                        Search for {currentGeneSumm.name} Nucleotide sequences
+                        on NCBI
+                      </button>
+                    )}
                   </div>
-                ) : (
-                  <button onClick={nucleotideSearch}>
-                    Search for {geneSumm.name} Nucleotide sequences
-                  </button>
-                )}
-              </div>
-              {/* <HomologFinder /> */}
-              <div className="homolog-find container">
-                {homologSearchResults ? (
-                  <div className="search-results">
-                    <button onClick={() => setHomologSearchResults(null)}>
-                      Hide Homolog Search Results
-                    </button>
-                    <h2>Search Results ({homologSearchResults.length})</h2>
-                    <div className="homolog-search-table-header-row">
-                      <div className="table-header">uid</div>
-                      <div className="table-header">caption</div>
-                      <div className="table-header">moltype</div>
-                      <div className="table-header">slen</div>
-                      <div className="table-header">organism</div>
-                      <div className="table-header">updatedate</div>
-                      <div className="table-header">title</div>
-                    </div>
-                    <div className="search-results-list">
-                      {homologSearchResults.map((homologSumm) => (
-                        <HomologListItem
-                          key={homologSumm.geneid}
-                          homologSumm={homologSumm}
-                        />
-                      ))}
-                    </div>
+                  <div className="homolog-find container">
+                    {homologSearchResults ? (
+                      homologSearchResults === 'nonefound' ? (
+                        <div>No Homologs Found</div>
+                      ) : (
+                        <div className="search-results">
+                          <button onClick={() => setHomologSearchResults(null)}>
+                            Hide Homolog Search Results
+                          </button>
+                          <h2>Homologs of {currentGeneSumm.name}</h2>
+                          <div className="search-results-list">
+                            {homologSearchResults.map((homologSumm) => (
+                              <HomologListItem
+                                key={homologSumm.geneid}
+                                currentGeneSummUid={currentGeneSumm.uid}
+                                homologSumm={homologSumm}
+                                setCurrentGeneSumm={setCurrentGeneSumm}
+                                setNeedGeneSumm={setNeedGeneSumm}
+                              />
+                            ))}
+                          </div>
+                        </div>
+                      )
+                    ) : (
+                      <button onClick={getHomologSearch}>
+                        Find Homologous genes
+                      </button>
+                    )}
                   </div>
-                ) : (
-                  <button className="red" onClick={getHomologSearch}>
-                    this homolog button is broken right now
-                    {/* Search for Homologs of {geneSumm.organism.commonname}{' '}
-                    {geneSumm.name} */}
-                  </button>
-                )}
-              </div>
+                </div>
+              ) : (
+                <div>
+                  <h3>
+                    Add this gene to your SK account to search for sequences and
+                    homologs
+                  </h3>
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -250,11 +300,6 @@ const GeneDetails = ({ user, geneSumm, setGeneSumm }) => {
           <h1>Getting Gene Summary</h1>
         </div>
       )}
-
-      {/* <button onClick={getGeneDets}>Get Gene Details</button>
-      <button onClick={getGeneSeq}>Get Gene Seq</button>
-      <button onClick={homologeneSearch}>Search Homologs</button>
-      <button onClick={getHomologeneDetails}>getHomologeneDetails</button> */}
     </div>
   )
 }

@@ -3,7 +3,7 @@ import { ESearch } from '../services/Entrez'
 import GeneSearchBar from '../components/GeneSearchBar'
 import GeneListItem from '../components/GeneListItem'
 
-const SearchNCBI = () => {
+const SearchNCBI = ({ setCurrentGeneSumm, setNeedGeneSumm }) => {
   const [searchQuery, setSearchQuery] = useState('')
   const [searched, setSearched] = useState(false)
   const [searchResults, setSearchResults] = useState([])
@@ -29,7 +29,7 @@ const SearchNCBI = () => {
   }
 
   useEffect(() => {
-    // ??
+    setNeedGeneSumm(true)
   }, [])
 
   return (
@@ -43,16 +43,20 @@ const SearchNCBI = () => {
       {searched ? (
         <div className="search-results">
           <h2>Search Results ({searchResults.length})</h2>
-          <div className="search-table-header-row">
+          {/* <div className="search-table-header-row">
             <div className="table-header">Gene Name</div>
             <div className="table-header">Description</div>
             <div className="table-header">Organism</div>
             <div className="table-header">Chromosome</div>
             <div className="table-header">Map Location</div>
-          </div>
+          </div> */}
           <div className="search-results-list">
             {searchResults.map((geneSumm) => (
-              <GeneListItem key={geneSumm.uid} geneSumm={geneSumm} />
+              <GeneListItem
+                key={geneSumm.uid}
+                geneSumm={geneSumm}
+                setCurrentGeneSumm={setCurrentGeneSumm}
+              />
             ))}
           </div>
         </div>

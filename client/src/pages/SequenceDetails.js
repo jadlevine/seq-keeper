@@ -22,33 +22,44 @@ import SequenceSummary from '../components/SequenceSummary'
 // import GeneListItem from '../components/GeneListItem'
 // import HomologListItem from '../components/HomologListItem'
 
-const SequenceDetails = ({ user, geneSumm }) => {
+const SequenceDetails = (props) => {
+  let {
+    user,
+    currentGeneSumm,
+    setCurrentGeneSumm,
+    currentSeqSumm,
+    setCurrentSeqSumm,
+    needSeqSumm,
+    setNeedSeqSumm,
+    setNeedGeneSumm
+  } = props
+
   let { gene_uid, seq_uid } = useParams()
   let navigate = useNavigate()
 
   // const [geneSumm, setGeneSumm] = useState(null) // SHOULD be from SK only - this lives up in App.js now (THANK YOU AARON SANCHEZ!!!)
-  const [seqSumm, setSeqSumm] = useState(null) // could be from ncbi or sk
+  // const [seqSumm, setCurrentSeqSumm] = useState(null) // could be from ncbi or sk
   const [skSeqId, setSKSeqId] = useState(false) // says if seq is in db, and so seqSumm above came from db
   const [fasta, setFasta] = useState(null)
 
   const viewFasta = async (e) => {
     e.preventDefault()
     if (skSeqId) {
-      setFasta(seqSumm.fasta)
+      setFasta(currentSeqSumm.fasta)
     } else {
-      let fastaResponse = await EFetch('nuccore', seqSumm.uid)
+      let fastaResponse = await EFetch('nuccore', currentSeqSumm.uid)
       // console.log(typeof fastaResponse)
       // console.log(fastaResponse)
       setFasta(fastaResponse)
-      setSeqSumm({ ...seqSumm, fasta: fastaResponse })
+      setCurrentSeqSumm({ ...currentSeqSumm, fasta: fastaResponse })
     }
   }
 
   const addThisSequence = async (e) => {
     e.preventDefault()
     // not including user.id in line below, because it's already been wrapped up into the seqSumm object/state
-    const added = await AddSeqToUser(seqSumm)
-    setSeqSumm(added)
+    const added = await AddSeqToUser(currentSeqSumm)
+    setCurrentSeqSumm(added)
     setSKSeqId(added.id)
     // YOU ARE HERE!!!
 
@@ -74,11 +85,11 @@ const SequenceDetails = ({ user, geneSumm }) => {
     e.preventDefault()
     // console.log(geneSumm.id)
     console.log(user.id)
-    console.log(seqSumm.id)
-    const deleted = await DeleteSeqFromUser(user.id, seqSumm.id)
+    console.log(currentSeqSumm.id)
+    const deleted = await DeleteSeqFromUser(user.id, currentSeqSumm.id)
     setSKSeqId(false)
     setFasta(null)
-    setSeqSumm(null)
+    setCurrentSeqSumm(null)
     navigate(-1)
   }
 
@@ -92,41 +103,29 @@ const SequenceDetails = ({ user, geneSumm }) => {
       ncbiLink: `https://www.ncbi.nlm.nih.gov/nuccore/${response[0].uid}`,
       fasta: '',
       userId: user.id,
-      geneId: geneSumm.id
+      geneId: currentGeneSumm.id
     }
-    setSeqSumm(skSeqSumm)
+    setCurrentSeqSumm(skSeqSumm)
   }
-
-  // const pageSetUp = async () => {
-  // const getGeneSumm = async () => {
-  //   //getSKGeneSumm (you already have uid...via params)
-  //   let skGeneSumm = null
-  //   console.log(`user.id: ${user.id}. Type: ${typeof user.id}`)
-  //   console.log(`gene_uid: ${gene_uid}. Type: ${typeof gene_uid}`)
-  //   skGeneSumm = await CheckSKGeneStatus(user.id, gene_uid)
-  //   // this line should NOT fail, but if it did, some sort of error message should appear?
-  //   console.log(`GENE: skGeneSumm response from backend: ${skGeneSumm}`)
-  //   console.log(skGeneSumm)
-  //   // let skGeneSumm = { ...response[0] }
-  //   // setGeneSumm(response[0])
-
-  //   //// WWWHHHHYYYYYYYYY ////////// THIS LINE IS FAILING ???????
-  //   setGeneSumm(skGeneSumm)
-
-  //   console.log(geneSumm)
-  //   return
-  // }
 
   const getSeqSumm = async () => {
     //check if skSeqId exists (controlls conditional rendering of lots on this page)
     const skSeqSumm = await CheckSKSeqStatus(user.id, seq_uid)
     // console.log(`SEQUENCE: skSeqSumm response from backend: ${skSeqSumm}`)
     if (skSeqSumm) {
-      setSeqSumm(skSeqSumm)
+      setCurrentSeqSumm(skSeqSumm)
       setSKSeqId(skSeqSumm.id)
       return
     }
     getSeqFromNCBI()
+  }
+
+  const backToGeneDetails = () => {
+    setNeedGeneSumm(true)
+    // setCurrentSeqSumm(null)
+    // setCurrentGeneSumm(null)
+    // navigate(`/gene/${currentGeneSumm.uid}`)
+    navigate(-1)
   }
 
   // on page load
@@ -173,11 +172,14 @@ const SequenceDetails = ({ user, geneSumm }) => {
 
   return (
     <div>
-      {seqSumm ? (
+      {currentSeqSumm ? (
         <div>
           <div className="seq-page-header">
-            <h1>Gene: {geneSumm?.name}</h1>
-            <h1>Sequence: {seqSumm.title}</h1>
+            <button onClick={backToGeneDetails}>
+              Back to {currentGeneSumm?.name} Details
+            </button>
+            <h1>Gene: {currentGeneSumm?.name}</h1>
+            <h1>Sequence: {currentSeqSumm.title}</h1>
             <div className="seqSKStatus container">
               {skSeqId ? (
                 <div>
@@ -188,7 +190,7 @@ const SequenceDetails = ({ user, geneSumm }) => {
                 </div>
               ) : (
                 <div>
-                  <h4>This sequence is not yet associated with your account</h4>
+                  <h4>This sequence is not associated with your account</h4>
                   {fasta ? (
                     <button onClick={addThisSequence}>Add this Sequence</button>
                   ) : (
@@ -200,7 +202,7 @@ const SequenceDetails = ({ user, geneSumm }) => {
             {/* <OrganismSummary geneSumm={geneSumm} /> */}
           </div>
           <div className="seq-page-body">
-            <SequenceSummary seqSumm={seqSumm} />
+            <SequenceSummary currentSeqSumm={currentSeqSumm} />
             <div className="fasta-block">
               {fasta ? (
                 <div className="fasta">

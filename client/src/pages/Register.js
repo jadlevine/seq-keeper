@@ -62,7 +62,7 @@ const Register = () => {
     )
   } else {
     return (
-      <div className="signUp-container">
+      <div className="signin-container">
         <div className="button-form-container">
           <button onClick={() => navigate('/signin')} className="signup-btn">
             Sign In

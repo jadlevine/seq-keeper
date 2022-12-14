@@ -1,6 +1,11 @@
 body {
   text-align: center;
   margin: 0;
+  /* background: rgba(0,0,0,0.2); */
+  background: url('../assets/dna_background2.jpeg');
+  /* background-repeat: none; */
+  background-size: cover;
+  /* background-blend-mode: lighten; */
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
   'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
   sans-serif;
@@ -16,6 +21,10 @@ body {
   text-align: left;
 }
 
+.update-account-form{
+  display: grid;
+  grid-template-rows: repeat (6 1fr);
+}
 .nav-bar{
   display: flex;
   justify-content: space-between;
@@ -32,6 +41,14 @@ body {
   width: 550px;
 }
 
+.inSK {
+  background-color: aquamarine; 
+}
+.notInSK {
+  background-color: ;
+}
+
+
 .gene-list-item{
   display: flex;
   justify-content: flex-start;
@@ -41,12 +58,17 @@ body {
   padding: 2em;
 } */
 
-.table-row{
-
-}
-
 .fasta {
   font-family: monospace;
+}
+
+.homolog-list-item{
+  display: grid;
+  margin: 2em;
+  grid-template-columns: repeat(2, 1fr);
+  background-color: lightgrey;
+  border: 1pt solid black;
+  width: auto;
 }
 
 .search-table-header-row,.search-table-item-row{

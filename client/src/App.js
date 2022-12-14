@@ -1,5 +1,5 @@
 import './App.css'
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { CheckSession } from './services/UserServices'
 import Signin from './pages/Signin'
@@ -14,7 +14,13 @@ import SearchNCBI from './pages/SearchNCBI'
 
 const App = () => {
   const [user, setUser] = useState(null)
-  const [geneSumm, setGeneSumm] = useState(null)
+  // const [geneSumm, setGeneSumm] = useState(null) // take this out, eventually
+  const [currentGeneSumm, setCurrentGeneSumm] = useState(null)
+  const [needGeneSumm, setNeedGeneSumm] = useState(true)
+  const [currentSeqSumm, setCurrentSeqSumm] = useState(null)
+  const [needSeqSumm, setNeedSeqSumm] = useState(true)
+
+  let navigate = useNavigate()
 
   const checkToken = async () => {
     const user = await CheckSession()
@@ -24,6 +30,8 @@ const App = () => {
   const handleSignout = () => {
     //Reset all auth related state and clear localStorage
     setUser(null)
+    setCurrentGeneSumm(null)
+    setNeedGeneSumm(true)
     localStorage.clear()
   }
 
@@ -44,9 +52,31 @@ const App = () => {
   )
   const authRoutes = (
     <Route path="/">
-      <Route index element={<UserHome user={user} />} />
-      <Route path="/userhome" element={<UserHome user={user} />} />
-      <Route path="/searchncbi" element={<SearchNCBI />} />
+      <Route
+        index
+        element={
+          <UserHome user={user} setCurrentGeneSumm={setCurrentGeneSumm} />
+        }
+      />
+      <Route
+        path="/userhome"
+        element={
+          <UserHome
+            user={user}
+            setCurrentGeneSumm={setCurrentGeneSumm}
+            setNeedGeneSumm={setNeedGeneSumm}
+          />
+        }
+      />
+      <Route
+        path="/searchncbi"
+        element={
+          <SearchNCBI
+            setCurrentGeneSumm={setCurrentGeneSumm}
+            setNeedGeneSumm={setNeedGeneSumm}
+          />
+        }
+      />
       <Route
         path="/accountdetails"
         element={<AccountDetails user={user} handleSignout={handleSignout} />}
@@ -56,8 +86,12 @@ const App = () => {
         element={
           <GeneDetails
             user={user}
-            geneSumm={geneSumm}
-            setGeneSumm={setGeneSumm}
+            currentGeneSumm={currentGeneSumm}
+            setCurrentGeneSumm={setCurrentGeneSumm}
+            needGeneSumm={needGeneSumm}
+            setNeedGeneSumm={setNeedGeneSumm}
+            setCurrentSeqSumm={setCurrentSeqSumm}
+            setNeedSeqSumm={setNeedSeqSumm}
           />
         }
       />
@@ -66,8 +100,13 @@ const App = () => {
         element={
           <SequenceDetails
             user={user}
-            geneSumm={geneSumm}
-            setGeneSumm={setGeneSumm}
+            currentGeneSumm={currentGeneSumm}
+            setCurrentGeneSumm={setCurrentGeneSumm}
+            setNeedGeneSumm={setNeedGeneSumm}
+            currentSeqSumm={currentSeqSumm}
+            setCurrentSeqSumm={setCurrentSeqSumm}
+            needSeqSumm={needSeqSumm}
+            setNeedSeqSumm={setNeedSeqSumm}
           />
         }
       />

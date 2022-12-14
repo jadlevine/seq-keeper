@@ -3,36 +3,37 @@ import { Link } from 'react-router-dom'
 
 // come back and update the useNavigate below (to get to GeneDetails) with link or a-tag, whichever works best
 
-
-// uid: searchResponse[key].uid,
-// name: searchResponse[key].name,
-// description: searchResponse[key].description,
-// chromosome: searchResponse[key].chromosome,
-// maplocation: searchResponse[key].maplocation,
-// organism: {
-//   scientificname: searchResponse[key].organism.scientificname,
-//   commonname: searchResponse[key].organism.commonname,
-//   taxid: searchResponse[key].organism.taxid
-// },
-// summary: searchResponse[key].summary
-
-const GeneListItem = ({ geneSumm }) => {
+const GeneListItem = ({ geneSumm, setCurrentGeneSumm }) => {
   let navigate = useNavigate()
 
   const showGene = () => {
+    // e.preventDefault()
+    setCurrentGeneSumm(geneSumm)
     navigate(`/gene/${geneSumm.uid}`)
   }
 
   return (
-    <div className="search-table-item-row">
-      <div className="gene-data link" onClick={showGene}>
-        {geneSumm.name}
+    <div className="gene-list-item container search-table-item-row">
+      <div className="gene-data">
+        <h4>Gene Name</h4>
+        <div className="gene-data link" onClick={showGene}>{geneSumm.name}</div>
       </div>
-      <div className="gene-data">{geneSumm.description}</div>
-      {geneSumm.organismscientificname? <div className="gene-data">{geneSumm.organismscientificname}</div> : <div className="gene-data">{geneSumm.organism.scientificname}</div>}
-      {/* <div className="gene-data">{geneSumm.organism.scientificname}</div> */}
-      <div className="gene-data">{geneSumm.chromosome}</div>
-      <div className="gene-data">{geneSumm.maplocation}</div>
+      <div className="gene-data">
+        <h4>Description</h4>
+        <div className="gene-data">{geneSumm.description}</div>
+      </div>
+      <div className="gene-data">
+        <h4>Organism</h4>
+        {geneSumm.organismscientificname? <div className="gene-data">{geneSumm.organismscientificname}</div> : <div className="gene-data">{geneSumm.organism.scientificname}</div>}
+      </div>
+      <div className="gene-data">
+        <h4>Chromosome</h4>
+        <div className="gene-data">{geneSumm.chromosome}</div>
+      </div>
+      <div className="gene-data">
+        <h4>Map Location</h4>
+        <div className="gene-data">{geneSumm.maplocation}</div>
+      </div>
     </div>
   )
 }

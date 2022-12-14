@@ -104,7 +104,7 @@ const AccountDetails = ({ user, handleSignout }) => {
     return (
       <div className="account-container">
         <div className="update-title">Update Account</div>
-        <form className="update-form-container" onSubmit={handleSubmit}>
+        <form className="update-account-form container" onSubmit={handleSubmit}>
           <input
             className="update-account-input"
             type="text"
@@ -159,6 +159,13 @@ const AccountDetails = ({ user, handleSignout }) => {
             >
               Cancel
             </button>
+            <div className="account-summary-stats">
+              <div>Genes associated with this account: ##</div>
+              <div>Seqs associated with this account: ##</div>
+              <div className="red">homolog groups</div>
+              <div>Remove all genes</div>
+              <div>remove all seqs</div>
+            </div>
           </div>
         </form>
       </div>

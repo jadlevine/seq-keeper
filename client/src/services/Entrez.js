@@ -26,7 +26,8 @@ const entrezBaseUrl = 'https://eutils.ncbi.nlm.nih.gov/entrez/eutils/'
 export const ESearch = async (db, query) => {
   try {
     // queries - special characters must be url-encoded  Spaces may be replaced by '+' signs.
-    let formattedQuery = query.replace(' ', '+')
+    let formattedQuery = query.replaceAll(' ', '+')
+    console.log(formattedQuery)
     const eSearchUrl = `${entrezBaseUrl}esearch.fcgi?db=${db}&term=${formattedQuery}&retmode=json`
     const response = await axios.get(eSearchUrl)
     const idList = response.data.esearchresult.idlist
