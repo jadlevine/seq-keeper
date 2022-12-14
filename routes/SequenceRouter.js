@@ -3,6 +3,12 @@ const controller = require('../controllers/SequenceController.js')
 const middleware = require('../middleware')
 
 // Router.get('/all', controller.GetAllPlants) // testing route
+Router.post(
+  '/all',
+  middleware.stripToken,
+  middleware.verifyToken,
+  controller.GetAllSeqsByUser
+)
 
 Router.post(
   '/add',

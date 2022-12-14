@@ -1,5 +1,16 @@
 const { User, Gene, HomologousPair, Sequence } = require('../models')
 
+const GetAllSeqsByUser = async (req, res) => {
+  try {
+    const seqs = await Sequence.findAll({
+      where: { userId: req.body.userId }
+    })
+    res.send(seqs)
+  } catch (error) {
+    throw error
+  }
+}
+
 const AddSequence = async (req, res) => {
   try {
     const newSeq = await Sequence.create(req.body)
@@ -113,6 +124,7 @@ const DeleteSeqFromUser = async (req, res) => {
 
 module.exports = {
   // GetAllRooms,
+  GetAllSeqsByUser,
   AddSequence,
   CheckForSequence,
   DeleteSeqFromUser

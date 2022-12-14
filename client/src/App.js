@@ -55,7 +55,13 @@ const App = () => {
       <Route
         index
         element={
-          <UserHome user={user} setCurrentGeneSumm={setCurrentGeneSumm} />
+          <UserHome
+            user={user}
+            setCurrentGeneSumm={setCurrentGeneSumm}
+            setNeedGeneSumm={setNeedGeneSumm}
+            setCurrentSeqSumm={setCurrentSeqSumm}
+            setNeedSeqSumm={setNeedSeqSumm}
+          />
         }
       />
       <Route
@@ -65,6 +71,8 @@ const App = () => {
             user={user}
             setCurrentGeneSumm={setCurrentGeneSumm}
             setNeedGeneSumm={setNeedGeneSumm}
+            setCurrentSeqSumm={setCurrentSeqSumm}
+            setNeedSeqSumm={setNeedSeqSumm}
           />
         }
       />

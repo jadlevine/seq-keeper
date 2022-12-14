@@ -122,7 +122,8 @@ const SequenceDetails = (props) => {
 
   const backToGeneDetails = () => {
     setNeedGeneSumm(true)
-    // setCurrentSeqSumm(null)
+    setCurrentSeqSumm(null)
+    setNeedSeqSumm(true)
     // setCurrentGeneSumm(null)
     // navigate(`/gene/${currentGeneSumm.uid}`)
     navigate(-1)
@@ -130,9 +131,11 @@ const SequenceDetails = (props) => {
 
   // on page load
   useEffect(() => {
-    // getGeneSumm()
-    getSeqSumm()
-  }, [])
+    if (needSeqSumm) {
+      getSeqSumm()
+      setNeedSeqSumm(false)
+    }
+  }, [currentSeqSumm])
 
   // NOTE - GI/UID/accessionVersion numbers are unique identifiers of a record
   //      - accession number applies to the whole db record, entrez seq db searches with accession number will retreive the MOST RECENT version of a sequence record

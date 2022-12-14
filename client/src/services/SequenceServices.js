@@ -1,5 +1,15 @@
 import Client from './api'
 
+export const GetAllSeqsByUser = async (userId) => {
+  try {
+    // this is POST request, so that data can be passed in as req.body ({ userId }, here)
+    const res = await Client.post('/user/sequences/all', { userId })
+    return res.data
+  } catch (error) {
+    throw error
+  }
+}
+
 export const CheckSKSeqStatus = async (userId, seqUid) => {
   try {
     const res = await Client.post('/user/sequences/check', { userId, seqUid })
