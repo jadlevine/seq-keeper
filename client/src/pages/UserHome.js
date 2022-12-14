@@ -11,6 +11,10 @@ const UserHome = (props) => {
     setNeedGeneSumm,
     setCurrentSeqSumm,
     setNeedSeqSumm
+    // userGenes,
+    // setUserGenes,
+    // userSeqs,
+    // setUserSeqs
   } = props
 
   const [userGenes, setUserGenes] = useState([])
@@ -53,48 +57,51 @@ const UserHome = (props) => {
   return (
     <div>
       <h1>{user.name}'s Home Page</h1>
-      <div className="genelist">
-        {userGenes ? (
-          <div className="search-results">
-            <h2>Gene List ({userGenes.length})</h2>
-            <div className="search-results-list">
-              {userGenes.map((geneSumm) => (
-                <GeneListItem
-                  key={geneSumm.uid}
-                  geneSumm={geneSumm}
-                  setCurrentGeneSumm={setCurrentGeneSumm}
-                />
-              ))}
+      <div className="user-home-body">
+        <div className="genelist container">
+          {userGenes ? (
+            <div className="search-results">
+              <h2>Gene List ({userGenes.length})</h2>
+              <div className="search-results-list">
+                {userGenes.map((geneSumm) => (
+                  <GeneListItem
+                    key={geneSumm.uid}
+                    geneSumm={geneSumm}
+                    setCurrentGeneSumm={setCurrentGeneSumm}
+                    // userGenes={userGenes}
+                  />
+                ))}
+              </div>
             </div>
-          </div>
-        ) : (
-          <div>
-            <h2 className="red">Fetching your Gene List</h2>
-          </div>
-        )}
-      </div>
-      <div className="seqlist">
-        {userGenes ? (
-          <div className="search-results">
-            <h2>Sequence List ({userGenes.length})</h2>
-            <div className="search-results-list">
-              {userSeqs.map((seqSumm) => (
-                <SequenceListItem
-                  key={seqSumm.uid}
-                  seqSumm={seqSumm}
-                  userId={user.id}
-                  // geneId={skGeneId}
-                  setNeedSeqSumm={setNeedSeqSumm}
-                  setCurrentSeqSumm={setCurrentSeqSumm}
-                />
-              ))}
+          ) : (
+            <div>
+              <h2 className="red">Fetching your Gene List</h2>
             </div>
-          </div>
-        ) : (
-          <div>
-            <h2 className="red">Fetching your Sequence List</h2>
-          </div>
-        )}
+          )}
+        </div>
+        <div className="seqlist container">
+          {userSeqs ? (
+            <div className="search-results">
+              <h2>Sequence List ({userSeqs.length})</h2>
+              <div className="search-results-list">
+                {userSeqs.map((seqSumm) => (
+                  <SequenceListItem
+                    key={seqSumm.uid}
+                    seqSumm={seqSumm}
+                    userId={user.id}
+                    // geneId={skGeneId}
+                    setNeedSeqSumm={setNeedSeqSumm}
+                    setCurrentSeqSumm={setCurrentSeqSumm}
+                  />
+                ))}
+              </div>
+            </div>
+          ) : (
+            <div>
+              <h2 className="red">Fetching your Sequence List</h2>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   )

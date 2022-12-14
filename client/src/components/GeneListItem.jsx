@@ -13,26 +13,36 @@ const GeneListItem = ({ geneSumm, setCurrentGeneSumm }) => {
   }
 
   return (
-    <div className="gene-list-item container search-table-item-row">
-      <div className="gene-data">
+    <div className={geneSumm.id?"in-sk gene-list-item container" : " not-in-sk gene-list-item container" }>
+      {geneSumm.id? (
+        <div>
+          <h4>SK-geneId</h4>
+          <div>{geneSumm.id}</div>
+        </div>
+      ):(
+        <div>
+          <h4>No SK-id<br/>Click on gene name to see details and add.</h4>
+        </div>
+      )}
+      <div>
         <h4>Gene Name</h4>
-        <div className="gene-data link" onClick={showGene}>{geneSumm.name}</div>
+        <div className="link" onClick={showGene}>{geneSumm.name}</div>
       </div>
-      <div className="gene-data">
+      <div>
         <h4>Description</h4>
-        <div className="gene-data">{geneSumm.description}</div>
+        <div>{geneSumm.description}</div>
       </div>
-      <div className="gene-data">
+      <div>
         <h4>Organism</h4>
-        {geneSumm.organismscientificname? <div className="gene-data">{geneSumm.organismscientificname}</div> : <div className="gene-data">{geneSumm.organism.scientificname}</div>}
+        {geneSumm.organismscientificname? <div>{geneSumm.organismscientificname}</div> : <div>{geneSumm.organism.scientificname}</div>}
       </div>
-      <div className="gene-data">
+      <div>
         <h4>Chromosome</h4>
-        <div className="gene-data">{geneSumm.chromosome}</div>
+        <div>{geneSumm.chromosome}</div>
       </div>
-      <div className="gene-data">
+      <div>
         <h4>Map Location</h4>
-        <div className="gene-data">{geneSumm.maplocation}</div>
+        <div>{geneSumm.maplocation}</div>
       </div>
     </div>
   )

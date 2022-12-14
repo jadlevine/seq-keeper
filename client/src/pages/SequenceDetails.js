@@ -108,6 +108,9 @@ const SequenceDetails = (props) => {
     setCurrentSeqSumm(skSeqSumm)
   }
 
+  // <h4>NCBI Link</h4>
+  //         <a href={`https://www.ncbi.nlm.nih.gov/nuccore/${seqSumm.uid}`} target="_blank">{seqSumm.accessionversion}</a>
+
   const getSeqSumm = async () => {
     //check if skSeqId exists (controlls conditional rendering of lots on this page)
     const skSeqSumm = await CheckSKSeqStatus(user.id, seq_uid)

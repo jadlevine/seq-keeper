@@ -2,6 +2,8 @@ import './App.css'
 import { Routes, Route, useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { CheckSession } from './services/UserServices'
+import { GetAllGenesByUser } from './services/GeneServices'
+import { GetAllSeqsByUser } from './services/SequenceServices'
 import Signin from './pages/Signin'
 import Register from './pages/Register'
 import AccountDetails from './pages/AccountDetails'
@@ -19,8 +21,21 @@ const App = () => {
   const [needGeneSumm, setNeedGeneSumm] = useState(true)
   const [currentSeqSumm, setCurrentSeqSumm] = useState(null)
   const [needSeqSumm, setNeedSeqSumm] = useState(true)
+  // const [userGenes, setUserGenes] = useState([])
+  // const [userSeqs, setUserSeqs] = useState([])
 
   let navigate = useNavigate()
+
+  // const getSKGenes = async () => {
+  //   const response = await GetAllGenesByUser(user.id)
+  //   setUserGenes(response)
+  //   // setUserHasGene(true)
+  // }
+
+  // const getSKSeqs = async () => {
+  //   const response = await GetAllSeqsByUser(user.id)
+  //   setUserSeqs(response)
+  // }
 
   const checkToken = async () => {
     const user = await CheckSession()
@@ -61,6 +76,10 @@ const App = () => {
             setNeedGeneSumm={setNeedGeneSumm}
             setCurrentSeqSumm={setCurrentSeqSumm}
             setNeedSeqSumm={setNeedSeqSumm}
+            // userGenes={userGenes}
+            // setUserGenes={setUserGenes}
+            // userSeqs={userSeqs}
+            // setUserSeqs={setUserSeqs}
           />
         }
       />
@@ -73,6 +92,10 @@ const App = () => {
             setNeedGeneSumm={setNeedGeneSumm}
             setCurrentSeqSumm={setCurrentSeqSumm}
             setNeedSeqSumm={setNeedSeqSumm}
+            // userGenes={userGenes}
+            // setUserGenes={setUserGenes}
+            // userSeqs={userSeqs}
+            // setUserSeqs={setUserSeqs}
           />
         }
       />
@@ -82,6 +105,8 @@ const App = () => {
           <SearchNCBI
             setCurrentGeneSumm={setCurrentGeneSumm}
             setNeedGeneSumm={setNeedGeneSumm}
+            user={user}
+            // userGenes={userGenes}
           />
         }
       />

@@ -10,6 +10,14 @@ Router.post(
   controller.GetAllSeqsByUser
 )
 
+//get all sequences associated with a particular SK gene
+Router.post(
+  '/gene',
+  middleware.stripToken,
+  middleware.verifyToken,
+  controller.GetAllSeqsByGene
+)
+
 Router.post(
   '/add',
   middleware.stripToken,

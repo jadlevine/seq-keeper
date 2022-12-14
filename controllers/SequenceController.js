@@ -11,6 +11,17 @@ const GetAllSeqsByUser = async (req, res) => {
   }
 }
 
+const GetAllSeqsByGene = async (req, res) => {
+  try {
+    const seqs = await Sequence.findAll({
+      where: { geneId: req.body.geneId }
+    })
+    res.send(seqs)
+  } catch (error) {
+    throw error
+  }
+}
+
 const AddSequence = async (req, res) => {
   try {
     const newSeq = await Sequence.create(req.body)
@@ -125,6 +136,7 @@ const DeleteSeqFromUser = async (req, res) => {
 module.exports = {
   // GetAllRooms,
   GetAllSeqsByUser,
+  GetAllSeqsByGene,
   AddSequence,
   CheckForSequence,
   DeleteSeqFromUser

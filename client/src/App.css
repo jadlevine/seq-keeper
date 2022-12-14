@@ -13,17 +13,40 @@ body {
 -moz-osx-font-smoothing: grayscale;
 }
 
+
+/* Generics */
+.bold{
+  font-weight: bold;
+}
+.underline{
+  text-decoration: underline;
+}
+.red{
+  color:red;
+}
 .container{
   border: 1pt solid black;
 }
-
 .text-block{
   text-align: left;
 }
+.link {
+  color: blue;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.link:visited {
+  color: purple;
+}
 
-.update-account-form{
-  display: grid;
-  grid-template-rows: repeat (6 1fr);
+
+/* page bodies and nav*/
+.user-home-body{
+  display: flex;
+}
+.gene-page-body, .gene-page-header{
+  display: flex;
+  justify-content: space-around;
 }
 .nav-bar{
   display: flex;
@@ -34,32 +57,29 @@ body {
   padding: 1em;
   min-height: 2em;
 }
-
 .nav-options{
   display: flex;
   justify-content: space-evenly;
   width: 550px;
 }
 
-.inSK {
-  background-color: aquamarine; 
-}
-.notInSK {
-  background-color: ;
-}
 
-
+/* LISTS and tables */
+/* Gene list, Seq List, homolog List */
 .gene-list-item{
-  display: flex;
-  justify-content: flex-start;
-  align-content: center;
-}
-/* .gene-data{
-  padding: 2em;
-} */
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  /* justify-content: flex-start; */
+  /* align-content: center; */
 
-.fasta {
-  font-family: monospace;
+}
+.seq-list-item{
+/* 2 rows */
+}
+.seq-list-item-row{
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+
 }
 
 .homolog-list-item{
@@ -70,7 +90,6 @@ body {
   border: 1pt solid black;
   width: auto;
 }
-
 .search-table-header-row,.search-table-item-row{
   display: grid;
   margin: 2em;
@@ -87,26 +106,14 @@ body {
   border: 1pt solid black;
   width: auto;
 }
-.nt-data{
-  padding: 0 .5em;
-}
-.table-header{
-  padding: 0 .5em;
+
+/* FORMS */
+.update-account-form{
+  display: grid;
+  grid-template-rows: repeat (6 1fr);
 }
 
-.link {
-  color: blue;
-  text-decoration: underline;
-  cursor: pointer;
-}
-.link:visited {
-  color: purple;
-}
-
-.gene-page-body, .gene-page-header{
-  display: flex;
-  justify-content: space-around;
-}
+/* DATA SUMMARY BOXES */
 .gene-summ-container{
   width: 40vw;
 }
@@ -131,12 +138,14 @@ margin: 0 1em;
   margin: 0 1em 0 0;
 }
 
-.bold{
-  font-weight: bold;
+
+/* Unique to this project */
+.in-sk {
+  background-color: aquamarine; 
 }
-.underline{
-  text-decoration: underline;
+.not-in-sk {
+  background-color: grey;
 }
-.red{
-  color:red;
+.fasta {
+  font-family: monospace;
 }

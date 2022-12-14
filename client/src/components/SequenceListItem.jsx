@@ -13,45 +13,54 @@ const SequenceListItem = ( props ) => {
   let navigate = useNavigate()
 
 
-  const viewThisSequence = async (e) => {
-      e.preventDefault()
+  const showThisSeq = () => {
+      // e.preventDefault()
       setCurrentSeqSumm(seqSumm)
       navigate(`/gene/${gene_uid}/sequence/${seqSumm.uid}`)
 
     //navigate to sequence details (which will need geneid/geneSumm? and user info?)
   
   }
-  
+
 
   return (
-    <div className="seq-list-item container">
-      <div className="text-block">
-        <div className="nt-data">{seqSumm.title}</div>
-        
-      </div>
-      <div className="seq-table-row">
+    <div className={seqSumm.id? "in-sk seq-list-item container": "not-in-sk seq-list-item container"}>
+      <div className="seq-list-item-row">
+        {seqSumm.id? (
+          <div>
+            <h4>SK-seqId</h4>
+            <div>{seqSumm.id}</div>
+          </div>
+        ):(
+          <div>
+            <h4>No SK-seqId<br/>Click on Accession Number to see details and add.</h4>
+          </div>
+        )}
+        <div>
+          <h4>Accession Number</h4>
+          <div className="link" onClick={showThisSeq}>{seqSumm.accessionversion}
+        </div>     
+        </div>
         <div>
           <h4>Molecule</h4>
-          <div className="nt-data">{seqSumm.biomol}</div>
+          <div>{seqSumm.biomol}</div>
         </div>
         <div>
           <h4>Sequence Length (bp)</h4>
-          <div className="nt-data bold larger">{seqSumm.slen}</div>
+          <div className=" bold larger">{seqSumm.slen}</div>
         </div>
         <div>
           <h4>Organism</h4>
-          <div className="nt-data">{seqSumm.organism}</div>
+          <div>{seqSumm.organism}</div>
         </div>
         <div>
           <h4>Update Date</h4>
-          <div className="nt-data">{seqSumm.updatedate}</div>
-        </div>
-        <div>
-          <h4>NCBI Link</h4>
-          <a href={`https://www.ncbi.nlm.nih.gov/nuccore/${seqSumm.uid}`} target="_blank">{seqSumm.accessionversion}</a>
+          <div>{seqSumm.updatedate}</div>
         </div>
       </div>
-      <button onClick={viewThisSequence}>View Sequence Details</button>
+      <div className="text-block seq-list-item-description">
+        <div>{seqSumm.title}</div>
+      </div>
     </div>
   )
 }

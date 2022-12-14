@@ -8,6 +8,7 @@ import {
   GetGeneById,
   CheckSKGeneStatus
 } from '../services/GeneServices'
+import { GetSeqsByGene } from '../services/SequenceServices'
 
 import GeneSummary from '../components/GeneSummary'
 import SequenceListItem from '../components/SequenceListItem'
@@ -74,6 +75,20 @@ const GeneDetails = (props) => {
     setCurrentGeneSumm(gene)
   }
 
+  const tagSKSeqs = async (res) => {
+    const seqsByGene = await GetSeqsByGene(skGeneId)
+
+    for (const key in res) {
+      for (const sk in seqsByGene) {
+        if (res[key].uid == seqsByGene[sk].uid) {
+          res[key]['id'] = seqsByGene[sk].id
+          // break
+        }
+      }
+    }
+    return res
+  }
+
   const NCBISequenceSearch = async () => {
     const db = 'nuccore'
     let organism = currentGeneSumm.organismscientificname
@@ -81,39 +96,12 @@ const GeneDetails = (props) => {
     let gene = currentGeneSumm.name
     let geneFormatted = gene.replaceAll(' ', '%20')
     let searchQuery = `(${organismFormatted}%5BOrganism%5D)%20AND%20${geneFormatted}%5BGene%20Name%5D`
-
-    /**
-     * EXAMPLE
-     * (human%5BOrganism%5D)%20AND%20rad51%5BGene%20Name%5D
-     * (human[Organism]) AND rad51[Gene Name]
-     *
-     * (bos taurus[Organism]) AND bdnf[Gene Name]
-     * (bos%20taurus%5BOrganism%5D)%20AND%20bdnf%5BGene%20Name%5D
-     
-    * q = `(${organismFormatted}%5BOrganism%5D)%20AND%20${geneFormatted}%5BGene%20Name%5D`
-     */
-    // EXAMPLE:
-
-    // let searchQuery = `bos%20taurus%5BOrganism%5D)%20AND%20bdnf%5BGene%20Name%5D`
-
-    console.log(searchQuery)
     let response = await ESearch(db, searchQuery)
-    setSeqSearchResults(response)
-    // delete this when done!
-    console.log(response)
-  }
 
-  // const getGeneData = async () => {
-  //   let userSKGenes = await GetAllGenesByUser(user.id)
-  //   for (const gene in userSKGenes) {
-  //     if (userSKGenes[gene].uid === parseInt(gene_uid)) {
-  //       setSKGeneId(userSKGenes[gene].id)
-  //       getGeneFromSK(userSKGenes[gene].id)
-  //       return
-  //     }
-  //   }
-  //   getGeneFromNCBI()
-  // }
+    let taggedSeqResults = await tagSKSeqs(response)
+    setSeqSearchResults(taggedSeqResults)
+    // then update relevant state?
+  }
 
   const getHomologSearch = async () => {
     let db = 'homologene'

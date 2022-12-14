@@ -10,6 +10,15 @@ export const GetAllSeqsByUser = async (userId) => {
   }
 }
 
+export const GetSeqsByGene = async (geneId) => {
+  try {
+    const res = await Client.post(`/user/sequences/gene`, { geneId })
+    return res.data
+  } catch (error) {
+    throw error
+  }
+}
+
 export const CheckSKSeqStatus = async (userId, seqUid) => {
   try {
     const res = await Client.post('/user/sequences/check', { userId, seqUid })

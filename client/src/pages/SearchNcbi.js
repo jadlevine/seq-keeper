@@ -1,19 +1,48 @@
 import { useState, useEffect } from 'react'
 import { ESearch } from '../services/Entrez'
+import { GetAllGenesByUser } from '../services/GeneServices'
 import GeneSearchBar from '../components/GeneSearchBar'
 import GeneListItem from '../components/GeneListItem'
 
-const SearchNCBI = ({ setCurrentGeneSumm, setNeedGeneSumm }) => {
+const SearchNCBI = ({ setCurrentGeneSumm, setNeedGeneSumm, user }) => {
   const [searchQuery, setSearchQuery] = useState('')
   const [searched, setSearched] = useState(false)
   const [searchResults, setSearchResults] = useState([])
 
+  const getSKGenes = async () => {
+    const response = await GetAllGenesByUser(user.id)
+    // setUserGenes(response)
+    // setUserHasGene(true)
+  }
+
+  const tagSKGenes = async (searchRes) => {
+    const userGenes = await GetAllGenesByUser(user.id)
+
+    // console.log(searchRes)
+    // console.log(typeof userGenes)
+    for (const key in searchRes) {
+      for (const sk in userGenes) {
+        if (searchRes[key].uid == userGenes[sk].uid) {
+          searchRes[key]['id'] = userGenes[sk].id
+          // break
+        }
+      }
+      // if (Object.hasOwnProperty.call(object, key)) {
+      //   const element = object[key]
+      // }
+    }
+    return searchRes
+  }
+
   const getSearchResults = async () => {
     let db = 'Gene'
-    let searchResponse = await ESearch(db, searchQuery)
+    let searchResults = await ESearch(db, searchQuery)
 
     // then set search results to parsed results
-    setSearchResults(searchResponse)
+    let taggedGeneResults = await tagSKGenes(searchResults)
+
+    setSearchResults(taggedGeneResults)
+
     // and update state
     setSearched(true)
     setSearchQuery('')
@@ -43,13 +72,6 @@ const SearchNCBI = ({ setCurrentGeneSumm, setNeedGeneSumm }) => {
       {searched ? (
         <div className="search-results">
           <h2>Search Results ({searchResults.length})</h2>
-          {/* <div className="search-table-header-row">
-            <div className="table-header">Gene Name</div>
-            <div className="table-header">Description</div>
-            <div className="table-header">Organism</div>
-            <div className="table-header">Chromosome</div>
-            <div className="table-header">Map Location</div>
-          </div> */}
           <div className="search-results-list">
             {searchResults.map((geneSumm) => (
               <GeneListItem
