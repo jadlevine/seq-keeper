@@ -28,33 +28,34 @@ const Signin = ({ setUser }) => {
   }
 
   return (
-    <div className="signin-container">
-      <div className="button-form-container">
-        <form className="signin-container">
-          <h3 className="signin-text">Sign In</h3>
-          <input
-            onChange={handleChange}
-            value={formValues.email}
-            required
-            type="text"
-            name="email"
-            className="signin-input"
-            placeholder="email"
-          ></input>
-          <input
-            onChange={handleChange}
-            value={formValues.password}
-            required
-            type="password"
-            name="password"
-            className="signin-input"
-            placeholder="password"
-          ></input>
-          <button onClick={handleSubmit} type="submit" className="submit-btn">
-            Submit
-          </button>
-        </form>
-      </div>
+    <div className="signin-body">
+      <h2>Sign In to your Seq Keeper Account</h2>
+      <form className="signin-form container" onSubmit={handleSubmit}>
+        <input
+          onChange={handleChange}
+          value={formValues.email}
+          required
+          type="text"
+          name="email"
+          className="signin-input"
+          placeholder="email"
+        ></input>
+        <input
+          onChange={handleChange}
+          value={formValues.password}
+          required
+          type="password"
+          name="password"
+          className="signin-input"
+          placeholder="password"
+        ></input>
+        <button
+          disabled={!formValues.email && !formValues.password}
+          className="signin-button"
+        >
+          Sign In
+        </button>
+      </form>
     </div>
   )
 }

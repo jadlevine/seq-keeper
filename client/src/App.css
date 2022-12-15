@@ -66,22 +66,26 @@ body {
 }
 
 /* REGISTER */
-.register-body{
+.register-body,
+.signin-body{
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-.register-form{
+.register-form,
+.signin-form{
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-.register-input{
+.register-input,
+.signin-input{
   margin: .5em;
   padding: .2em;
   font-size: larger;
 }
-.register-button{
+.register-button,
+.signin-button{
   margin: .5em 0;
   padding: .2em;
   font-size: larger;
