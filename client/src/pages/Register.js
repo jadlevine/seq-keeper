@@ -64,13 +64,13 @@ const Register = () => {
     return (
       <div className="register-body">
         <h2>Register For A Seq Keeper Account</h2>
-        <form className="register" onSubmit={handleSubmit}>
+        <form className="register-form container" onSubmit={handleSubmit}>
           <input
             onChange={handleChange}
             type="text"
-            placeholder="name"
+            placeholder="User name"
             name="name"
-            className="signup-input"
+            className="register-input"
             value={formValues.name}
             required
           ></input>
@@ -78,7 +78,7 @@ const Register = () => {
             type="text"
             placeholder="email"
             name="email"
-            className="signup-input"
+            className="register-input"
             onChange={handleChange}
             value={formValues.email}
             required
@@ -87,7 +87,7 @@ const Register = () => {
             type="password"
             placeholder="password"
             name="password"
-            className="signup-input"
+            className="register-input"
             onChange={handleChange}
             value={formValues.password}
             required
@@ -96,12 +96,11 @@ const Register = () => {
             type="password"
             placeholder="confirm password"
             name="confirmPassword"
-            className="signup-input"
+            className="register-input"
             onChange={handleChange}
             value={formValues.confirmPassword}
             required
           ></input>
-
           <button
             disabled={
               !formValues.email &&
@@ -109,7 +108,7 @@ const Register = () => {
               !formValues.password &&
               !formValues.confirmPassword
             }
-            className="signup-btn"
+            className="register-button"
           >
             Register
           </button>

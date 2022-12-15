@@ -2,8 +2,6 @@ import './App.css'
 import { Routes, Route, useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { CheckSession } from './services/UserServices'
-import { GetAllGenesByUser } from './services/GeneServices'
-import { GetAllSeqsByUser } from './services/SequenceServices'
 import Signin from './pages/Signin'
 import Register from './pages/Register'
 import AccountDetails from './pages/AccountDetails'
@@ -16,26 +14,12 @@ import SearchNCBI from './pages/SearchNCBI'
 
 const App = () => {
   const [user, setUser] = useState(null)
-  // const [geneSumm, setGeneSumm] = useState(null) // take this out, eventually
   const [currentGeneSumm, setCurrentGeneSumm] = useState(null)
   const [needGeneSumm, setNeedGeneSumm] = useState(true)
   const [currentSeqSumm, setCurrentSeqSumm] = useState(null)
   const [needSeqSumm, setNeedSeqSumm] = useState(true)
-  // const [userGenes, setUserGenes] = useState([])
-  // const [userSeqs, setUserSeqs] = useState([])
 
   let navigate = useNavigate()
-
-  // const getSKGenes = async () => {
-  //   const response = await GetAllGenesByUser(user.id)
-  //   setUserGenes(response)
-  //   // setUserHasGene(true)
-  // }
-
-  // const getSKSeqs = async () => {
-  //   const response = await GetAllSeqsByUser(user.id)
-  //   setUserSeqs(response)
-  // }
 
   const checkToken = async () => {
     const user = await CheckSession()
@@ -43,7 +27,6 @@ const App = () => {
   }
 
   const handleSignout = () => {
-    //Reset all auth related state and clear localStorage
     setUser(null)
     setCurrentGeneSumm(null)
     setNeedGeneSumm(true)
