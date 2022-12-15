@@ -1,4 +1,4 @@
-const { User, Gene, HomologousPair, Sequence } = require('../models')
+const { Gene } = require('../models')
 
 const GetAllGenesByUser = async (req, res) => {
   try {
@@ -14,13 +14,7 @@ const GetAllGenesByUser = async (req, res) => {
 const GetGeneById = async (req, res) => {
   try {
     let geneId = parseInt(req.params.gene_id)
-    // const gene = await Gene.findByPk(geneId)
     let gene = await Gene.findOne({ where: { id: geneId } })
-    // if (gene === null) {
-    //   res.send({ msg: 'Error, gene not found' })
-    // } else {
-    //   res.send(gene)
-    // }
     res.send(gene)
   } catch (error) {
     throw error
@@ -29,9 +23,7 @@ const GetGeneById = async (req, res) => {
 
 const AddGene = async (req, res) => {
   try {
-    // don't need anything special here (i.e., addGeneToUser, b/c gene already has user id... that stuff will come during get requests!!)
     const newGene = await Gene.create(req.body)
-    // console.log(typeof req.body.organism.taxid)
     res.send(newGene)
   } catch (error) {
     throw error
@@ -63,65 +55,10 @@ const DeleteGene = async (req, res) => {
   }
 }
 
-// const CreateRoom = async (req, res) => {
-//   try {
-//     const { name, userId } = req.body.formValues
-//     // console.log(req.body)
-//     let room = await Room.create({ name, userId })
-//     res.send(room)
-//   } catch (error) {
-//     throw error
-//   }
-// }
-
-// const GetRoomsByUser = async (req, res) => {
-//   try {
-//     let userId = parseInt(req.params.user_id)
-//     const roomsByUser = await Room.findAll({
-//       where: { userId },
-//       include: User
-//     })
-//     res.send(roomsByUser)
-//   } catch (error) {
-//     throw error
-//   }
-// }
-
-// const GetRoomById = async (req, res) => {
-//   try {
-//     let roomId = parseInt(req.params.room_id)
-//     const roomById = await Room.findAll({
-//       where: { id: roomId },
-//       include: User
-//     })
-//     res.send(roomById)
-//   } catch (error) {
-//     throw error
-//   }
-// }
-
-// const UpdateRoom = async (req, res) => {
-//   try {
-//     let roomId = parseInt(req.body.roomForm.roomId)
-//     let updatedRoom = await Room.update(req.body.roomForm, {
-//       where: { id: roomId },
-//       returning: true
-//     })
-//     res.send(updatedRoom)
-//   } catch (error) {
-//     throw error
-//   }
-// }
-
 module.exports = {
   GetAllGenesByUser,
   GetGeneById,
   AddGene,
   CheckForGene,
   DeleteGene
-  // GetAllRooms,
-  // GetRoomById,
-  // CreateRoom,
-  // UpdateRoom,
-  // DeleteRoom
 }

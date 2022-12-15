@@ -2,32 +2,18 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { ESearch, ESummary, EFetch } from '../services/Entrez'
 import {
-  // AddGeneToUser,
-  // DeleteGene,
-  // GetAllGenesByUser,
-  // GetGeneById,
-  CheckSKGeneStatus
-} from '../services/GeneServices'
-import {
   CheckSKSeqStatus,
   AddSeqToUser,
   DeleteSeqFromUser
 } from '../services/SequenceServices'
-// import functions from sequenceservices here
 
-// import OrganismSummary from '../components/OrganismSummary'
 import SequenceSummary from '../components/SequenceSummary'
 import SequenceSourceSummary from '../components/SequenceSourceSummary'
-// import SequenceListItem from '../components/SequenceListItem'
-// import HomologFinder from '../components/HomologSearch.jsx'
-// import GeneListItem from '../components/GeneListItem'
-// import HomologListItem from '../components/HomologListItem'
 
 const SequenceDetails = (props) => {
   let {
     user,
     currentGeneSumm,
-    setCurrentGeneSumm,
     currentSeqSumm,
     setCurrentSeqSumm,
     needSeqSumm,
@@ -35,11 +21,9 @@ const SequenceDetails = (props) => {
     setNeedGeneSumm
   } = props
 
-  let { gene_uid, seq_uid } = useParams()
+  let { gene_uid } = useParams()
   let navigate = useNavigate()
 
-  // const [geneSumm, setGeneSumm] = useState(null) // SHOULD be from SK only - this lives up in App.js now (THANK YOU AARON SANCHEZ!!!)
-  // const [seqSumm, setCurrentSeqSumm] = useState(null) // could be from ncbi or sk
   const [skSeqId, setSKSeqId] = useState(false) // says if seq is in db, and so seqSumm above came from db
   const [fasta, setFasta] = useState(null)
 
@@ -64,7 +48,6 @@ const SequenceDetails = (props) => {
 
   const deleteThisSequence = async (e) => {
     e.preventDefault()
-    // console.log(geneSumm.id)
     console.log(user.id)
     console.log(currentSeqSumm.id)
     const deleted = await DeleteSeqFromUser(user.id, currentSeqSumm.id)
@@ -75,10 +58,8 @@ const SequenceDetails = (props) => {
   }
 
   const getSeqFromNCBI = async () => {
-    // console.log(geneSumm)
     const db = 'nuccore'
     const response = await ESummary(db, seq_uid)
-    // console.log(response)
     let skSeqSumm = {
       ...response[0],
       ncbiLink: `https://www.ncbi.nlm.nih.gov/nuccore/${response[0].uid}`,
@@ -91,9 +72,8 @@ const SequenceDetails = (props) => {
   }
 
   const getSeqSumm = async () => {
-    //check if skSeqId exists (controlls conditional rendering of lots on this page)
+    //check if skSeqId exists (controlls conditional rendering on this page)
     const skSeqSumm = await CheckSKSeqStatus(user.id, seq_uid)
-    // console.log(`SEQUENCE: skSeqSumm response from backend: ${skSeqSumm}`)
     if (skSeqSumm) {
       setCurrentSeqSumm(skSeqSumm)
       setSKSeqId(skSeqSumm.id)
@@ -106,12 +86,9 @@ const SequenceDetails = (props) => {
     setNeedGeneSumm(true)
     setCurrentSeqSumm(null)
     setNeedSeqSumm(true)
-    // setCurrentGeneSumm(null)
     navigate(`/gene/${currentGeneSumm.uid}`)
-    // navigate(-1)
   }
 
-  // on page load
   useEffect(() => {
     if (needSeqSumm) {
       getSeqSumm()

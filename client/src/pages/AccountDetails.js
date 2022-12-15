@@ -1,5 +1,4 @@
-// import Client from '../services/api'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { UpdateAccount } from '../services/UserServices'
 import DeleteAccount from '../components/DeleteAccount'
@@ -35,13 +34,9 @@ const AccountDetails = ({ user, handleSignout }) => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      //check if new password=confirm New password
       if (
         updateFormValues.newPassword !== updateFormValues.confirmNewPassword
       ) {
-        // let title = document.getElementsByClassName('update-title')[0].innerHTML
-        // console.log(title)
-        // title.innerHTML = toString('test')
         window.alert(
           'Update request failed. \nNew Password and Confirm New Password must match.'
         )
@@ -54,16 +49,12 @@ const AccountDetails = ({ user, handleSignout }) => {
         console.log(res) // this is not working when pw does not match
       }
 
-      // CLEAN UP
       //alert user that update was successful
       window.alert('SUCCESS! Account details updated. Please sign in again')
       // logout and navigate back to sign in
       handleSignout()
       navigate('/signin')
     } catch (error) {
-      // let title = document.getElementsByClassName('update-title')[0].innerHTML
-      // title.innerHTML =
-      //   'Update request failed. \nCheck that your Current Password was entered correctly.'
       window.alert(
         'Update request failed. \nCheck that your Current Password was entered correctly.'
       )
@@ -75,12 +66,6 @@ const AccountDetails = ({ user, handleSignout }) => {
     return (
       <div className="account-container">
         <h1>Account</h1>
-        <h2 className="red">
-          All account stuff is functional on the front end, but the code is
-          ugly, and, obviously the styling is ugly. DeleteAccount.jsx is a
-          component but update account is not. AccountDetails.js is a page (this
-          page) that holds both
-        </h2>
         <div className="btn-container">
           <button
             className="btn"
@@ -159,13 +144,6 @@ const AccountDetails = ({ user, handleSignout }) => {
             >
               Cancel
             </button>
-            <div className="account-summary-stats">
-              <div>Genes associated with this account: ##</div>
-              <div>Seqs associated with this account: ##</div>
-              <div className="red">homolog groups</div>
-              <div>Remove all genes</div>
-              <div>remove all seqs</div>
-            </div>
           </div>
         </form>
       </div>

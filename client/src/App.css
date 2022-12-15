@@ -64,11 +64,12 @@ body {
   justify-content: space-evenly;
   width: 550px;
 }
-.footer{
-  /* margin: 6em 0 0 0; */
-  position: sticky;
-  bottom:0;
+.register-body{
+  display: flex;
+  flex-direction: column;
+  align-content: center;
 }
+
 .user-home-body{
   display: flex;
 }
@@ -129,27 +130,20 @@ margin: .25em 0;
   grid-template-columns: repeat(2, 1fr);
   /* width: auto; */
 }
-/* .search-table-header-row,.search-table-item-row{
-  display: grid;
-  margin: 2em;
-  grid-template-columns: repeat(5, 1fr);
-  background-color: aquamarine;
-  border: 1pt solid black;
-  width: auto;
-}
-.seq-table-header-row, .seq-table-row{
-  display: grid;
-  margin: 1em;
-  grid-template-columns: repeat(5, 1fr);
-  background-color: aquamarine;
-  border: 1pt solid black;
-  width: auto;
-} */
 
 /* FORMS */
 .update-account-form{
   display: grid;
   grid-template-rows: repeat (6 1fr);
+}
+.register-form-container{
+  display: grid;
+  grid-template-rows: 1fr 5fr;
+}
+.register{
+  display: grid;
+  grid-template-rows: repeat (6 1fr);
+  width: 400px;
 }
 
 /* DATA SUMMARY BOXES */

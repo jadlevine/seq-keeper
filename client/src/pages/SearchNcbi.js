@@ -9,19 +9,12 @@ const SearchNCBI = ({ setCurrentGeneSumm, setNeedGeneSumm, user }) => {
   const [searched, setSearched] = useState(false)
   const [searchResults, setSearchResults] = useState([])
 
-  const getSKGenes = async () => {
-    const response = await GetAllGenesByUser(user.id)
-    // setUserGenes(response)
-    // setUserHasGene(true)
-  }
-
   const tagSKGenes = async (searchRes) => {
     const userGenes = await GetAllGenesByUser(user.id)
     for (const key in searchRes) {
       for (const sk in userGenes) {
         if (searchRes[key].uid == userGenes[sk].uid) {
           searchRes[key]['id'] = userGenes[sk].id
-          // break
         }
       }
     }
@@ -77,12 +70,7 @@ const SearchNCBI = ({ setCurrentGeneSumm, setNeedGeneSumm, user }) => {
           </div>
         </div>
       ) : (
-        <div>
-          <h2 className="red">
-            Instructions for using the search (if it gets more complicated
-            (search nts, genes, etc...) could go here?
-          </h2>
-        </div>
+        <div></div>
       )}
     </div>
   )

@@ -11,10 +11,6 @@ const UserHome = (props) => {
     setNeedGeneSumm,
     setCurrentSeqSumm,
     setNeedSeqSumm
-    // userGenes,
-    // setUserGenes,
-    // userSeqs,
-    // setUserSeqs
   } = props
 
   const [userGenes, setUserGenes] = useState([])
@@ -23,7 +19,6 @@ const UserHome = (props) => {
   const getSKGenes = async () => {
     const response = await GetAllGenesByUser(user.id)
     setUserGenes(response)
-    // setUserHasGene(true)
   }
 
   const getSKSeqs = async () => {
@@ -31,27 +26,11 @@ const UserHome = (props) => {
     setUserSeqs(response)
   }
 
-  // unnecessary?
-  const handleChange = (e) => {
-    // setSearchQuery(e.target.value)
-  }
-
-  // unnecessary?
-  const onSubmit = (e) => {
-    e.preventDefault()
-    // getSearchResults()
-  }
-
   useEffect(() => {
-    // on page load?
     getSKGenes()
     setNeedGeneSumm(true)
     getSKSeqs()
     setNeedSeqSumm(true)
-
-    // getSKSequences()?
-    // getGeneCollections()
-    // set state for those things
   }, [])
 
   return (
@@ -68,14 +47,13 @@ const UserHome = (props) => {
                     key={geneSumm.uid}
                     geneSumm={geneSumm}
                     setCurrentGeneSumm={setCurrentGeneSumm}
-                    // userGenes={userGenes}
                   />
                 ))}
               </div>
             </div>
           ) : (
             <div>
-              <h2 className="red">Fetching your Gene List</h2>
+              <h2>Fetching your Gene List</h2>
             </div>
           )}
         </div>
@@ -89,7 +67,6 @@ const UserHome = (props) => {
                     key={seqSumm.uid}
                     seqSumm={seqSumm}
                     userId={user.id}
-                    // geneId={skGeneId}
                     setNeedSeqSumm={setNeedSeqSumm}
                     setCurrentSeqSumm={setCurrentSeqSumm}
                   />

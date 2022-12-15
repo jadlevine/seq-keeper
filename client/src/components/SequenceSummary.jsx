@@ -11,7 +11,6 @@ const SequenceSummary = ( { currentSeqSumm } ) => {
         <div className="summary-row-title">SK -seqId</div>
         <div className="summary-row-data">{currentSeqSumm.id}</div>
       </div>
-
       <div className="sequence-summary-row">
         <div className="summary-row-title">Molecule</div>
         <div className="summary-row-data">{currentSeqSumm.biomol}</div>
@@ -40,10 +39,6 @@ const SequenceSummary = ( { currentSeqSumm } ) => {
         <div className="summary-row-title">NCBI Link</div>
         <a className="summary-row-data" href={`${currentSeqSumm.ncbiLink}`} alt ="https://www.ncbi.nlm.nih.gov/nuccore" target="_blank">{currentSeqSumm.accessionversion}</a>
       </div>
-      {/* <div className="sequence-summary-row">
-        <div className="summary-row-title">Notes</div>
-        <div className="summary-row-data">{currentSeqSumm.notes}</div>
-      </div> */}
     </div>
   )
 }

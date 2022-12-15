@@ -12,7 +12,7 @@ import { GetSeqsByGene } from '../services/SequenceServices'
 
 import GeneSummary from '../components/GeneSummary'
 import SequenceListItem from '../components/SequenceListItem'
-import HomologFinder from '../components/HomologSearch.jsx'
+
 import OrganismSummary from '../components/OrganismSummary'
 import GeneListItem from '../components/GeneListItem'
 import HomologListItem from '../components/HomologListItem'
@@ -50,17 +50,13 @@ const GeneDetails = (props) => {
       organismcommonname: response[0].organism.commonname,
       organismtaxid: response[0].organism.taxid
     }
-    console.log('fetching and converting to SK format')
+    // console.log('fetching and converting to SK format')
     setCurrentGeneSumm(skGeneSumm)
   }
 
   const getSKGeneSumm = async () => {
     let skGeneSumm = null
-    // console.log(`user.id: ${user.id}. Type: ${typeof user.id}`)
-    // console.log(`gene_uid: ${gene_uid}. Type: ${typeof gene_uid}`)
     skGeneSumm = await CheckSKGeneStatus(user.id, gene_uid)
-    // console.log(`GENE: skGeneSumm response from backend: ${skGeneSumm}`)
-    console.log(skGeneSumm)
     if (skGeneSumm) {
       setCurrentGeneSumm(skGeneSumm)
       setSKGeneId(skGeneSumm.id)
@@ -69,20 +65,12 @@ const GeneDetails = (props) => {
     getGeneFromNCBI()
   }
 
-  // useful?
-  const getGeneFromSK = async (geneId) => {
-    const gene = await GetGeneById(geneId)
-    setCurrentGeneSumm(gene)
-  }
-
   const tagSKSeqs = async (res) => {
     const seqsByGene = await GetSeqsByGene(skGeneId)
-
     for (const key in res) {
       for (const sk in seqsByGene) {
         if (res[key].uid == seqsByGene[sk].uid) {
           res[key]['id'] = seqsByGene[sk].id
-          // break
         }
       }
     }
@@ -100,7 +88,6 @@ const GeneDetails = (props) => {
 
     let taggedSeqResults = await tagSKSeqs(response)
     setSeqSearchResults(taggedSeqResults)
-    // then update relevant state?
   }
 
   const getHomologSearch = async () => {
@@ -109,34 +96,19 @@ const GeneDetails = (props) => {
     let sciNameArr = currentGeneSumm.organismscientificname.split(' ')
     let organism = `${sciNameArr[0]}+${sciNameArr[1]}`
     let searchQuery = `${geneName}[gene+name]+${organism}[orgn]`
-
-    /**
-     * PROB need to strip numbers off end (strain id?)...
-     * Pyricularia oryzae 70-15
-     * BREAKS this function
-     * */
-
-    // let searchQuery = `${geneSumm.name}[gene+name]+${geneSumm.organism.taxid}[txid]`
-    console.log(searchQuery)
-    // tpo[gene name] AND human[orgn]
     let response = await ESearch(db, searchQuery)
     if (response[0]) {
       setHomologSearchResults(response[0].homologenedatalist)
     } else {
       setHomologSearchResults('nonefound')
     }
-    // delete this when done!
-    // console.log(response)
-    // console.log(response[0].homologenedatalist)
   }
 
   const addThisGene = async (e) => {
     e.preventDefault()
     const added = await AddGeneToUser(user.id, currentGeneSumm)
     setCurrentGeneSumm(added)
-    setSKGeneId(added.id) // check this line
-    // setUserHasGene(true)
-    // console.log(added)
+    setSKGeneId(added.id)
   }
 
   const deleteThisGene = async (e) => {
@@ -144,13 +116,9 @@ const GeneDetails = (props) => {
     const deleted = await DeleteGene(currentGeneSumm.id)
     setCurrentGeneSumm(null)
     setNeedGeneSumm(true)
-    // setSKGeneId(false)
-    // navigate(`/userhome`)
   }
 
-  // on page load
   useEffect(() => {
-    // useEffect here to check if user has gene, and then get geneSumm from proper location (SK or NCBI)... set skGeneId to id/null, which will trigger conditional rendering of all sorts of stuff (add or delete this gene button, etc...)
     if (needGeneSumm) {
       setSKGeneId(false)
       getSKGeneSumm()
@@ -158,33 +126,7 @@ const GeneDetails = (props) => {
       setSeqSearchResults(null)
       setHomologSearchResults(null)
     }
-    // if gene is in seq keeper, get associated sequences
-
-    // getGeneData()
-    // }, [])
   }, [currentGeneSumm])
-
-  // might not use these functions
-  const getGeneDets = async () => {
-    let db = 'gene'
-    let fetchResponse = await EFetch(db, gene_uid)
-    console.log(fetchResponse)
-    // let jsonRes = xmlToJson(fetchResponse)
-    // console.log(jsonRes)
-    // fetchresponse is xml... convert to json?
-  }
-  const getGeneSeq = async () => {
-    let db = 'nuccore'
-    let nucUid = 1676319757
-    let fetchResponse = await EFetch(db, nucUid)
-    // let fetchResponse = await EFetch(db, gene_uid)
-    console.log(fetchResponse)
-  }
-  const getHomologeneDetails = async () => {
-    let db = 'homologene'
-    let fetchResponse = await EFetch(db, gene_uid)
-    console.log(fetchResponse)
-  }
 
   return (
     <div>

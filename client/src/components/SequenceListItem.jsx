@@ -4,22 +4,15 @@ import { ESearch, ESummary, EFetch } from '../services/Entrez'
 
 const SequenceListItem = ( props ) => {
   let { seqSumm,
-    userId,
-    geneId,
     setCurrentSeqSumm,
-    setNeedSeqSumm
   } = props
   let { gene_uid } = useParams()
   let navigate = useNavigate()
 
 
   const showThisSeq = () => {
-      // e.preventDefault()
       setCurrentSeqSumm(seqSumm)
       navigate(`/gene/${gene_uid}/sequence/${seqSumm.uid}`)
-
-    //navigate to sequence details (which will need geneid/geneSumm? and user info?)
-  
   }
 
 

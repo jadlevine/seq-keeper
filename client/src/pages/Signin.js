@@ -30,10 +30,6 @@ const Signin = ({ setUser }) => {
   return (
     <div className="signin-container">
       <div className="button-form-container">
-        <button onClick={() => navigate('/register')} className="signup-btn">
-          Register
-        </button>
-
         <form className="signin-container">
           <h3 className="signin-text">Sign In</h3>
           <input

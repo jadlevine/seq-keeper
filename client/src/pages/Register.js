@@ -62,63 +62,58 @@ const Register = () => {
     )
   } else {
     return (
-      <div className="signin-container">
-        <div className="button-form-container">
-          <button onClick={() => navigate('/signin')} className="signup-btn">
-            Sign In
-          </button>
-          <form className="signup-container" onSubmit={handleSubmit}>
-            <h3 className="signin-text">Register For A Seq Keeper Account</h3>
-            <input
-              onChange={handleChange}
-              type="text"
-              placeholder="name"
-              name="name"
-              className="signup-input"
-              value={formValues.name}
-              required
-            ></input>
-            <input
-              type="text"
-              placeholder="email"
-              name="email"
-              className="signup-input"
-              onChange={handleChange}
-              value={formValues.email}
-              required
-            ></input>
-            <input
-              type="password"
-              placeholder="password"
-              name="password"
-              className="signup-input"
-              onChange={handleChange}
-              value={formValues.password}
-              required
-            ></input>
-            <input
-              type="password"
-              placeholder="confirm password"
-              name="confirmPassword"
-              className="signup-input"
-              onChange={handleChange}
-              value={formValues.confirmPassword}
-              required
-            ></input>
+      <div className="register-body">
+        <h2>Register For A Seq Keeper Account</h2>
+        <form className="register" onSubmit={handleSubmit}>
+          <input
+            onChange={handleChange}
+            type="text"
+            placeholder="name"
+            name="name"
+            className="signup-input"
+            value={formValues.name}
+            required
+          ></input>
+          <input
+            type="text"
+            placeholder="email"
+            name="email"
+            className="signup-input"
+            onChange={handleChange}
+            value={formValues.email}
+            required
+          ></input>
+          <input
+            type="password"
+            placeholder="password"
+            name="password"
+            className="signup-input"
+            onChange={handleChange}
+            value={formValues.password}
+            required
+          ></input>
+          <input
+            type="password"
+            placeholder="confirm password"
+            name="confirmPassword"
+            className="signup-input"
+            onChange={handleChange}
+            value={formValues.confirmPassword}
+            required
+          ></input>
 
-            <button
-              disabled={
-                !formValues.email &&
-                !formValues.name &&
-                !formValues.password &&
-                !formValues.confirmPassword
-              }
-              className="signup-btn"
-            >
-              Register
-            </button>
-          </form>
-        </div>
+          <button
+            disabled={
+              !formValues.email &&
+              !formValues.name &&
+              !formValues.password &&
+              !formValues.confirmPassword
+            }
+            className="signup-btn"
+          >
+            Register
+          </button>
+        </form>
       </div>
     )
   }

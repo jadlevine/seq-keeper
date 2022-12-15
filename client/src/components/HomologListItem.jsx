@@ -17,7 +17,6 @@ const HomologListItem = ({homologSumm, setCurrentGeneSumm, setNeedGeneSumm, curr
       <div className="homolog-list-item container">
         <div className="gene-data">
           <h4>Gene Name</h4>
-          {/* <Link to={`/gene/${homologSumm.geneid}`}>{homologSumm.symbol}</Link> */}
           <div className="gene-data link" onClick={showGene}>{homologSumm.symbol}</div>
         </div>
         <div className="gene-data">
