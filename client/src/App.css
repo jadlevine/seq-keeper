@@ -44,25 +44,36 @@ body {
   text-decoration: underline;
   cursor: pointer;
 }
-.link:visited {
+/* .link:visited {
   color: purple;
-}
+} */
 
 
-/* LAYOUT --> NAV, page headers, page bodies*/
+/* NAV */
 .nav-bar{
   display: flex;
   justify-content: space-between;
-  background-color: rgb(100, 100, 100);
+  background-color: rgba(100,100,100,.8);
   align-items: center;
   font-size: 20px;
-  padding: 1em;
+  padding: 0 1em;
   min-height: 2em;
+}
+.authenticated-nav{
+  display: flex;
+  justify-content: space-between;
+  width: 60vw;
 }
 .nav-options{
   display: flex;
   justify-content: space-evenly;
-  width: 550px;
+  align-items: center;
+  width: 450px;
+}
+.nav-text{
+  color: white;
+  font-size:x-large;
+  font-weight: bold;
 }
 
 /* REGISTER */
