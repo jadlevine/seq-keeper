@@ -21,7 +21,7 @@ const SequenceDetails = (props) => {
     setNeedGeneSumm
   } = props
 
-  let { gene_uid } = useParams()
+  let { gene_uid, seq_uid } = useParams()
   let navigate = useNavigate()
 
   const [skSeqId, setSKSeqId] = useState(false) // says if seq is in db, and so seqSumm above came from db

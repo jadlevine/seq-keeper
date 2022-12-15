@@ -2,7 +2,6 @@ const express = require('express')
 const cors = require('cors')
 const logger = require('morgan')
 const GeneRouter = require('./routes/GeneRouter')
-const HomologousPairRouter = require('./routes/HomologousPairRouter')
 const SequenceRouter = require('./routes/SequenceRouter')
 const UserRouter = require('./routes/UserRouter')
 
@@ -18,7 +17,6 @@ app.use(express.urlencoded({ extended: true }))
 app.get('/', (req, res) => res.json({ message: 'Server Works' }))
 
 app.use('/user/genes', GeneRouter)
-app.use('/user/homologouspairs', HomologousPairRouter)
 app.use('/user/sequences', SequenceRouter)
 app.use('/users', UserRouter)
 
