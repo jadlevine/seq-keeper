@@ -208,10 +208,12 @@ const GeneDetails = (props) => {
                 </div>
               )}
             </div>
-            <OrganismSummary currentGeneSumm={currentGeneSumm} />
           </div>
           <div className="gene-page-body">
-            <GeneSummary currentGeneSumm={currentGeneSumm} />
+            <div>
+              <OrganismSummary currentGeneSumm={currentGeneSumm} />
+              <GeneSummary currentGeneSumm={currentGeneSumm} />
+            </div>
             <div className="gene-data-finder-container container">
               {skGeneId ? (
                 <div>

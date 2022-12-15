@@ -17,9 +17,6 @@ const SearchNCBI = ({ setCurrentGeneSumm, setNeedGeneSumm, user }) => {
 
   const tagSKGenes = async (searchRes) => {
     const userGenes = await GetAllGenesByUser(user.id)
-
-    // console.log(searchRes)
-    // console.log(typeof userGenes)
     for (const key in searchRes) {
       for (const sk in userGenes) {
         if (searchRes[key].uid == userGenes[sk].uid) {
@@ -27,9 +24,6 @@ const SearchNCBI = ({ setCurrentGeneSumm, setNeedGeneSumm, user }) => {
           // break
         }
       }
-      // if (Object.hasOwnProperty.call(object, key)) {
-      //   const element = object[key]
-      // }
     }
     return searchRes
   }

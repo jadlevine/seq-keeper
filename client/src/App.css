@@ -26,6 +26,7 @@ body {
 }
 .container{
   border: 1pt solid black;
+  background-color: rgba(100,100,100,.4);
 }
 .text-block{
   text-align: left;
@@ -40,13 +41,21 @@ body {
 }
 
 
-/* page bodies and nav*/
+/* LAYOUT --> NAV, page headers, page bodies*/
 .user-home-body{
   display: flex;
 }
 .gene-page-body, .gene-page-header{
   display: flex;
   justify-content: space-around;
+}
+.seq-page-header{
+
+}
+.seq-page-body{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+
 }
 .nav-bar{
   display: flex;
@@ -90,7 +99,7 @@ body {
   border: 1pt solid black;
   width: auto;
 }
-.search-table-header-row,.search-table-item-row{
+/* .search-table-header-row,.search-table-item-row{
   display: grid;
   margin: 2em;
   grid-template-columns: repeat(5, 1fr);
@@ -105,7 +114,7 @@ body {
   background-color: aquamarine;
   border: 1pt solid black;
   width: auto;
-}
+} */
 
 /* FORMS */
 .update-account-form{
@@ -114,8 +123,35 @@ body {
 }
 
 /* DATA SUMMARY BOXES */
-.gene-summ-container{
-  width: 40vw;
+.gene-summary-container,
+.organism-summary-container,
+.sequence-source-summary-container{
+  /* width: 50vw; */
+  width: 500px;
+  /* min-width: 500px; */
+}
+.summary-header{
+  font-weight: bold;
+  text-decoration: underline;
+  text-align: left;
+  padding: 0 0 0 7vw;
+}
+.gene-summary-row,
+.organism-summary-row,
+.seq-summary-row,
+.sequence-source-summary-row{
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+}
+.summary-row-title{
+  justify-self: end;
+  margin: 0 1em;
+  font-weight: bold;
+}
+.summary-row-data{
+  text-align: left;
+  /* justify-self: start; */
+  margin: 0 1em 0 0;
 }
 
 .gene-data-finder-container{

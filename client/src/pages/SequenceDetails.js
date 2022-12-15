@@ -15,8 +15,9 @@ import {
 } from '../services/SequenceServices'
 // import functions from sequenceservices here
 
-import OrganismSummary from '../components/OrganismSummary'
+// import OrganismSummary from '../components/OrganismSummary'
 import SequenceSummary from '../components/SequenceSummary'
+import SequenceSourceSummary from '../components/SequenceSourceSummary'
 // import SequenceListItem from '../components/SequenceListItem'
 // import HomologFinder from '../components/HomologSearch.jsx'
 // import GeneListItem from '../components/GeneListItem'
@@ -68,18 +69,7 @@ const SequenceDetails = (props) => {
     // const added = await AddSeqToUser(user.id, geneSumm)
 
     // setSKSeqId(added.id)
-
-    console.log('you got it, dude!')
-    console.log(added)
   }
-
-  // const addThisGene = async (e) => {
-  //   e.preventDefault()
-  //   const added = await AddGeneToUser(user.id, geneSumm)
-  //   setSKGeneId(added.id) // check this line
-  //   // setUserHasGene(true)
-  //   // console.log(added)
-  // }
 
   const deleteThisSequence = async (e) => {
     e.preventDefault()
@@ -205,10 +195,14 @@ const SequenceDetails = (props) => {
                 </div>
               )}
             </div>
+            {/* ?? Seq source summary (organism and gene?) /> */}
             {/* <OrganismSummary geneSumm={geneSumm} /> */}
           </div>
           <div className="seq-page-body">
-            <SequenceSummary currentSeqSumm={currentSeqSumm} />
+            <div>
+              <SequenceSourceSummary currentSeqSumm={currentSeqSumm} />
+              <SequenceSummary currentSeqSumm={currentSeqSumm} />
+            </div>
             <div className="fasta-block">
               {fasta ? (
                 <div className="fasta">

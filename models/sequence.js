@@ -35,6 +35,7 @@ module.exports = (sequelize, DataTypes) => {
       subname: DataTypes.STRING,
       fasta: DataTypes.TEXT,
       notes: DataTypes.TEXT,
+      ncbiLink: DataTypes.STRING,
       userId: {
         type: DataTypes.INTEGER,
         allowNull: false,

@@ -27,7 +27,7 @@ sequelize migration:generate --name Gene-addColumn-notes-changeColumn-descriptio
 
 sequelize migration:generate --name Sequence-overhaul
 
-
+sequelize migration:generate --name Sequence-addColumn-ncbiLink
 
 
 IN PSQL
