@@ -49,8 +49,6 @@ const SequenceDetails = (props) => {
       setFasta(currentSeqSumm.fasta)
     } else {
       let fastaResponse = await EFetch('nuccore', currentSeqSumm.uid)
-      // console.log(typeof fastaResponse)
-      // console.log(fastaResponse)
       setFasta(fastaResponse)
       setCurrentSeqSumm({ ...currentSeqSumm, fasta: fastaResponse })
     }
@@ -98,9 +96,6 @@ const SequenceDetails = (props) => {
     setCurrentSeqSumm(skSeqSumm)
   }
 
-  // <h4>NCBI Link</h4>
-  //         <a href={`https://www.ncbi.nlm.nih.gov/nuccore/${seqSumm.uid}`} target="_blank">{seqSumm.accessionversion}</a>
-
   const getSeqSumm = async () => {
     //check if skSeqId exists (controlls conditional rendering of lots on this page)
     const skSeqSumm = await CheckSKSeqStatus(user.id, seq_uid)
@@ -118,8 +113,8 @@ const SequenceDetails = (props) => {
     setCurrentSeqSumm(null)
     setNeedSeqSumm(true)
     // setCurrentGeneSumm(null)
-    // navigate(`/gene/${currentGeneSumm.uid}`)
-    navigate(-1)
+    navigate(`/gene/${currentGeneSumm.uid}`)
+    // navigate(-1)
   }
 
   // on page load
@@ -172,14 +167,14 @@ const SequenceDetails = (props) => {
         <div>
           <div className="seq-page-header">
             <button onClick={backToGeneDetails}>
-              Back to {currentGeneSumm?.name} Details
+              {currentGeneSumm?.name} Details
             </button>
             <h1>Gene: {currentGeneSumm?.name}</h1>
             <h1>Sequence: {currentSeqSumm.title}</h1>
             <div className="seqSKStatus container">
               {skSeqId ? (
                 <div>
-                  <h4>Seq Keeper Seq ID: {skSeqId}</h4>
+                  <h4 className="red">Seq Keeper Seq ID: {skSeqId}</h4>
                   <button onClick={deleteThisSequence}>
                     Delete from account
                   </button>
@@ -209,10 +204,12 @@ const SequenceDetails = (props) => {
                   <div className="button-row">
                     <button onClick={() => setFasta(null)}>Hide FASTA</button>
                   </div>
-                  <div className="text-block fasta">{fasta}</div>
+                  <div className="fasta">{fasta}</div>
                 </div>
               ) : (
-                <button onClick={viewFasta}>View FASTA Sequence</button>
+                <button onClick={viewFasta}>
+                  View FASTA Sequence ({currentSeqSumm.slen}bp)
+                </button>
               )}
             </div>
           </div>

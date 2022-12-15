@@ -10,7 +10,7 @@ const GeneSummary = ({currentGeneSumm}) => {
         <div className="summary-row-data">{currentGeneSumm.name}</div>
       </div>
       <div className="gene-summary-row">
-        <div className="summary-row-title">SK - gId</div>
+        <div className="summary-row-title">SK - geneID</div>
         {currentGeneSumm.id? (
           <div className="summary-row-data">{currentGeneSumm.id}</div>
         ):(
@@ -49,7 +49,7 @@ const GeneSummary = ({currentGeneSumm}) => {
       </div>
       <div className="gene-summary-row">
         <div className="summary-row-title">NCBI Link</div>
-        <a className="summary-row-data" href={`${currentGeneSumm.ncbiLink}`} target="_blank">{currentGeneSumm.name}</a>
+        <a className="summary-row-data" href={`${currentGeneSumm.ncbiLink}`} alt="https://www.ncbi.nlm.nih.gov/gene" target="_blank">{currentGeneSumm.name}</a>
       </div>
 
     </div>

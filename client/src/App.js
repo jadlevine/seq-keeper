@@ -153,6 +153,9 @@ const App = () => {
         <Nav user={user} handleSignout={handleSignout} />
       </div>
       <Routes>{user ? authRoutes : publicRoutes}</Routes>
+      <footer>
+        <div className="footer">Seq Keeper, 2022, Josh Levine</div>
+      </footer>
     </div>
   )
 }
