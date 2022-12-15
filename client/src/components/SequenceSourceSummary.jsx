@@ -16,8 +16,12 @@ const SequenceSourceSummary = ({currentSeqSumm}) => {
         <div className="summary-row-data">{currentSeqSumm.taxid}</div>
       </div>
       <div className="sequence-source-summary-row">
-        <div className="summary-row-title red">Gene info?</div>
-        <div className="summary-row-data red">uid, skgeneID?</div>
+        <div className="summary-row-title">SK - gid</div>
+        <div className="summary-row-data">{currentSeqSumm.geneId}</div>
+      </div>
+      <div className="sequence-source-summary-row">
+        <div className="summary-row-title">gene uid</div>
+        <div className="summary-row-data">{currentSeqSumm.geneUid}</div>
       </div>
     </div>
   )

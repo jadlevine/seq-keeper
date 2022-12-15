@@ -33,13 +33,14 @@ const SequenceListItem = ( props ) => {
           </div>
         ):(
           <div>
-            <h4>No SK-seqId<br/>Click on Accession Number to see details and add.</h4>
+            <h4>No SK-seqId<br/><span className="link" onClick={showThisSeq}>Click to see more
+        </span></h4>
+            
           </div>
         )}
         <div>
           <h4>Accession Number</h4>
-          <div className="link" onClick={showThisSeq}>{seqSumm.accessionversion}
-        </div>     
+          <div>{seqSumm.accessionversion}</div>     
         </div>
         <div>
           <h4>Molecule</h4>

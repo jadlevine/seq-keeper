@@ -60,13 +60,6 @@ const SequenceDetails = (props) => {
     const added = await AddSeqToUser(currentSeqSumm)
     setCurrentSeqSumm(added)
     setSKSeqId(added.id)
-    // YOU ARE HERE!!!
-
-    // eventually, render this component(page?) like the geneDetails page... with conditional rendering depending on if the seq is in SeqKeeper yet
-
-    // const added = await AddSeqToUser(user.id, geneSumm)
-
-    // setSKSeqId(added.id)
   }
 
   const deleteThisSequence = async (e) => {
@@ -91,7 +84,8 @@ const SequenceDetails = (props) => {
       ncbiLink: `https://www.ncbi.nlm.nih.gov/nuccore/${response[0].uid}`,
       fasta: '',
       userId: user.id,
-      geneId: currentGeneSumm.id
+      geneId: currentGeneSumm.id,
+      geneUid: currentGeneSumm.uid
     }
     setCurrentSeqSumm(skSeqSumm)
   }
@@ -125,82 +119,50 @@ const SequenceDetails = (props) => {
     }
   }, [currentSeqSumm])
 
-  // NOTE - GI/UID/accessionVersion numbers are unique identifiers of a record
-  //      - accession number applies to the whole db record, entrez seq db searches with accession number will retreive the MOST RECENT version of a sequence record
-
-  ///details to display:
-  /**
-   * line 1
-   * accessionversion: "NM_153647.4" - first arg of FASTA header
-   * biomol: "mRNA" - 3rd arg of FASTA header
-   * slen: integer (render as "sequence length")
-   * updatedate: "2022/04/17"
-   * organism: "human"
-   * line/block 2
-   * title: "a description" - 2ns arg of FASTA header
-   * block 3
-   * fasta --> conditional - fasta (make it look good, not text-align: center!)
-   * 
-   * Details to keep (in addition) for db use, and/or seqDetails page?
-   * or gi - number? same as uid (which is a string here?)
-   * taxid: integer - for checking against organism
-   * strain: "important for microbes"
-  * subtype - "chromosome|map"
-   * subname: "14|14q32.12" 
-  
-  * ADD seq - only avail when fasta is showing
-   * notes field?
-   * (include geneId and userId as well!)
-   */
-
-  // const getGeneSeq = async () => {
-  //   let db = 'nuccore'
-  //   let nucUid = 1676319757
-  //   let fetchResponse = await EFetch(db, nucUid)
-  //   // let fetchResponse = await EFetch(db, gene_uid)
-  //   console.log(fetchResponse)
-  // }
-
   return (
     <div>
       {currentSeqSumm ? (
         <div>
           <div className="seq-page-header">
-            <button onClick={backToGeneDetails}>
-              {currentGeneSumm?.name} Details
-            </button>
-            <h1>Gene: {currentGeneSumm?.name}</h1>
-            <h1>Sequence: {currentSeqSumm.title}</h1>
-            <div className="seqSKStatus container">
-              {skSeqId ? (
-                <div>
-                  <h4 className="red">Seq Keeper Seq ID: {skSeqId}</h4>
-                  <button onClick={deleteThisSequence}>
-                    Delete from account
-                  </button>
-                </div>
-              ) : (
-                <div>
-                  <h4>This sequence is not associated with your account</h4>
-                  {fasta ? (
-                    <button onClick={addThisSequence}>Add this Sequence</button>
-                  ) : (
-                    <p>View FASTA to add this sequence to your account.</p>
-                  )}
-                </div>
-              )}
+            <div className="text-block seq-header-data">
+              <h2>{currentSeqSumm.title}</h2>
+              <div className="seqSKStatus">
+                {skSeqId ? (
+                  <div>
+                    <h4>SK - seqId: {skSeqId}</h4>
+                    <button onClick={deleteThisSequence}>
+                      Delete from account
+                    </button>
+                  </div>
+                ) : (
+                  <div>
+                    <h4>This sequence is not associated with your account</h4>
+                    {fasta ? (
+                      <button onClick={addThisSequence}>
+                        Add this Sequence
+                      </button>
+                    ) : (
+                      <p>View FASTA to add this sequence to your account.</p>
+                    )}
+                  </div>
+                )}
+              </div>
+              <h3>
+                Gene:{' '}
+                <span className="link" onClick={backToGeneDetails}>
+                  {currentGeneSumm?.name}
+                </span>
+              </h3>
             </div>
-            {/* ?? Seq source summary (organism and gene?) /> */}
-            {/* <OrganismSummary geneSumm={geneSumm} /> */}
           </div>
           <div className="seq-page-body">
             <div>
               <SequenceSourceSummary currentSeqSumm={currentSeqSumm} />
               <SequenceSummary currentSeqSumm={currentSeqSumm} />
             </div>
-            <div className="fasta-block">
+            <div className="fasta-block container">
               {fasta ? (
-                <div className="fasta">
+                <div>
                   <div className="button-row">
                     <button onClick={() => setFasta(null)}>Hide FASTA</button>
                   </div>

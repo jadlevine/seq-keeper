@@ -29,6 +29,7 @@ sequelize migration:generate --name Sequence-overhaul
 
 sequelize migration:generate --name Sequence-addColumn-ncbiLink
 
+sequelize migration:generate --name Sequence-addColumn-geneUid
 
 IN PSQL
   \c foliage_friend_development;

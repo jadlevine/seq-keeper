@@ -191,22 +191,23 @@ const GeneDetails = (props) => {
       {currentGeneSumm ? (
         <div>
           <div className="gene-page-header">
-            <h1>{currentGeneSumm.name}</h1>
-            <div className="geneSKStatus container">
-              {skGeneId ? (
-                <div>
-                  <h4>Seq Keeper Gene ID: {skGeneId}</h4>
-                  <button onClick={deleteThisGene}>Delete</button>
-                </div>
-              ) : (
-                <div>
-                  <h4>This gene is not associated with your account</h4>
-                  <button onClick={addThisGene}>Add this Gene</button>
-                  <button className="red">
-                    Add it as a homolog of...? this does nothing right now
-                  </button>
-                </div>
-              )}
+            <div className="text-block gene-header-data">
+              <h1>{currentGeneSumm.name}</h1>
+              <div className="geneSKStatus">
+                {skGeneId ? (
+                  <div>
+                    <h4>SK - geneId: {skGeneId}</h4>
+                    <button onClick={deleteThisGene}>
+                      Delete from account
+                    </button>
+                  </div>
+                ) : (
+                  <div>
+                    <h4>This gene is not associated with your account</h4>
+                    <button onClick={addThisGene}>Add this Gene</button>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
           <div className="gene-page-body">
@@ -217,7 +218,7 @@ const GeneDetails = (props) => {
             <div className="gene-data-finder-container container">
               {skGeneId ? (
                 <div>
-                  <div className="seq-find container">
+                  <div className="seq-finder">
                     {seqSearchResults ? (
                       <div className="search-results">
                         <button onClick={() => setSeqSearchResults(null)}>
@@ -238,13 +239,15 @@ const GeneDetails = (props) => {
                         </div>
                       </div>
                     ) : (
-                      <button onClick={NCBISequenceSearch}>
-                        Search for {currentGeneSumm.name} Nucleotide sequences
-                        on NCBI
+                      <button
+                        className="larger-text"
+                        onClick={NCBISequenceSearch}
+                      >
+                        Find {currentGeneSumm.name} Sequences
                       </button>
                     )}
                   </div>
-                  <div className="homolog-find container">
+                  <div className="homolog-finder">
                     {homologSearchResults ? (
                       homologSearchResults === 'nonefound' ? (
                         <div>No Homologs Found</div>
@@ -268,7 +271,10 @@ const GeneDetails = (props) => {
                         </div>
                       )
                     ) : (
-                      <button onClick={getHomologSearch}>
+                      <button
+                        onClick={getHomologSearch}
+                        className="larger-text"
+                      >
                         Find Homologous genes
                       </button>
                     )}
