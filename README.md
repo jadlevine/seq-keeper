@@ -1,12 +1,10 @@
 ![Seq Keeper](./images/header_SK.png)
 
-## Date: December 15, 2022
+### Date: December 15, 2022
 
 ---
 
-### **_Creator_**
-
-#### Josh Levine
+### **_Creator_**: Josh Levine
 
 [Website]() | [GitHub](https://github.com/jadlevine) | [LinkedIn](https://www.linkedin.com/in/joshua-adam-levine/)
 
@@ -43,23 +41,22 @@ To use this application, navigate to the deployed version on Heroku, [here - her
 1. Register for an account, using a valid email address.
 2. Sign in to your account.
 3. Click on any of the links in the Navigation Bar at any time to navigate.
-4. Account Pages
+4. User Home Page - displays your genes and sequences
 
-- User Home Page - displays your genes and sequences
+- Initially, your Gene and Sequence Lists will be empty. Use "NCBI Search" in the navigation bar to find genes.
+- Once you have added genes and sequences to your account, they will appear with a light-blue background in the application.
 
-  - Initially, your Gene and Sequence Lists will be empty. Use "NCBI Search" in the navigation bar to find genes.
-  - Once you have added genes and sequences to your account, they will appear with a light-blue background in the application.
+5. Gene Details Page - displays gene details
 
-- Gene Details Page - displays gene details
+- _Add to Account_ or _Delete from account_ will be conditionally rendered depending on whether the gene is associated with your account.
+- Once added, options to _Find \<gene\> Sequences_ and _Find Homologous Genes_ will appear. Click on either button to see records.
+- Click on Genes or Sequences to go to the details page for that record.
 
-  - _Add to Account_ or _Delete from account_ will be conditionally rendered depending on whether the gene is associated with your account.
-  - Once added, options to _Find \<gene\> Sequences_ and _Find Homologous Genes_ will appear. Click on either button to see records.
-  - Click on Genes or Sequences to go to the details page for that record.
+6. Sequence Details Page - displays sequence details
 
-- Sequence Details Page - displays sequence details
-  - Click on _View FASTA Sequence (\<length\>)_ to see the sequence.
-    - ### **NOTE - Very large sequences (>100,000 bp) can slow the application considerably.**
-  - Viewing the FASTA sequence enables the _Add this Sequence_ button, which will add the sequence to your account.
+- Click on _View FASTA Sequence (\<length\>)_ to see the sequence.
+  - ### **NOTE - Very large sequences (>100,000 bp) can slow the application considerably.**
+- Viewing the FASTA sequence enables the _Add this Sequence_ button, which will add the sequence to your account.
 
 ---
 
