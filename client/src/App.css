@@ -76,34 +76,43 @@ body {
   font-weight: bold;
 }
 
-/* REGISTER */
+/* REGISTER, SIGNIN, UPDATE-ACCOUNT, DELETE ACCOUNT */
 .register-body,
-.signin-body{
+.signin-body,
+.update-account-body,
+.delete-account-body{
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 .register-form,
-.signin-form{
+.signin-form,
+.update-account-form{
   display: flex;
   flex-direction: column;
   align-items: center;
 }
+.delete-account-form{
+  padding: 0 1em;
+}
 .register-input,
-.signin-input{
+.signin-input,
+.update-account-input{
   margin: .5em;
   padding: .2em;
   font-size: larger;
 }
 .register-button,
-.signin-button{
-  margin: .5em 0;
+.signin-button,
+.account-button{
+  margin: .5em;
   padding: .2em;
   font-size: larger;
   width: 150px;
 }
 
 
+/* PAGE LAYOUTS */
 .user-home-body{
   display: flex;
 }
@@ -165,20 +174,7 @@ margin: .25em 0;
   /* width: auto; */
 }
 
-/* FORMS */
-.update-account-form{
-  display: grid;
-  grid-template-rows: repeat (6 1fr);
-}
-.register-form-container{
-  display: grid;
-  grid-template-rows: 1fr 5fr;
-}
-.register{
-  display: grid;
-  grid-template-rows: repeat (6 1fr);
-  width: 400px;
-}
+
 
 /* DATA SUMMARY BOXES */
 .gene-summary-container,

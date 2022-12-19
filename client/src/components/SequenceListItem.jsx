@@ -33,7 +33,7 @@ const SequenceListItem = ( props ) => {
         )}
         <div>
           <h4>Accession Number</h4>
-          <div>{seqSumm.accessionversion}</div>     
+          <div className="link" onClick={showThisSeq}>{seqSumm.accessionversion}</div>     
         </div>
         <div>
           <h4>Molecule</h4>

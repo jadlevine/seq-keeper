@@ -33,24 +33,24 @@ const Signin = ({ setUser }) => {
       <form className="signin-form container" onSubmit={handleSubmit}>
         <input
           onChange={handleChange}
-          value={formValues.email}
-          required
           type="text"
           name="email"
-          className="signin-input"
+          value={formValues.email}
           placeholder="email"
+          className="signin-input"
+          required
         ></input>
         <input
           onChange={handleChange}
-          value={formValues.password}
-          required
           type="password"
           name="password"
-          className="signin-input"
+          value={formValues.password}
           placeholder="password"
+          className="signin-input"
+          required
         ></input>
         <button
-          disabled={!formValues.email && !formValues.password}
+          disabled={!formValues.email || !formValues.password}
           className="signin-button"
         >
           Sign In

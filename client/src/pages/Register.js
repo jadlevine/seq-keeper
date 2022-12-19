@@ -68,44 +68,44 @@ const Register = () => {
           <input
             onChange={handleChange}
             type="text"
-            placeholder="User name"
             name="name"
-            className="register-input"
             value={formValues.name}
+            placeholder="username"
+            className="register-input"
             required
           ></input>
           <input
+            onChange={handleChange}
             type="text"
-            placeholder="email"
             name="email"
-            className="register-input"
-            onChange={handleChange}
             value={formValues.email}
+            placeholder="email"
+            className="register-input"
             required
           ></input>
           <input
+            onChange={handleChange}
             type="password"
-            placeholder="password"
             name="password"
-            className="register-input"
-            onChange={handleChange}
             value={formValues.password}
+            placeholder="password"
+            className="register-input"
             required
           ></input>
           <input
-            type="password"
-            placeholder="confirm password"
-            name="confirmPassword"
-            className="register-input"
             onChange={handleChange}
+            type="password"
+            name="confirmPassword"
             value={formValues.confirmPassword}
+            placeholder="confirm password"
+            className="register-input"
             required
           ></input>
           <button
             disabled={
-              !formValues.email &&
-              !formValues.name &&
-              !formValues.password &&
+              !formValues.email ||
+              !formValues.name ||
+              !formValues.password ||
               !formValues.confirmPassword
             }
             className="register-button"
