@@ -59,7 +59,7 @@ const SearchNCBI = ({ setCurrentGeneSumm, setNeedGeneSumm, user }) => {
       {searched ? (
         <div className="search-results">
           <h2>Search Results ({searchResults.length})</h2>
-          <div className="search-results-list">
+          <div className="gene-list">
             {searchResults.map((geneSumm) => (
               <GeneListItem
                 key={geneSumm.uid}
@@ -70,7 +70,9 @@ const SearchNCBI = ({ setCurrentGeneSumm, setNeedGeneSumm, user }) => {
           </div>
         </div>
       ) : (
-        <div></div>
+        <div>
+          <h2>Use search bar to find genes</h2>
+        </div>
       )}
     </div>
   )

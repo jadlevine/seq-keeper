@@ -37,7 +37,7 @@ const UserHome = (props) => {
     <div>
       <h1>{user.name}'s Home Page</h1>
       <div className="user-home-body">
-        <div className="genelist container">
+        <div className="gene-list container">
           {userGenes ? (
             <div className="search-results">
               <h2>Gene List ({userGenes.length})</h2>
@@ -57,7 +57,8 @@ const UserHome = (props) => {
             </div>
           )}
         </div>
-        <div className="seqlist container">
+
+        <div className="sequence-list container">
           {userSeqs ? (
             <div className="search-results">
               <h2>Sequence List ({userSeqs.length})</h2>

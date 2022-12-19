@@ -157,17 +157,17 @@ const GeneDetails = (props) => {
               <OrganismSummary currentGeneSumm={currentGeneSumm} />
               <GeneSummary currentGeneSumm={currentGeneSumm} />
             </div>
-            <div className="gene-data-finder-container container">
+            <div className="sequence-list homolog-list container">
               {skGeneId ? (
                 <div>
-                  <div className="seq-finder">
+                  <div>
                     {seqSearchResults ? (
                       <div className="search-results">
                         <button onClick={() => setSeqSearchResults(null)}>
                           Hide Sequence Search Results
                         </button>
                         <h2>Search Results ({seqSearchResults.length})</h2>
-                        <div className="search-results-list">
+                        <div className="sequence-list">
                           {seqSearchResults.map((seqSumm) => (
                             <SequenceListItem
                               key={seqSumm.uid}

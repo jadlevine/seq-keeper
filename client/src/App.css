@@ -44,9 +44,9 @@ body {
   text-decoration: underline;
   cursor: pointer;
 }
-/* .link:visited {
+.link:visited {
   color: purple;
-} */
+}
 
 
 /* NAV */
@@ -115,6 +115,8 @@ body {
 /* PAGE LAYOUTS */
 .user-home-body{
   display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
 }
 
 .seq-page-header{
@@ -148,15 +150,22 @@ body {
 
 /* LISTS and tables */
 /* Gene list, Seq List, homolog List */
+.search-results{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.gene-list,
+.sequence-list{
+  width: 700px;
+}
 .gene-list-item{
   display: grid;
   grid-template-columns: repeat(6, 1fr);
-  /* justify-content: flex-start; */
-  /* align-content: center; */
-
+  margin: .25em;
 }
 .seq-list-item{
-margin: .25em 0;
+margin: .25em;
 }
 .seq-list-item-row{
   display: grid;
@@ -171,7 +180,6 @@ margin: .25em 0;
   display: grid;
   margin: 2em;
   grid-template-columns: repeat(2, 1fr);
-  /* width: auto; */
 }
 
 
