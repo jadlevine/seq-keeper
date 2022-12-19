@@ -80,14 +80,17 @@ To use this application, navigate to the deployed version on Heroku, [here - her
 
 ### **_Future Updates_**
 
+- [x] ~~Conditional rendering of gene and sequence options~~
 - [x] ~~Add Homologous Gene Search~~
-- [ ] Add BLAST sequence searching functionality
+- [ ] Add Chromosome map visualizations
+- [ ] Add BLAST sequence search
 - [ ] Add Protein Sequence search
 - [ ] Add Protein Structure visualization
-- [ ] Add Phylogenetic Tree visualization
-- [ ] Allow user to specify homologous relationships between genes, and build custom phylogenetic trees
+- [ ] Allow user to specify homologous relationships between genes
+- [ ] Implement MUSCLE to perform multiple sequence alignments
+- [ ] Implement Phylotree.js to create and visualize Phylogenetic Trees
 - [ ] Allow user to perform custom searching and filtering
-- [ ] Replace window alerts with modal or MUI
+- [ ] Implement modal and/or MUI for front-end UI.
 
 ---
 
