@@ -217,7 +217,7 @@ const GeneDetails = (props) => {
                         onClick={getHomologSearch}
                         className="larger-text"
                       >
-                        Find Homologous genes
+                        Find Homologous Genes
                       </button>
                     )}
                   </div>

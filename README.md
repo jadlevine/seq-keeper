@@ -1,6 +1,4 @@
-# Seq Keeper
-
-<!-- ![Seq Keeper](./images/header.png) -->
+![Seq Keeper](./images/header_SK.png)
 
 ## Date: December 15, 2022
 
@@ -16,7 +14,13 @@
 
 ### **_Description_**
 
-A PERN stack application for researching and curating DNA sequences and their evolutionary relationships.
+A full stack application for researching and curating genes and their known sequences.
+
+---
+
+### **_Technologies Used_**
+
+![Tech Used](./images/Tech_Banner_SK.png)
 
 ---
 
@@ -26,50 +30,56 @@ You can see the planning of this project on Trello, [here](https://trello.com/b/
 
 An Entity Relationship Diagram (ERD) of the data models can be found [here](https://drive.google.com/file/d/1pu_gBItMIm7eFgA6dT51EIxQ-Jg-Sp0f/view?usp=sharing)
 
-A Component Hierarchy Diagram showing the structure of the React app can be found [here](https://drive.google.com/file/d/1hBGsjTrU7Cw9RS-O6ioQqnudeqJ0uNjK/view?usp=sharing)
-
----
-
-### **_Technologies Used_**
-
-PERN Stack
-
-- Postgres
-- Express
-- React
-- Node
-
-BioTech Stack
-
-- BLAST (Nucleotide search)
-- MUSCLE (Multiple Sequence Alignment)
-- phylotree.js (tree visualization)
-
-<!-- ![Tech Used](./images/tech_banner_FSK.png) -->
+A Component Hierarchy Diagram (CHD) of the structure of the React app can be found [here](https://drive.google.com/file/d/1hBGsjTrU7Cw9RS-O6ioQqnudeqJ0uNjK/view?usp=sharing)
 
 ---
 
 ### **_Getting Started_**
 
-<!-- To use this application, use the deployed version on Heroku, [here](heroku link) -->
+To use this application, navigate to the deployed version on Heroku, [here - heroku link](herokulink)
 
-Using the application
+**Using the application**
 
-1. Sign up
-2. Log in
-3. Search for Sequences.
+1. Register for an account, using a valid email address.
+2. Sign in to your account.
+3. Click on any of the links in the Navigation Bar at any time to navigate.
+4. Account Pages
+
+- User Home Page - displays your genes and sequences
+
+  - Initially, your Gene and Sequence Lists will be empty. Use "NCBI Search" in the navigation bar to find genes.
+  - Once you have added genes and sequences to your account, they will appear with a light-blue background in the application.
+
+- Gene Details Page - displays gene details
+
+  - _Add to Account_ or _Delete from account_ will be conditionally rendered depending on whether the gene is associated with your account.
+  - Once added, options to _Find \<gene\> Sequences_ and _Find Homologous Genes_ will appear. Click on either button to see records.
+  - Click on Genes or Sequences to go to the details page for that record.
+
+- Sequence Details Page - displays sequence details
+  - Click on _View FASTA Sequence (\<length\>)_ to see the sequence.
+    - ### **NOTE - Very large sequences (>100,000 bp) can slow the application considerably.**
+  - Viewing the FASTA sequence enables the _Add this Sequence_ button, which will add the sequence to your account.
 
 ---
 
 ### **_Screenshots_**
 
-<!-- #### Create Schedule Form
+#### Register Page
 
-![home page](./images/home_page_screenshot_FSK.png)
+![Register Page](./images/Register_SK.png)
 
-#### Active Schedule
+#### User Home Page
 
-## ![scheduled attractions](./images/scheduled_attractions_screenshot_FSK.png) -->
+![User Home Page](./images/UserHome_SK.png)
+
+#### Gene Details Page
+
+![Gene Details Page](./images/GeneDetails_SeqSearch_SK.png)
+
+#### Sequence Details Page
+
+![Sequence Details Page](./images/SequenceDetails_SK.png)
 
 ### **_Future Updates_**
 
@@ -80,11 +90,8 @@ Using the application
 
 ### **_Credits_**
 
-Entez
-BLAST
-MUSCLE
-phyhlotree.js
-[validator](https://www.npmjs.com/package/validator)
-[react-xml-parser](https://www.npmjs.com/package/react-xml-parser)
+[NCBI/Entez](https://www.ncbi.nlm.nih.gov/search/)
 
-<!-- Font: [Bangers](https://fonts.google.com/specimen/Bangers) -->
+[validator](https://www.npmjs.com/package/validator)
+
+[react-xml-parser](https://www.npmjs.com/package/react-xml-parser)
