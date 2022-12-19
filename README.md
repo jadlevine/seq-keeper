@@ -80,8 +80,14 @@ To use this application, navigate to the deployed version on Heroku, [here - her
 
 ### **_Future Updates_**
 
-- [x] ~~Future update 1~~
-- [ ] Future update 2
+- [x] ~~Add Homologous Gene Search~~
+- [ ] Add BLAST sequence searching functionality
+- [ ] Add Protein Sequence search
+- [ ] Add Protein Structure visualization
+- [ ] Add Phylogenetic Tree visualization
+- [ ] Allow user to specify homologous relationships between genes, and build custom phylogenetic trees
+- [ ] Allow user to perform custom searching and filtering
+- [ ] Replace window alerts with modal or MUI
 
 ---
 
