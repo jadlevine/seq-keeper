@@ -14,6 +14,8 @@
 
 A full stack application for researching and curating genes and their known sequences.
 
+Seq Keeper is deployed on Heroku, [here](https://seq-keeper.herokuapp.com/)
+
 ---
 
 ### **_Technologies Used_**
@@ -34,9 +36,7 @@ A Component Hierarchy Diagram (CHD) of the structure of the React app can be fou
 
 ### **_Getting Started_**
 
-To use this application, navigate to the deployed version on Heroku, [here - heroku link](herokulink)
-
-**Using the application**
+On the deployed Seq Keeper App:
 
 1. Register for an account, using a valid email address.
 2. Sign in to your account.
@@ -82,14 +82,14 @@ To use this application, navigate to the deployed version on Heroku, [here - her
 
 - [x] ~~Conditional rendering of gene and sequence options~~
 - [x] ~~Add Homologous Gene Search~~
+- [ ] Allow user to perform custom searching and filtering
+- [ ] Allow user to specify homologous relationships between genes
 - [ ] Add Chromosome map visualizations
 - [ ] Add BLAST sequence search
 - [ ] Add Protein Sequence search
 - [ ] Add Protein Structure visualization
-- [ ] Allow user to specify homologous relationships between genes
 - [ ] Implement MUSCLE to perform multiple sequence alignments
 - [ ] Implement Phylotree.js to create and visualize Phylogenetic Trees
-- [ ] Allow user to perform custom searching and filtering
 - [ ] Implement modal and/or MUI for front-end UI.
 
 ---
