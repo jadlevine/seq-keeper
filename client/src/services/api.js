@@ -1,10 +1,10 @@
 import Axios from 'axios'
 
 // Heroku
-// export const BASE_URL = 'https://seq-keeper.herokuapp.com/'
+export const BASE_URL = 'https://seq-keeper.herokuapp.com/'
 
 // Running BACKEND locally
-export const BASE_URL = process.env.REACT_APP_BASEURL
+// export const BASE_URL = process.env.REACT_APP_BASEURL
 
 const Client = Axios.create({ baseURL: BASE_URL })
 
