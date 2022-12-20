@@ -9,7 +9,7 @@ const app = express()
 
 const PORT = process.env.PORT || 3001
 
-app.use(cors())
+app.use(cors({ origin: ['https://seq-keeper.herokuapp.com/'] }))
 app.use(logger('dev'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
@@ -24,4 +24,4 @@ app.use('/users', UserRouter)
 app.get('/*', (req, res) => {
   res.sendFile(`${__dirname}/client/build/index.html`)
 })
-app.listen(PORT, () => console.log(`Server Started On Port: ${PORT}`))
+app.listen(PORT, () => console.log(`Server Running On Port: ${PORT}`))

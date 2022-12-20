@@ -1,13 +1,10 @@
 import Axios from 'axios'
 
-// // Heroku
-// export const BASE_URL = 'https://foliage-friends-database.herokuapp.com/'
-
-// JOSH Heroku
-// export const BASE_URL = 'https://foliage-friend-backend.herokuapp.com/'
+// Heroku
+// export const BASE_URL = 'https://seq-keeper.herokuapp.com/'
 
 // Running BACKEND locally
-export const BASE_URL = 'http://localhost:3001'
+export const BASE_URL = process.env.REACT_APP_BASEURL
 
 const Client = Axios.create({ baseURL: BASE_URL })
 
