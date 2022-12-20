@@ -4,7 +4,7 @@ import { GetAllGenesByUser } from '../services/GeneServices'
 import GeneSearchBar from '../components/GeneSearchBar'
 import GeneListItem from '../components/GeneListItem'
 
-const SearchNCBI = ({ setCurrentGeneSumm, setNeedGeneSumm, user }) => {
+const SearchNcbi = ({ setCurrentGeneSumm, setNeedGeneSumm, user }) => {
   const [searchQuery, setSearchQuery] = useState('')
   const [searched, setSearched] = useState(false)
   const [searchResults, setSearchResults] = useState([])
@@ -78,4 +78,4 @@ const SearchNCBI = ({ setCurrentGeneSumm, setNeedGeneSumm, user }) => {
   )
 }
 
-export default SearchNCBI
+export default SearchNcbi

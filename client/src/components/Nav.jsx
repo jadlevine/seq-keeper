@@ -14,7 +14,7 @@ const Nav = ({ user, handleSignout }) => {
         <h3><span className='underline'>Signed in as</span> <br/>{user?.email}</h3>
         <div className="nav-options">
           <Link className="nav-text" to="/userhome">User Home</Link>
-          <Link className="nav-text" to="/searchncbi">NCBI Search</Link>
+          <Link className="nav-text" to="/SearchNcbi">NCBI Search</Link>
           <Link className="nav-text" to="/accountdetails">Account Details</Link>
           <Link className="nav-text" onClick={handleSignout} to="/signin">Sign Out</Link>
         </div>

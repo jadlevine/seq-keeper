@@ -8,9 +8,9 @@ import AccountDetails from './pages/AccountDetails'
 import UserHome from './pages/UserHome'
 import GeneDetails from './pages/GeneDetails'
 import SequenceDetails from './pages/SequenceDetails'
+import SearchNcbi from './pages/SearchNcbi'
 import Nav from './components/Nav'
 import NoPage from './components/NoPage'
-import SearchNCBI from './pages/SearchNCBI'
 
 const App = () => {
   const [user, setUser] = useState(null)
@@ -83,9 +83,9 @@ const App = () => {
         }
       />
       <Route
-        path="/searchncbi"
+        path="/SearchNcbi"
         element={
-          <SearchNCBI
+          <SearchNcbi
             setCurrentGeneSumm={setCurrentGeneSumm}
             setNeedGeneSumm={setNeedGeneSumm}
             user={user}
